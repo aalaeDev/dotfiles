@@ -86,18 +86,6 @@ The magic happens in `matugen/.config/matugen/`.
 
 ---
 
-## ⌨️ Keybindings
-
-Defined in `hypr/.config/hypr/keybindings.conf`.
-- **Mod Key:** `SUPER` (Windows/Command key)
-- `SUPER + Q`: Launch Terminal (Kitty)
-- `SUPER + R`: Launch Application Menu (Rofi)
-- `SUPER + E`: File Explorer
-- `SUPER + V`: Clipboard Manager (CopyQ)
-- `SUPER + T`: Toggle Tailscale VPN
-
----
-
 ## 📂 Directory Structure
 
 ```text
