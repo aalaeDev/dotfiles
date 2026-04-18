@@ -1,0 +1,271 @@
+/* Import Matugen-generated dynamic colors */
+@import url("colors.css");
+
+/* Config */
+* {
+    font-family: "JetbrainsMono NFP SemiBold";
+}
+
+/* Control Center */
+.control-center {
+    background-color: @background;
+    color: @on_background;
+    outline: 2px solid @primary;
+    padding: 0px;
+    margin: 0px;
+}
+
+.widget-notifications {
+    /* background: red; */
+    padding: 0;
+    margin: 0;
+}
+
+.notification-row .notification-background {}
+
+/* Notification */
+.notification {
+    background: @background;
+    color: @on_background;
+    border: 1px solid @primary;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.body {
+    color: @on_background;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.summary {
+    font-size: 14px;
+    font-weight: 500;
+    background: transparent;
+    color: @primary;
+    text-shadow: none;
+    margin-left: 8px;
+}
+
+.time {
+    font-size: 12px;
+    font-weight: 400;
+    background: transparent;
+    color: @outline;
+    text-shadow: none;
+    margin: 2px;
+}
+
+.close-button {
+    background-color: @primary;
+    color: @on_primary;
+    margin-top: 5px;
+    margin-right: 5px;
+    border-radius: 6px;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+    color: @on_background;
+    background: transparent;
+}
+
+.notification.critical progress {
+    background-color: @error;
+}
+
+.notification.low progress,
+.notification.normal progress {
+    background-color: @primary;
+}
+
+
+/* Notifications expanded-group */
+.notification-group {
+    background-color: @background;
+    /* margin: 2px 8px 2px 8px; */
+    font-size: 10px;
+}
+
+.notification-group-icon {
+    color: @on_background;
+}
+
+.notification-group-headers {
+    color: @on_background;
+}
+
+.notification-group-collapse-button,
+.notification-group-close-all-button {
+    background: @primary;
+    color: @on_primary;
+    margin: 4px;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.notification-group-collapse-button:hover,
+.notification-group-close-all-button:hover {
+    background: @primary;
+    color: @on_primary;
+}
+
+/* widget title */
+.widget-title {
+    color: @on_background;
+    /* margin: 0px; */
+}
+
+.widget-title>button {
+    font-size: 1rem;
+    color: @on_background;
+    background: @surface_container_high;
+    box-shadow: none;
+}
+
+.widget-title>button:hover {
+    background: @primary;
+    color: @on_primary;
+}
+
+/* widget button grid */
+button {
+    border: 0px;
+    min-width: 35px;
+    background: @surface_container;
+}
+
+.widget-buttons-grid {
+    font-size: x-large;
+    background: @surface_container_high;
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button {
+    color: @on_background;
+    margin: 8px;
+    /* padding: 16px; */
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button:hover {
+    background: @primary;
+    color: @on_primary;
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked {
+    background: @primary;
+}
+
+.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked label {
+    color: @on_primary;
+}
+
+/* dnd widget */
+.widget-dnd {
+    background: transparent;
+    border: 1px solid transparent;
+    font-size: large;
+    color: @on_background;
+}
+
+.widget-dnd>label {
+    color: @on_background;
+}
+
+.widget-dnd>switch {
+    background: @surface_container;
+    color: @on_background;
+    border-radius: 6px;
+}
+
+.widget-dnd>switch:checked {
+    background: @primary;
+    /* border: 1px solid @error; */
+}
+
+/* volume & backlight widget */
+.widget-volume,
+.widget-backlight {
+    background: @surface_container_high;
+    color: @on_background;
+    font-size: x-large;
+}
+
+/* music player widget */
+.widget-mpris {
+    background: transparent;
+    margin: 0px 8px;
+    padding: 0px;
+    border: none;
+    border: 1px solid @outline_variant;
+}
+
+.widget-mpris button {
+    background-color: transparent;
+    border-radius: 6px;
+
+}
+
+.widget-mpris button:hover {
+    background-color: @primary;
+    color: @on_primary;
+}
+
+
+.widget.widget-mpris>carouselindicatordots {
+    margin: 0;
+    margin-top: 12px;
+}
+
+.widget-mpris-player {
+    box-shadow: none;
+    margin: 0;
+    background: @background;
+}
+
+
+
+/* sliders in backlight and volume */
+trough slider {
+    background: @on_background;
+}
+
+trough slider:hover {
+    background: @primary;
+}
+
+trough highlight {
+    background: @primary;
+}
+
+scrollbar {
+    background: transparent;
+    width: 8px;
+    /* Total area width */
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    /* Force GTK to allow a thin profile */
+    -GtkScrollbar-has-backward-stepper: false;
+    -GtkScrollbar-has-forward-stepper: false;
+}
+
+scrollbar trough {
+    background: transparent;
+    border: none;
+    min-width: 0px;
+}
+
+scrollbar slider {
+    background: @primary;
+    border-radius: 20px;
+    min-width: 8px;
+    /* This is your actual thickness */
+    border: none;
+    margin: 0px;
+}
+
+/* Optional: Only show it when you're actually scrolling or hovering the bar */
+scrollbar slider:hover {
+    background: @primary;
+    min-width: 8px;
+}

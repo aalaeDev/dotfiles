@@ -1,0 +1,105 @@
+@import "colors.css";
+
+@define-color background-focus #141525;
+@define-color green #8bb25e; /* Color for charging battery */
+
+* {
+    border: none;
+    border-radius: 0; /* Hardcoded */
+    font-family: "JetBrainsMono NF"; /* Hardcoded */
+    font-weight: 600; /* Hardcoded */
+    font-size: 0.9rem; /* Hardcoded */
+    min-height: 0;
+    padding: 2px 5px;
+}
+
+window#waybar {
+    background: none;
+    color: @primary;
+}
+
+tooltip {
+    background: @background;
+    border: 1px solid @primary;
+    border-radius: 8px; /* Hardcoded */
+    margin-top: 8px; /* Hardcoded */
+}
+tooltip label {
+    color: @primary;
+    font-size: 0.9rem; /* Hardcoded */
+    padding: 0px; /* Hardcoded */
+}
+
+#workspaces button {
+    box-shadow: none;
+    text-shadow: none;
+    padding: 2px;
+    border-radius: 12px;
+    margin-right: 4px;
+    color: @primary;
+    animation: ws_normal 20s ease-in-out 1;
+}
+
+#workspaces button.active {
+    background: @primary;
+    color: @inverse_primary;
+    animation: ws_active 20s ease-in-out 1;
+    transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#workspaces button:hover {
+    background: @primary_container;
+    color: @surface_tint;
+    animation: ws_hover 20s ease-in-out 1;
+    transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#battery {
+    color: @primary;
+}
+
+#battery.charging {
+    color: @green;
+}
+
+#battery.warning:not(.charging) {
+    color: @error;
+}
+
+#custom-tailscale.stopped {
+    color: @error;
+}
+
+#custom-tailscale.connected {
+    color: @green;
+}
+
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#window,
+#custom-notification,
+#custom-updates,
+#custom-tailscale,
+#tray,
+#cpu,
+#memory {
+    padding: 4px 12px;
+    background-color: @background;
+    border-radius: 12px;
+    margin-left: 4px;
+}
+
+#window,
+#cpu,
+#memory {
+    margin-left: 0px;
+    margin-right: 4px;
+}
+
+#custom-notification.has-notifications {
+    background-color: @primary;
+    color: @on_primary;
+    font-weight: bold;
+}

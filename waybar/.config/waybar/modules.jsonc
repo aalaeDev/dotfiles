@@ -1,0 +1,153 @@
+{
+    "battery": {
+        "format": "{capacity}% {icon} ",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "on-click": "xfce4-power-manager-settings"
+    },
+    "hyprland/workspaces": {
+        "rotate": 0,
+        "all-outputs": true,
+        "active-only": false,
+        "on-click": "activate",
+        "disable-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "persistent-workspaces": {},
+    },
+    "hyprland/window": {
+        "format": "  {}",
+        "seperate-outputs": true,
+        "max-length": 75,
+    },
+    "clock": {
+        "format": "{:%H:%M:%S}",
+        "format-alt": "{:%H:%M:%S | 󰃭 %d·%m·%y}",
+        "rotate": 0,
+        "interval": 1,
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffabf9'><b>{}</b></span>",
+                "weekdays": "<span color='#f9629e'><b>{}</b></span>",
+                "today": "<span color='#62abf9'><b>{}</b></span>",
+            },
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down",
+        },
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon} ",
+        "format-bluetooth": "{volume}% {icon} ",
+        "format-muted": "",
+        "format-icons": {
+            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+            "headphone": "",
+            "phone": "",
+            "phone-muted": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                ""
+            ],
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "ignored-sinks": [
+            "Easy Effects Sink"
+        ],
+    },
+    "network": {
+        "interface": "wlp0s20f3",
+        "format": "{ifname} ",
+        "format-wifi": "{essid} ({signalStrength}%) {icon} ",
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
+        "format-ethernet": "{ipaddr}/{cidr} 󰊗 ",
+        "format-disconnected": "󰤭 ",
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "nm-connection-editor",
+    },
+    "custom/notification": {
+        "format": "{}",
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "~/.local/bin/swaync-count.sh",
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "on-click-right": "sleep 0.1 && swaync-client -C -sw",
+    },
+    "custom/updates": {
+        "format": "{} {icon}",
+        "return-type": "json",
+        "format-icons": {
+            "has-updates": "󱍷",
+            "updated": "󰂪",
+        },
+        "exec-if": "which waybar-module-pacman-updates",
+        "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
+    },
+    "custom/tailscale": {
+        "exec": "~/.local/bin/waybar-tailscale.sh --status",
+        "on-click": "~/.local/bin/waybar-tailscale.sh --toggle && pkill -RTMIN+8 waybar",
+        "on-click-right": "~/.local/bin/waybar-tailscale.sh --select-exit-node && pkill -RTMIN+8 waybar",
+        "exec-on-event": true,
+        "format": "Tailscale {icon}",
+        "format-icons": {
+            "connected": "󰖂",
+            "stopped": "󰌙",
+            "connecting": "󰑮",
+            "disconnecting": "󰑮",
+        },
+        "tooltip": true,
+        "return-type": "json",
+        "interval": 3,
+        "signal": 8,
+    },
+    "tray": {
+        "icon-size": 18,
+        "rotate": 0,
+        "spacing": 5,
+    },
+    "cpu": {
+        "interval": 1,
+        "format": "  {usage}%",
+        "states": {
+            "warning": 70,
+            "critical": 90,
+        },
+        "tooltip": true,
+    },
+    "memory": {
+        "interval": 1,
+        "format": "󰾅  {used}/{total} GB",
+        "states": {
+            "warning": 70,
+            "critical": 90,
+        },
+        "tooltip": true,
+    },
+}

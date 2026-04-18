@@ -1,0 +1,166 @@
+{
+    // ===== GENERAL SETTINGS =====
+    "telemetry.telemetryLevel": "off",
+    // ===== EDITOR BASICS =====
+    "editor.formatOnPaste": true,
+    "editor.suggestSelection": "first",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 120,
+    "editor.linkedEditing": true,
+    "editor.detectIndentation": true,
+    "editor.accessibilitySupport": "off",
+    "editor.snippetSuggestions": "top",
+    "editor.lightbulb.enabled": "off",
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.renderControlCharacters": false,
+    "editor.inlineSuggest.suppressSuggestions": true,
+    // ===== EDITOR APPEARANCE =====
+    "editor.fontFamily": "JetBrainsMono NF",
+    "editor.fontWeight": "500",
+    "editor.lineHeight": 1.4,
+    "editor.padding.top": 16,
+    "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
+    "editor.minimap.enabled": false,
+    "editor.minimap.maxColumn": 250,
+    "editor.guides.indentation": false,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorWidth": 4,
+    "editor.cursorStyle": "block",
+    // ===== EDITOR NAVIGATION =====
+    "editor.gotoLocation.multipleReferences": "goto",
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.gotoLocation.multipleDeclarations": "goto",
+    "editor.gotoLocation.multipleImplementations": "goto",
+    "editor.gotoLocation.multipleTypeDefinitions": "goto",
+    "editor.hover.enabled": "on",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.activityBar.location": "bottom",
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "none",
+    "workbench.tips.enabled": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.editorActionsLocation": "hidden",
+    "workbench.tree.indent": 15,
+    // ===== FILES AND EXPLORER =====
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "explorer.sortOrder": "type",
+    "explorer.confirmDelete": false,
+    "explorer.confirmPasteNative": false,
+    // ===== TERMINAL =====
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.commandsToSkipShell": [
+        "matlab.interrupt"
+    ],
+    // ===== GIT =====
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "gitlens.codeLens.dateFormat": "",
+    "scm.diffDecorations": "none",
+    // ===== DIFF EDITOR =====
+    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.renderSideBySide": false,
+    "diffEditor.wordWrap": "on",
+    // ===== WINDOW =====
+    "window.newWindowDimensions": "inherit",
+    "problems.decorations.enabled": false,
+    // ===== TYPOGRAPHY =====
+    "editor.suggestFontSize": 16,
+    "editor.suggestLineHeight": 30,
+    // ===== CODE ASSISTANCE =====
+    "code-runner.defaultLanguage": "javascript",
+    // ===== LANGUAGE SPECIFIC =====
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+        },
+    },
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml",
+    },
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Google, IndentWidth: 4, TabWidth: 4}",
+    "C_Cpp.files.exclude": {
+        "**/.vscode": true,
+        "**/.vs": true,
+    },
+    // ===== PRETTIER =====
+    "prettier.tabWidth": 4,
+    // ===== EXTENSIONS SPECIFIC =====
+    "material-icon-theme.activeIconPack": "react_redux",
+    "liveServer.settings.fullReload": true,
+    "makefile.configureOnOpen": true,
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    // ===== EMMET =====
+    "emmet.includeLanguages": {
+        "blade": "html",
+        "vue-html": "html",
+        "vue": "html",
+        "react": "html",
+        "javascript": "html",
+    },
+    // ===== NOTEBOOK =====
+    "notebook.markup.fontSize": 16,
+    "notebook.output.fontSize": 16,
+    "notebook.output.wordWrap": true,
+    "notebook.formatOnSave.enabled": true,
+    "notebook.lineNumbers": "on",
+    // ===== CHAT =====
+    "chat.editor.wordWrap": "on",
+    // ===== TOKEN COLORS =====
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                    "comment",
+                    "keyword",
+                    "variable.language",
+                    "entity.other.attribute-name.html",
+                    "entity.other.attribute-name",
+                    "keyword.control",
+                    "storage.type",
+                    "comment",
+                    "comment.block",
+                    "comment.line",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                },
+            },
+        ],
+    },
+    // ===== MISC =====
+    "security.workspace.trust.untrustedFiles": "open",
+    "workbench.editorAssociations": {
+        "*.db": "sqlite-viewer.option",
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+    },
+    "explorer.confirmDragAndDrop": false,
+    "files.associations": {
+        "*.xodr": "xml",
+    },
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "files.autoSaveWhenNoErrors": true,
+    "notebook.defaultFormatter": "charliermarsh.ruff",
+    "diffEditor.codeLens": true,
+    "workbench.colorTheme": "HyprLuna Material",
+    "window.menuBarVisibility": "compact",
+    "chat.disableAIFeatures": true,
+    "geminicodeassist.inlineSuggestions.nextEditPredictions": true,
+    "geminicodeassist.enableTelemetry": false,
+    "markdown.preview.fontFamily": "JetBrainsMono NF, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+    "markdown.preview.fontSize": 16,
+    "python.languageServer": "None",
+    "ty.disableLanguageServices": true,
+}

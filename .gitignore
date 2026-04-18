@@ -1,0 +1,5 @@
+# .gitignore
+.sync.ffs_db
+*.log
+tmp/
+tmux/.config/tmux/plugins/*

@@ -1,0 +1,22 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": ["cpu", "memory", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": [
+        "network",
+        "custom/tailscale",
+        "pulseaudio",
+        "battery",
+        "tray",
+        "clock",
+        "custom/updates",
+        "custom/notification",
+    ],
+    "include": ["~/.config/waybar/modules.jsonc"],
+}
