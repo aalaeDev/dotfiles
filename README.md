@@ -22,6 +22,17 @@ This repository contains my personal configuration files (dotfiles), managed wit
 
 ---
 
+## 🖼️ Gallery
+
+<p align="center">
+  <img src="assets/screenshots/screenshot1.png" width="45%" />
+  <img src="assets/screenshots/screenshot2.png" width="45%" />
+  <img src="assets/screenshots/screenshot3.png" width="45%" />
+  <img src="assets/screenshots/screenshot4.png" width="45%" />
+</p>
+
+---
+
 ## 🛠️ Software & Tools
 
 | Component          | Application                                                                 |
