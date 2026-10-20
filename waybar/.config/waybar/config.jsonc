@@ -10,7 +10,7 @@
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
         "network",
-        "custom/tailscale",
+        // "custom/tailscale",
         "pulseaudio",
         "battery",
         "tray",
