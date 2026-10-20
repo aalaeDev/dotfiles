@@ -3,3 +3,4 @@
 *.log
 tmp/
 tmux/.config/tmux/plugins/*
+fish/.config/fish/fish_variables
