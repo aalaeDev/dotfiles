@@ -1,7 +1,5 @@
 @import "colors.css";
 
-@define-color green #8bb25e; /* Color for charging battery */
-
 * {
     border: none;
     border-radius: 0; /* Hardcoded */

@@ -9,6 +9,14 @@
 
     @define-color error_container #93000a;
 
+    @define-color green #9fd49c;
+
+    @define-color green_container #215025;
+
+    @define-color green_source #8bb25e;
+
+    @define-color green_value #8bb25e;
+
     @define-color inverse_on_surface #303036;
 
     @define-color inverse_primary #515b92;
@@ -20,6 +28,10 @@
     @define-color on_error #690005;
 
     @define-color on_error_container #ffdad6;
+
+    @define-color on_green #063911;
+
+    @define-color on_green_container #baf0b6;
 
     @define-color on_primary #222c61;
 

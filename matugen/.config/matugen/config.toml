@@ -1,3 +1,7 @@
+# Extra colors blended toward the wallpaper palette; templates get green, on_green, green_container...
+[config.custom_colors]
+green = { color = "#8bb25e", blend = true }
+
 [config.wallpaper]
 # Whether to set the wallpaper or not
 set = true
