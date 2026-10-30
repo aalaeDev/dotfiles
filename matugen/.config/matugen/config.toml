@@ -24,6 +24,10 @@ input_path = '~/dotfiles/matugen/.config/matugen/templates/tmux-colors.conf'
 output_path = '~/dotfiles/tmux/.config/tmux/colors.conf'
 post_hook = 'tmux source-file ~/.config/tmux/tmux.conf'
 
+[templates.delta]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/delta.gitconfig'
+output_path = '~/dotfiles/git/.config/git/delta.gitconfig'
+
 [templates.kitty]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/kitty-colors.conf'
 output_path = '~/dotfiles/kitty/.config/kitty/colors.conf'

@@ -39,5 +39,10 @@ function __fetch_stop --on-event fish_preexec
 end
 bind ctrl-l '__fetch_stop; commandline -f clear-screen'
 
+# git: abbreviations expand in place, so the full command stays in history
+abbr -a gs 'git status --short --branch'
+abbr -a gl 'git log --graph --format="%C(auto)%h%d %s %C(dim)%cr" -20'
+abbr -a gd 'git diff'
+
 starship init fish | source
 set -U fish_greeting ""

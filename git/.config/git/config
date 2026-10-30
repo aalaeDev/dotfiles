@@ -1,0 +1,21 @@
+# Shared settings; name, email and credentials stay in ~/.gitconfig (not tracked)
+[include]
+    path = delta.gitconfig
+
+[core]
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = matugen
+    navigate = true
+    line-numbers = true
+[merge]
+    conflictStyle = zdiff3
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[alias]
+    st = status --short --branch
+    lg = log --graph --format='%C(auto)%h%d %s %C(dim)%cr'
