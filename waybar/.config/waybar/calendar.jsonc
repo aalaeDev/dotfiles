@@ -3,10 +3,10 @@
     "clock": {
         "calendar": {
             "format": {
-                "months": "<span color='#bac3ff'><b>{}</b></span>",
-                "weekdays": "<span color='#e6bad7'><b>{}</b></span>",
-                "days": "<span color='#e4e1e9'>{}</span>",
-                "today": "<span color='#222c61' background='#bac3ff'><b>{}</b></span>",
+                "months": "<span color='#a3c9fe'><b>{}</b></span>",
+                "weekdays": "<span color='#d8bde3'><b>{}</b></span>",
+                "days": "<span color='#e1e2e8'>{}</span>",
+                "today": "<span color='#00315b' background='#a3c9fe'><b>{}</b></span>",
             },
         },
     },
