@@ -141,6 +141,7 @@
     "security.workspace.trust.untrustedFiles": "open",
     "workbench.editorAssociations": {
         "*.db": "sqlite-viewer.option",
+        "*.md": "vscode.markdown.editor"
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml",
