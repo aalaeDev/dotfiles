@@ -1,0 +1,63 @@
+/* WhatsApp Web in the matugen palette. Its design-system tokens (--WDS-*) are
+* redefined on many obfuscated theme classes, so they are set on every element;
+* the -RGB variants are "r, g, b" triplets, hence the _rgbc colours. */
+@-moz-document domain("web.whatsapp.com") {
+    :root,
+    :root * {
+        /* Backgrounds and panels */
+        --WDS-app-wash: var(--site-bg) !important;
+        --WDS-background-wash-plain: var(--site-bg) !important;
+        --WDS-background-wash-inset: var(--site-bg) !important;
+        --WDS-background-wash-inset-RGB: var(--surface_container_low_rgbc) !important;
+        --WDS-surface-default: var(--surface_container_low) !important;
+        --WDS-surface-default-RGB: var(--surface_container_low_rgbc) !important;
+        --WDS-surface-emphasized: var(--surface_container) !important;
+        --WDS-surface-emphasized-RGB: var(--surface_container_rgbc) !important;
+        --WDS-surface-elevated-default: var(--surface_container) !important;
+        --WDS-surface-elevated-emphasized: var(--surface_container_high) !important;
+        --WDS-surface-inverse: var(--inverse_surface) !important;
+        --WDS-surface-highlight: rgb(var(--on_surface_rgb) / 0.1) !important;
+        --WDS-surface-highlight-RGB: var(--on_surface_rgbc) !important;
+        --WDS-surface-pressed: rgb(var(--on_surface_rgb) / 0.16) !important;
+        --WDS-lines-divider: var(--outline_variant) !important;
+
+        /* Chat area and bubbles */
+        --WDS-systems-chat-background-wallpaper: var(--surface_container_lowest) !important;
+        --WDS-systems-chat-foreground-wallpaper: var(--surface_container) !important;
+        --WDS-systems-bubble-surface-incoming: var(--surface_container_high) !important;
+        --WDS-systems-bubble-surface-incoming-RGB: var(--surface_container_high_rgbc) !important;
+        --WDS-systems-bubble-surface-outgoing: var(--primary_container) !important;
+        --WDS-systems-bubble-surface-outgoing-RGB: var(--primary_container_rgbc) !important;
+
+        /* Text and icons */
+        --WDS-content-default: var(--on_surface) !important;
+        --WDS-content-default-RGB: var(--on_surface_rgbc) !important;
+        --WDS-content-deemphasized: var(--on_surface_variant) !important;
+        --WDS-content-disabled: var(--outline) !important;
+        --WDS-content-inverse: var(--inverse_on_surface) !important;
+        --WDS-content-action-emphasized: var(--primary) !important;
+        --WDS-content-external-link: var(--primary) !important;
+        --WDS-content-read: var(--tertiary) !important;
+
+        /* Accent */
+        --WDS-accent: var(--primary) !important;
+        --WDS-accent-RGB: var(--primary_rgbc) !important;
+        --WDS-accent-deemphasized: var(--primary_container) !important;
+        --WDS-accent-emphasized: var(--primary_fixed_dim) !important;
+        --WDS-content-on-accent: var(--on_primary) !important;
+
+        /* Older tokens still used by some panels and dialogs */
+        --panel-background: var(--surface_container_low) !important;
+        --panel-background-rgb: var(--surface_container_low_rgbc) !important;
+        --panel-background-deep: var(--site-bg) !important;
+        --panel-input-background: var(--surface_container_high) !important;
+        --app-background-deeper: var(--site-bg) !important;
+        --background-default-rgb: var(--surface_container_low_rgbc) !important;
+        --modal-backdrop-solid: var(--surface_container_low) !important;
+        --picker-background: var(--surface_container_high) !important;
+        --text-primary-strong: var(--on_surface) !important;
+        --text-action: var(--primary) !important;
+        --text-muted: var(--on_surface_variant) !important;
+        --icon-high-emphasis: var(--primary) !important;
+    }
+}
