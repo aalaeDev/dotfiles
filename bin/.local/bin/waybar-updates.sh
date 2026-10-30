@@ -34,7 +34,7 @@ print_status() {
     count=$(printf '%s\n' "$list" | grep -c .)
 
     if [ "$count" -eq 0 ]; then
-        echo '{"text": "0", "alt": "updated", "class": "updated", "tooltip": "System is up to date"}'
+        echo '{"text": "", "alt": "updated", "class": "updated", "tooltip": "System is up to date"}'
         return
     fi
 
@@ -45,7 +45,7 @@ print_status() {
         tooltip="$tooltip\\n… and $((count - TOOLTIP_MAX_LINES)) more"
     fi
 
-    echo "{\"text\": \"$count\", \"alt\": \"has-updates\", \"class\": \"has-updates\", \"tooltip\": \"$tooltip\"}"
+    echo "{\"text\": \"$count \", \"alt\": \"has-updates\", \"class\": \"has-updates\", \"tooltip\": \"$tooltip\"}"
 }
 
 run_upgrade() {

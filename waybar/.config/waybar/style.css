@@ -1,21 +1,23 @@
 @import "colors.css";
 
-@define-color background-focus #141525;
 @define-color green #8bb25e; /* Color for charging battery */
 
 * {
     border: none;
     border-radius: 0; /* Hardcoded */
-    font-family: "JetBrainsMono NF"; /* Hardcoded */
+    font-family: "JetBrainsMono NFP", "JetBrainsMono NF"; /* Hardcoded; Propo gives icons their real width */
     font-weight: 600; /* Hardcoded */
     font-size: 0.9rem; /* Hardcoded */
     min-height: 0;
-    padding: 2px 5px;
 }
 
 window#waybar {
     background: none;
     color: @primary;
+}
+
+window#waybar > box {
+    padding: 6px 15px;
 }
 
 tooltip {
@@ -27,31 +29,125 @@ tooltip {
 tooltip label {
     color: @primary;
     font-size: 0.9rem; /* Hardcoded */
-    padding: 0px; /* Hardcoded */
+    padding: 4px 6px; /* Hardcoded */
+}
+
+/* --- Workspaces --- */
+
+#workspaces {
+    padding: 2px 5px;
 }
 
 #workspaces button {
     box-shadow: none;
     text-shadow: none;
-    padding: 2px;
+    padding: 4px 7px;
     border-radius: 12px;
     margin-right: 4px;
     color: @primary;
-    animation: ws_normal 20s ease-in-out 1;
 }
 
 #workspaces button.active {
     background: @primary;
     color: @inverse_primary;
-    animation: ws_active 20s ease-in-out 1;
     transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
 #workspaces button:hover {
     background: @primary_container;
     color: @surface_tint;
-    animation: ws_hover 20s ease-in-out 1;
     transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+/* --- Pills: standalone modules and groups --- */
+
+#clock,
+#window,
+#cpu,
+#memory,
+#privacy,
+#custom-tailscale,
+#connectivity,
+#hardware,
+#extras,
+#session {
+    background-color: @background;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+#clock,
+#window,
+#cpu,
+#memory,
+#privacy,
+#custom-tailscale {
+    padding: 4px 14px;
+}
+
+#window,
+#cpu,
+#memory {
+    margin-left: 0px;
+    margin-right: 8px;
+}
+
+window#waybar.empty #window {
+    background: transparent;
+}
+
+/* No padding: edge children's hover background then meets the pill's rounded corners */
+#connectivity,
+#hardware,
+#extras,
+#session {
+    padding: 0;
+}
+
+/* Modules inside a group: no pill of their own, highlight on hover */
+#network,
+#custom-protonvpn,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#battery,
+#custom-expand,
+#tray,
+#idle_inhibitor,
+#custom-updates,
+#custom-mail,
+#custom-notification,
+#custom-power {
+    padding: 4px 11px;
+    border-radius: 12px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#clock:hover,
+#network:hover,
+#custom-protonvpn:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#custom-expand:hover,
+#idle_inhibitor:hover,
+#custom-updates:hover,
+#custom-mail:hover,
+#custom-notification:hover {
+    background-color: @surface_container_high;
+}
+
+/* --- Module states --- */
+
+#cpu.warning,
+#memory.warning {
+    color: @tertiary;
+}
+
+#cpu.critical,
+#memory.critical {
+    color: @error;
 }
 
 #battery {
@@ -66,6 +162,56 @@ tooltip label {
     color: @error;
 }
 
+#battery.critical:not(.charging) {
+    color: @error;
+    animation: battery_blink 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes battery_blink {
+    to {
+        color: @on_error;
+        background-color: @error;
+    }
+}
+
+#pulseaudio.muted {
+    color: @outline;
+}
+
+#bluetooth.off,
+#bluetooth.disabled {
+    color: @outline;
+}
+
+#bluetooth.connected {
+    color: @tertiary;
+}
+
+#idle_inhibitor.activated {
+    color: @tertiary;
+}
+
+#extras.expanded #custom-expand {
+    color: @tertiary;
+}
+
+/* Mic / screen share in use: theme pill with a softly pulsing red icon */
+#privacy {
+    border: 1px solid alpha(@error, 0.5);
+}
+
+#privacy-item,
+#privacy-item image {
+    color: @error;
+    animation: privacy_pulse 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes privacy_pulse {
+    to {
+        color: alpha(@error, 0.45);
+    }
+}
+
 #custom-tailscale.stopped {
     color: @error;
 }
@@ -74,32 +220,38 @@ tooltip label {
     color: @green;
 }
 
-#clock,
-#battery,
-#pulseaudio,
-#network,
-#window,
-#custom-notification,
-#custom-updates,
-#custom-tailscale,
-#tray,
-#cpu,
-#memory {
-    padding: 4px 12px;
-    background-color: @background;
-    border-radius: 12px;
-    margin-left: 4px;
+#custom-protonvpn.disconnected {
+    color: @error;
 }
 
-#window,
-#cpu,
-#memory {
-    margin-left: 0px;
-    margin-right: 4px;
+#custom-protonvpn.connected {
+    color: @green;
 }
 
-#custom-notification.has-notifications {
-    background-color: @primary;
-    color: @on_primary;
-    font-weight: bold;
+#custom-protonvpn.connecting,
+#custom-protonvpn.disconnecting {
+    color: @tertiary;
+    animation: vpn_pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes vpn_pulse {
+    from {
+        color: @tertiary;
+    }
+    to {
+        color: alpha(@tertiary, 0.4);
+    }
+}
+
+#custom-mail.unread {
+    color: @tertiary;
+}
+
+#custom-mail.closed {
+    color: @outline;
+}
+
+#custom-power:hover {
+    background-color: @error;
+    color: @on_error;
 }

@@ -35,6 +35,11 @@ input_path = '~/dotfiles/matugen/.config/matugen/templates/colors.css'
 output_path = '~/dotfiles/waybar/.config/waybar/colors.css'
 post_hook = 'pkill waybar; waybar & disown'
 
+[templates.waybar-calendar]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/waybar-calendar.jsonc'
+output_path = '~/dotfiles/waybar/.config/waybar/calendar.jsonc'
+post_hook = 'pkill -SIGUSR2 waybar'
+
 [templates.swaync]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/colors.css'
 output_path = '~/dotfiles/swaync/.config/swaync/colors.css'

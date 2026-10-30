@@ -1,0 +1,13 @@
+// Generated with Matugen: clock calendar colors, merged into the "clock" module by waybar's include
+{
+    "clock": {
+        "calendar": {
+            "format": {
+                "months": "<span color='#bac3ff'><b>{}</b></span>",
+                "weekdays": "<span color='#e6bad7'><b>{}</b></span>",
+                "days": "<span color='#e4e1e9'>{}</span>",
+                "today": "<span color='#222c61' background='#bac3ff'><b>{}</b></span>",
+            },
+        },
+    },
+}
