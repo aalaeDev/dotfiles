@@ -12,6 +12,9 @@
 @import url("websites/reddit.css");
 @import url("websites/claude.css");
 @import url("websites/chatgpt.css");
+@import url("websites/instagram.css");
+@import url("websites/facebook.css");
+@import url("websites/linkedin.css");
 
 /* One page background for every themed site and internal page; change it here.
    (A uniquely named variable, so defining it on all pages is harmless.) */

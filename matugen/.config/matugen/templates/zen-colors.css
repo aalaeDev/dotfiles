@@ -2,12 +2,14 @@
 * Zen colors
 * Generated with Matugen; imported by userChrome.css and userContent.css.
 * --name: hex, --name_rgb: "r g b" (for rgb(var(--x_rgb) / a)),
-* --name_hsl: "h s% l%" (for sites that take HSL channels, e.g. claude.ai)
+* --name_hsl: "h s% l%" (for sites that take HSL channels, e.g. claude.ai),
+* --name_rgbc: "r, g, b" (for rgba(var(--x), a), e.g. instagram.com)
 */
 :root {
 <* for name, value in colors *>
     --{{name}}: {{value.default.hex}};
     --{{name}}_rgb: {{value.default.red}} {{value.default.green}} {{value.default.blue}};
     --{{name}}_hsl: {{value.default.hue}} {{value.default.saturation}}% {{value.default.lightness}}%;
+    --{{name}}_rgbc: {{value.default.red}}, {{value.default.green}}, {{value.default.blue}};
 <* endfor *>
 }

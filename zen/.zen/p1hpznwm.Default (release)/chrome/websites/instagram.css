@@ -1,0 +1,21 @@
+/* instagram.com in the matugen palette. Its --ig-* tokens are "r, g, b" triplets
+* (read as rgba(var(--ig-x), a)) redefined on obfuscated classes, so they are
+* set on every element with the _rgbc variants; the background matches --site-bg. */
+@-moz-document domain("instagram.com") {
+    :root,
+    :root * {
+        --ig-primary-background: var(--surface_container_low_rgbc) !important;
+        --ig-secondary-background: var(--surface_container_rgbc) !important;
+        --ig-elevated-background: var(--surface_container_high_rgbc) !important;
+        --ig-highlight-background: var(--surface_container_highest_rgbc) !important;
+        --ig-banner-background: var(--surface_container_rgbc) !important;
+        --ig-primary-text: var(--on_surface_rgbc) !important;
+        --ig-secondary-text: var(--on_surface_variant_rgbc) !important;
+        --ig-separator: var(--outline_variant_rgbc) !important;
+        --ig-elevated-separator: var(--outline_variant_rgbc) !important;
+        --ig-stroke: var(--outline_rgbc) !important;
+        --ig-primary-button: var(--primary_rgbc) !important;
+        --ig-secondary-button: var(--surface_container_highest_rgbc) !important;
+        --ig-link: var(--primary_rgbc) !important;
+    }
+}

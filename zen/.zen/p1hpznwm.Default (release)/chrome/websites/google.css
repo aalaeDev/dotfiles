@@ -1,6 +1,57 @@
 /* Google Search (dark mode) in the matugen palette. Class names are obfuscated,
 * so this sticks to ids and stable attributes. */
 @-moz-document domain("google.com") {
+    /* Dark-mode tokens (obfuscated names, defined on :root in the page's <style>):
+       surfaces, borders, text, links and selected chips. Covers results, AI Mode,
+       the "Ask anything" box, source cards and chips. */
+    :root {
+        --EpFNW: var(--site-bg) !important;
+        --PBxOKe: var(--surface_container) !important;
+        --YaIeMb: var(--surface_container) !important;
+        --DEeStf: var(--surface_container) !important;
+        --XKMDxc: var(--surface_container_high) !important;
+        --TSWZIb: var(--surface_container_high) !important;
+        --Ijc2tf: var(--surface_container_high) !important;
+        --aYn2S: var(--surface_container_highest) !important;
+        --BRLwE: var(--surface_container_highest) !important;
+        --Lm570b: var(--surface_bright) !important;
+        --D9aNi: rgb(var(--on_surface_rgb) / 0.08) !important;
+
+        --gS5jXb: var(--outline_variant) !important;
+        --mXZkqc: var(--outline_variant) !important;
+        --JclFj: var(--outline_variant) !important;
+        --Yi4Nb: var(--outline_variant) !important;
+        --kloG3: var(--outline_variant) !important;
+
+        --YLNNHc: var(--on_surface) !important;
+        --Xqboce: var(--on_surface) !important;
+        --bbQxAb: var(--on_surface_variant) !important;
+        --uLz37c: var(--on_surface_variant) !important;
+        --IXoxUe: var(--outline) !important;
+
+        --JKqx2: var(--primary) !important;
+        --TMYS9: var(--primary) !important;
+        --rrJJUc: var(--primary) !important;
+        --Nsm0ce: var(--primary) !important;
+        --TyVYld: var(--primary) !important;
+        --lv6yU: var(--primary) !important;
+        --fuvksc: var(--primary) !important;
+        --p9J9c: var(--primary) !important;
+        --vdwxpe: var(--primary) !important;
+        --Pa8Wlb: var(--primary) !important;
+        --izGsqb: var(--primary) !important;
+        --Wmwad: var(--primary_fixed_dim) !important;
+        --gJjJk: var(--primary_fixed_dim) !important;
+        --MoaHse: var(--primary_fixed_dim) !important;
+
+        --vZe0jb: var(--secondary_container) !important;
+        --ZEpPmd: var(--secondary_container) !important;
+        --VuZXBd: var(--on_secondary_container) !important;
+        --jINu6c: var(--on_secondary_container) !important;
+        --VeLyLc: var(--on_secondary_container) !important;
+        --y01ou: var(--on_secondary_container) !important;
+    }
+
     body,
     #main,
     #cnt,

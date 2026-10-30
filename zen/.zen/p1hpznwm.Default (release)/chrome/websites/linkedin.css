@@ -1,0 +1,103 @@
+/*
+* LinkedIn in the matugen palette, without the feed, badges, upsells and side modules.
+*
+* LinkedIn runs two front ends: the new feed app (hashed names, --b0…, whose colour
+* tokens pick a light or dark primitive with light-dark()) and the classic one used
+* by profiles, jobs, messaging… (--color-* tokens, .global-nav__… classes). Both are
+* covered. The hashes come from LinkedIn's build and can change; if the feed app's
+* colours stop applying, save the page (HTML only) and re-map them.
+* Tokens are set on every element, since LinkedIn redefines them on inner nodes.
+* The bare /feed/ itself redirects to your profile (REDIRECTS in system/autoconfig/dotfiles.cfg).
+*/
+@-moz-document domain("linkedin.com") {
+    :root,
+    :root * {
+        color-scheme: dark !important;
+
+        /* Classic front end */
+        --color-background-canvas: var(--site-bg) !important;
+        --color-background-canvas-dark: var(--site-bg) !important;
+        --color-background: var(--surface_container) !important;
+        --color-background-container: var(--surface_container) !important;
+        --color-background-container-dark: var(--surface_container) !important;
+        --color-background-container-tint: var(--surface_container_high) !important;
+        --color-background-faint: var(--surface_container_high) !important;
+        --color-background-none-tint-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+        --color-background-transparent-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+        --color-background-new: rgb(var(--primary_rgb) / 0.12) !important;
+        --color-text: var(--on_surface) !important;
+        --color-text-low-emphasis: var(--on_surface_variant) !important;
+        --color-text-meta: var(--on_surface_variant) !important;
+        --color-text-disabled: var(--outline) !important;
+        --color-icon: var(--on_surface_variant) !important;
+        --color-border: var(--outline) !important;
+        --color-border-faint: var(--outline_variant) !important;
+        --color-border-low-emphasis: var(--outline_variant) !important;
+        --color-action: var(--primary) !important;
+        --color-action-active: var(--primary_fixed_dim) !important;
+        --color-checked: var(--primary) !important;
+        --color-checked-hover: var(--primary_fixed_dim) !important;
+
+        /* Feed app: dark surfaces, text and accent primitives */
+        --b0abd4: var(--surface_container) !important;
+        --b0abd3: var(--surface_container_high) !important;
+        --b0abd2: var(--surface_container_high) !important;
+        --b0abz: var(--surface_container) !important;
+        --b0abdu: var(--on_surface) !important;
+        --b0abcw: var(--on_surface) !important;
+        --b0abdw: var(--on_surface_variant) !important;
+        --b0abdx: var(--on_surface_variant) !important;
+        --b0abdz: var(--outline) !important;
+        --b0aa38: var(--primary) !important;
+        --b0aa37: var(--primary_fixed_dim) !important;
+    }
+
+    body,
+    main#workspace {
+        background-color: var(--site-bg) !important;
+    }
+
+    /* Filled buttons sit on the accent: text in its "on" colour */
+    .artdeco-button--primary {
+        color: var(--on_primary) !important;
+    }
+
+    /* Nav: no Home item (the feed redirects to your profile) */
+    .global-nav__primary-item:has(> a[href*="/feed/"]),
+    a[href*="/feed"]:has(svg[id*="home"]) {
+        display: none !important;
+    }
+
+    /* Nav: no notification counts */
+    .notification-badge,
+    a[aria-label*=" new notification"] > span:first-child > span {
+        display: none !important;
+    }
+
+    /* Premium upsells, ads and "Advertise on LinkedIn" */
+    .premium-upsell-link,
+    .global-nav__spotlight,
+    a[href*="linkedin.com/premium/products"],
+    a[aria-label*="Premium"],
+    [componentkey="MainFeedDesktopNav_feed_ad"],
+    aside[aria-label="Sidebar"] [role="menu"]:has(a[href*="/campaignmanager/"]) {
+        display: none !important;
+    }
+
+    /* Floating messaging window, and "People you may know" style suggestions */
+    #msg-overlay,
+    .msg-overlay-container,
+    .browsemap,
+    .scaffold-layout__aside section:has(button[aria-label*="to connect"]) {
+        display: none !important;
+    }
+}
+
+/* Feed fallback, if the redirect ever misses: only the "Start a post" composer stays,
+   and the right column (puzzles, "Add to your feed", recommendations) goes */
+@-moz-document url-prefix("https://www.linkedin.com/feed") {
+    [data-testid="mainFeed"] > :not(:has([aria-label="Start a post"])),
+    aside[aria-label="Aside"] {
+        display: none !important;
+    }
+}

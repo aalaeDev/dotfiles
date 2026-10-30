@@ -1,0 +1,38 @@
+/* Facebook (and the parts of Instagram built on the same design system) in the
+* matugen palette. These hex tokens are redefined on obfuscated theme classes,
+* so they are set on every element; a user-sheet !important wins over all of them. */
+@-moz-document domain("facebook.com"), domain("instagram.com") {
+    :root,
+    :root * {
+        /* Surfaces */
+        --web-wash: var(--site-bg) !important;
+        --surface-background: var(--surface_container) !important;
+        --card-background: var(--surface_container) !important;
+        --nav-bar-background: var(--surface_container) !important;
+        --popover-background: var(--surface_container_high) !important;
+        --comment-background: var(--surface_container_high) !important;
+        --input-background: var(--surface_container_high) !important;
+        --hover-overlay: rgb(var(--on_surface_rgb) / 0.08) !important;
+        --divider: var(--outline_variant) !important;
+        --media-inner-border: var(--outline_variant) !important;
+
+        /* Text and icons */
+        --primary-text: var(--on_surface) !important;
+        --secondary-text: var(--on_surface_variant) !important;
+        --placeholder-text: var(--outline) !important;
+        --disabled-text: var(--outline) !important;
+        --primary-icon: var(--on_surface) !important;
+        --secondary-icon: var(--on_surface_variant) !important;
+        --blue-link: var(--primary) !important;
+
+        /* Buttons and accents */
+        --accent: var(--primary) !important;
+        --primary-button-background: var(--primary) !important;
+        --primary-button-text: var(--on_primary) !important;
+        --primary-deemphasized-button-background: var(--primary_container) !important;
+        --primary-deemphasized-button-text: var(--on_primary_container) !important;
+        --secondary-button-background: var(--surface_container_highest) !important;
+        --secondary-button-text: var(--on_surface) !important;
+        --toggle-active-background: var(--secondary_container) !important;
+    }
+}
