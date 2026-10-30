@@ -14,8 +14,9 @@ window#waybar {
     color: @primary;
 }
 
+/* Matches Hyprland's gaps_out: pills line up with window edges, 8px all round */
 window#waybar > box {
-    padding: 5px 15px;
+    padding: 8px 8px 0;
 }
 
 tooltip {
@@ -33,7 +34,7 @@ tooltip label {
 /* --- Workspaces --- */
 
 #workspaces {
-    padding: 2px 5px;
+    padding: 0 5px;
 }
 
 #workspaces button {
@@ -41,7 +42,7 @@ tooltip label {
     text-shadow: none;
     padding: 4px 6px;
     border-radius: 11px;
-    margin-right: 4px;
+    margin: 0 2px; /* Even on both sides so the group stays centered */
     color: @primary;
 }
 

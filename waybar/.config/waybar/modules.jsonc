@@ -283,8 +283,9 @@
         "spacing": 5,
     },
     "cpu": {
-        "interval": 1,
-        "format": "<span size='130%' rise='-1451'></span> {usage}%",
+        "interval": 3,
+        // Padded so the pills to the right stay put between 9% and 10%
+        "format": "<span size='130%' rise='-1451'></span> {usage:>2}%",
         "states": {
             "warning": 70,
             "critical": 90,
@@ -292,7 +293,7 @@
         "tooltip": true,
     },
     "memory": {
-        "interval": 1,
+        "interval": 3,
         "format": "<span size='130%' rise='-1451'>󰾅</span> {used:.1f}/{total:.1f} GB",
         "states": {
             "warning": 75,
