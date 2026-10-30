@@ -16,7 +16,7 @@ choice=$(printf "%s\n%s\n%s\n%s\n%s" "$lock" "$logout" "$suspend" "$reboot" "$sh
 # Logic
 case "$choice" in
   "$lock")     hyprlock ;;
-  "$logout")   hyprctl dispatch exit ;;
+  "$logout")   hyprctl dispatch 'hl.dsp.exit()' ;;
   "$suspend")  systemctl suspend ;;
   "$reboot")   systemctl reboot ;;
   "$shutdown") systemctl poweroff ;;
