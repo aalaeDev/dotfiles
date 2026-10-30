@@ -1,0 +1,2 @@
+/* GTK looks for this variant first when dark is preferred, and would find the system's */
+@import url("gtk.css");
