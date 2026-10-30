@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the base directory (e.g., in your home directory)
-SCREENSHOTS_DIR="Pictures/Screenshots"
+SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
 
 # Get the current month and year for the folder name
 MONTH_YEAR=$(date +%Y-%m)
@@ -13,9 +13,8 @@ FULL_TIMESTAMP=$(date +%Y-%m-%d_%H%M%S)
 # Define the full path for the folder
 SAVE_PATH="$SCREENSHOTS_DIR/$MONTH_YEAR"
 
-# Define the full file path and name prefix using the timestamp
-# Hyprshot uses the path directly and will append the extension (e.g., .png)
-FULL_FILE_PATH="$SAVE_PATH/$FULL_TIMESTAMP.png"
+# Hyprshot takes the folder (-o) and the file name (-f) separately
+FILE_NAME="$FULL_TIMESTAMP.png"
 
 # Create the directory if it doesn't exist
 mkdir -p "$SAVE_PATH"
@@ -28,17 +27,17 @@ MODE="$1"
 if [ "$MODE" = "region" ]; then
     # Launch Hyprshot selection tool (similar to flameshot gui)
     echo "Starting Hyprshot in interactive selection mode..."
-    hyprshot -m region -f "$FULL_FILE_PATH" -z
+    hyprshot -m region -o "$SAVE_PATH" -f "$FILE_NAME" -z
 
 elif [ "$MODE" = "output" ]; then
-    # Capture only the single active screen (where the cursor is)
+    # Capture the focused monitor right away (plain "-m output" waits for a click to pick one)
     echo "Capturing the active single screen..."
-    hyprshot -m output -f "$FULL_FILE_PATH" -z
+    hyprshot -m output -m active -o "$SAVE_PATH" -f "$FILE_NAME"
 
 elif [ "$MODE" = "window" ]; then
     # Capture the selected window (Hyprshot prompts for selection)
     echo "Starting Hyprshot to select a window for capture..."
-    hyprshot -m window -f "$FULL_FILE_PATH" -z
+    hyprshot -m window -o "$SAVE_PATH" -f "$FILE_NAME" -z
 
 else
     # Handle incorrect or missing argument
