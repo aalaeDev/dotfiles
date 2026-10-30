@@ -5,7 +5,7 @@
     border-radius: 0; /* Hardcoded */
     font-family: "JetBrainsMono NFP", "JetBrainsMono NF"; /* Hardcoded; Propo gives icons their real width */
     font-weight: 600; /* Hardcoded */
-    font-size: 0.81rem; /* Hardcoded */
+    font-size: 0.85rem; /* Hardcoded */
     min-height: 0;
 }
 
@@ -15,7 +15,7 @@ window#waybar {
 }
 
 window#waybar > box {
-    padding: 5px 14px;
+    padding: 5px 15px;
 }
 
 tooltip {
@@ -80,7 +80,7 @@ tooltip label {
 #memory,
 #privacy,
 #custom-tailscale {
-    padding: 4px 13px;
+    padding: 4px 14px;
 }
 
 #window,
@@ -116,7 +116,7 @@ window#waybar.empty #window {
 #custom-mail,
 #custom-notification,
 #custom-power {
-    padding: 4px 10px;
+    padding: 4px 11px;
     border-radius: 11px;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
