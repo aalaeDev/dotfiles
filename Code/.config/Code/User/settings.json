@@ -115,6 +115,7 @@
     "notebook.lineNumbers": "on",
     // ===== CHAT =====
     "chat.editor.wordWrap": "on",
+    "chat.fontFamily": "JetBrainsMono NF",
     // ===== TOKEN COLORS =====
     "editor.tokenColorCustomizations": {
         "textMateRules": [
