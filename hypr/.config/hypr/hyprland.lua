@@ -80,35 +80,36 @@ hl.config({
     },
 })
 
-hl.curve("wind", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.02} } })
-hl.curve("winIn", { type = "bezier", points = { {0.1, 1.1}, {0.1, 1.05} } })
-hl.curve("winOut", { type = "bezier", points = { {0.3, -0.3}, {0, 1} } })
+-- Gentle ease-out without overshoot: steeper curves spend their whole travel in the first few frames at 60 Hz
+hl.curve("wind", { type = "bezier", points = { {0.22, 1}, {0.36, 1} } })
+hl.curve("winIn", { type = "bezier", points = { {0.22, 1}, {0.36, 1} } })
+hl.curve("winOut", { type = "bezier", points = { {0.4, 0}, {1, 1} } })
 hl.curve("liner", { type = "bezier", points = { {1, 1}, {1, 1} } })
 hl.animation({
     leaf = "windows",
     enabled = true,
-    speed = 6,
+    speed = 4,
     bezier = "wind",
     style = "slide",
 })
 hl.animation({
     leaf = "windowsIn",
     enabled = true,
-    speed = 6,
+    speed = 4,
     bezier = "winIn",
     style = "slide",
 })
 hl.animation({
     leaf = "windowsOut",
     enabled = true,
-    speed = 5,
+    speed = 3,
     bezier = "winOut",
     style = "slide",
 })
 hl.animation({
     leaf = "windowsMove",
     enabled = true,
-    speed = 5,
+    speed = 4,
     bezier = "wind",
     style = "slide",
 })
@@ -118,12 +119,10 @@ hl.animation({
     speed = 1,
     bezier = "liner",
 })
+-- Off: a looping angle redraws the whole screen every frame, even when idle
 hl.animation({
     leaf = "borderangle",
-    enabled = true,
-    speed = 30,
-    bezier = "liner",
-    style = "loop",
+    enabled = false,
 })
 hl.animation({
     leaf = "fade",
@@ -134,7 +133,7 @@ hl.animation({
 hl.animation({
     leaf = "workspaces",
     enabled = true,
-    speed = 5,
+    speed = 4,
     bezier = "wind",
 })
 
@@ -170,6 +169,13 @@ hl.animation({
 hl.config({
     master = {
         new_status = "master",
+    },
+})
+
+-- Triple buffer when a frame runs late: keeps animations smooth on the iGPU
+hl.config({
+    render = {
+        new_render_scheduling = true,
     },
 })
 
