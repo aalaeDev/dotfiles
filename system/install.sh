@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install the system-level configs in this package (copied, not stowed: they live
-# under /etc and must not depend on links into $HOME). Re-run after editing them.
+# under /etc and /opt and must not depend on links into $HOME). Re-run after editing them.
 #
 #   ./system/install.sh
 
@@ -22,6 +22,21 @@ while IFS= read -r -d '' file; do
     sudo install -Dm644 "$file" "$target"
     echo "   $target"
 done < <(find "$SRC/etc" -type f -print0)
+
+echo ":: Installing autoconfig (live theme reload) into Zen and Betterbird"
+# Kept in /usr/local/share too: the pacman hook copies it back after app updates
+SHARE=/usr/local/share/dotfiles/autoconfig
+sudo rm -rf /usr/local/share/dotfiles/zen-autoconfig     # earlier location
+while IFS= read -r -d '' file; do
+    relative="${file#"$SRC"/autoconfig/}"
+    sudo install -Dm644 "$file" "$SHARE/$relative"
+    for app in /opt/zen-browser-bin /opt/betterbird; do
+        [[ -d $app ]] || continue
+        sudo install -Dm644 "$file" "$app/$relative"
+        echo "   $app/$relative"
+    done
+done < <(find "$SRC/autoconfig" -type f -print0)
+sudo rm -f /etc/pacman.d/hooks/zen-autoconfig.hook       # replaced by dotfiles-autoconfig.hook
 
 echo ":: Applying"
 sudo systemctl daemon-reload                      # zram-generator creates dev-zram0.swap

@@ -1,0 +1,12 @@
+# Zen and Betterbird updates replace their /opt folder: put the live theme reload back
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = zen-browser-bin
+Target = betterbird-bin
+
+[Action]
+Description = Restoring dotfiles autoconfig (live theme reload)...
+When = PostTransaction
+Exec = /usr/bin/sh -c 'for app in /opt/zen-browser-bin /opt/betterbird; do [ -d "$app" ] && cp -r /usr/local/share/dotfiles/autoconfig/. "$app"/; done; true'
