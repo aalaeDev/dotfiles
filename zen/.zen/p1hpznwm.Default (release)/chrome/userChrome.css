@@ -1,0 +1,64 @@
+/*
+* Zen browser UI in the matugen palette (colors.css is generated from the wallpaper).
+* Zen derives most of its colors from --zen-primary-color and --zen-branding-bg.
+*
+* Set on every element, not just :root: Zen redefines these variables on descendants
+* (tabs, toolbars) and its workspace gradient is an inline style on the
+* .zen-browser-generic-background elements. As a user sheet, !important here beats
+* both Zen's own rules and those inline styles.
+*/
+@import url("colors.css");
+
+:root,
+:root * {
+    /* Accent and base everything else is mixed from */
+    --zen-primary-color: var(--primary) !important;
+    --zen-branding-bg: var(--surface) !important;
+
+    /* Solid background instead of the workspace gradient (plus its toolbar and
+       cross-fade "-old" copies): a mid surface with a hint of the accent, so it reads
+       as the theme rather than plain black */
+    --matugen-zen-bg: color-mix(in srgb, var(--primary) 8%, var(--surface_container));
+    --zen-main-browser-background: var(--matugen-zen-bg) !important;
+    --zen-main-browser-background-old: var(--matugen-zen-bg) !important;
+    --zen-main-browser-background-toolbar: var(--matugen-zen-bg) !important;
+    --zen-main-browser-background-toolbar-old: var(--matugen-zen-bg) !important;
+    --zen-themed-toolbar-bg-transparent: var(--matugen-zen-bg) !important;
+
+    /* Surface layers */
+    --zen-colors-primary: var(--surface_container_high) !important;
+    --zen-colors-secondary: var(--surface_container_highest) !important;
+    --zen-colors-tertiary: var(--surface_container_low) !important;
+    --zen-colors-border: var(--outline_variant) !important;
+    --zen-colors-hover-bg: var(--surface_container_high) !important;
+    --zen-colors-input-bg: var(--surface_container) !important;
+    --zen-urlbar-background: var(--surface_container) !important;
+    --zen-dialog-background: var(--surface_container) !important;
+
+    /* Text, fields and popups */
+    --toolbox-textcolor: var(--on_surface) !important;
+    --toolbar-color: var(--on_surface) !important;
+    --toolbar-field-background-color: var(--surface_container) !important;
+    --toolbar-field-color: var(--on_surface) !important;
+    --arrowpanel-background: var(--surface_container) !important;
+    --arrowpanel-color: var(--on_surface) !important;
+
+    /* Tabs */
+    --tab-background-color-selected: var(--secondary_container) !important;
+    --tab-background-color-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+}
+
+/* Selected tab text follows its container color */
+.tabbrowser-tab[selected] .tab-label,
+.tabbrowser-tab[selected] .tab-icon-stack {
+    color: var(--on_secondary_container) !important;
+}
+
+/* Selection and focus in the UI */
+::selection {
+    background-color: rgb(var(--primary_rgb) / 0.35) !important;
+}
+
+:focus-visible {
+    outline-color: var(--primary) !important;
+}

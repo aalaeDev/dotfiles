@@ -86,3 +86,8 @@ output_path = '~/.vscode/extensions/hyprluna.hyprluna-theme-1.0.2/themes/hyprlun
 [templates.fastfetch]
 input_path = "~/dotfiles/matugen/.config/matugen/templates/fastfetch.jsonc"
 output_path = "~/dotfiles/fastfetch/.config/fastfetch/config.jsonc"
+
+# Zen reads chrome CSS only at start-up: restart Zen to see a new palette
+[templates.zen]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/zen-colors.css'
+output_path = '~/dotfiles/zen/.zen/p1hpznwm.Default (release)/chrome/colors.css'

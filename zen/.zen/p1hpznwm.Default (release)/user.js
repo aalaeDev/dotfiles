@@ -6,3 +6,6 @@ user_pref("browser.tabs.unloadOnLowMemory", true);
 
 // Unload tabs left idle this long; they reload when clicked
 user_pref("zen.tab-unloader.timeout-minutes", 15);
+
+// Theme: load chrome/userChrome.css and chrome/userContent.css (matugen palette)
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
