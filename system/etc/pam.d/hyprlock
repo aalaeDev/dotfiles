@@ -1,0 +1,7 @@
+#%PAM-1.0
+# Lock screen only: a wrong password can be retried immediately.
+# Skips system-auth's pam_faillock (3 failures = 10 minute lockout) and, through
+# nodelay, pam_unix's wait after a failure. sudo and login keep both.
+
+auth       required     pam_unix.so     nodelay
+account    include      login
