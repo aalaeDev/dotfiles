@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Copy Path
+Comment=Copy the full path of %N
+Icon-Name=edit-copy
+Exec=sh -c 'wl-copy "$1"' _ %F
+Selection=s
+Extensions=any;
+Quote=double

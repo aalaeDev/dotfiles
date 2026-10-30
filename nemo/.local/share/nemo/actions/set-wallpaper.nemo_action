@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Set as Wallpaper
+Comment=Apply this image and its matugen theme
+Icon-Name=preferences-desktop-wallpaper
+Exec=sh -c '"$HOME/.local/bin/wallset.sh" "$1"' _ %F
+Selection=s
+Extensions=jpg;jpeg;png;
+Quote=double

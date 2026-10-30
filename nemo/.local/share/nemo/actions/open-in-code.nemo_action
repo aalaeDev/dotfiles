@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Open in VS Code
+Comment=Open %N in VS Code
+Icon-Name=com.visualstudio.code
+Exec=code %F
+Selection=s
+Extensions=any;
+Quote=double

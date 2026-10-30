@@ -1,0 +1,11 @@
+/* Nemo: selections and the active path segment in the wallpaper's accent */
+.nemo-window .view:selected,
+.nemo-window iconview:selected {
+    background-color: alpha(@accent_color, 0.25);
+    color: @window_fg_color;
+}
+
+.nemo-window toolbar button:checked {
+    background-color: alpha(@accent_color, 0.2);
+    color: @accent_color;
+}
