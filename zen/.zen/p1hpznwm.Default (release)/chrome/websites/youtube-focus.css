@@ -1,0 +1,51 @@
+/*
+* YouTube focus mode: an empty home page with a centred search box, and no
+* suggested videos. Not imported by userContent.css: dotfiles.cfg registers it
+* while the "dotfiles.youtube.focus" pref is on (toolbar button "YouTube focus").
+*
+* YouTube keeps the home page in the DOM, hidden, while a video plays, so home
+* rules are scoped to it being visible; video pages keep their own layout.
+*/
+@-moz-document domain("youtube.com") {
+    /* Home: no feed, chips or loading skeleton */
+    ytd-browse[page-subtype="home"] .grid-disabled.grid.ytd-browse.style-scope > .ytd-two-column-browse-results-renderer.style-scope,
+    ytd-browse[page-subtype="home"] #header,
+    #home-page-skeleton {
+        display: none !important;
+    }
+
+    /* Home: search box in the middle of the page, logo above it */
+    ytd-app:has(ytd-browse[page-subtype="home"]:not([hidden])) ytd-masthead > #container > #center {
+        position: fixed !important;
+        top: calc(50vh - 20px) !important;
+        left: calc(25vw - 40px) !important;
+        width: 50vw !important;
+        margin: 0 !important;
+    }
+
+    ytd-app:has(ytd-browse[page-subtype="home"]:not([hidden])) ytd-topbar-logo-renderer {
+        position: fixed;
+        top: 40vh;
+        left: calc(50vw - 80px);
+        transform: scale(2);
+    }
+
+    /* Home: only the search box and logo in the top bar */
+    ytd-app:has(ytd-browse[page-subtype="home"]:not([hidden])) ytd-masthead #end ytd-button-renderer {
+        display: none !important;
+    }
+
+    #voice-search-button {
+        display: none !important;
+    }
+
+    .ytSearchboxComponentSuggestionsContainer.ytSearchboxComponentSuggestionsContainerScrollable {
+        max-height: 300px !important;
+    }
+
+    /* Video pages: no suggested videos beside or after the player; playlists and chat stay */
+    ytd-watch-next-secondary-results-renderer.ytd-watch-flexy.style-scope,
+    .ytp-endscreen-content {
+        display: none !important;
+    }
+}

@@ -62,3 +62,12 @@
 :focus-visible {
     outline-color: var(--primary) !important;
 }
+
+/* "YouTube focus" toolbar button, added by dotfiles.cfg; accent-coloured while on */
+#dotfiles-youtube-focus {
+    list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='context-fill'%3E%3Cpath d='M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z'/%3E%3C/svg%3E");
+}
+
+#dotfiles-youtube-focus[checked] {
+    fill: var(--primary) !important;
+}
