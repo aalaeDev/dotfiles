@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""fastfetch with a light band sweeping across the logo, in the matugen palette.
+"""fastfetch with an animated logo in the matugen palette.
 
 Runs fastfetch once, prints its output and returns to the shell, leaving a
 background process that redraws only the logo's cells (saving and restoring
-the cursor, so typing at the prompt is undisturbed): the logo starts dimmed,
-the first sweep reveals a primary-to-tertiary gradient, and the band keeps
-sweeping. The fish config stops it before the next command runs, since
-new output scrolls the logo away from where it is drawn. Colours come from
-the logo colours matugen writes into the fastfetch config: 1 primary,
-3 tertiary, 4 highlight.
+the cursor, so typing at the prompt is undisturbed): a light band reveals the
+dimmed logo, then the palette keeps flowing across it, with a sweep of light
+every few seconds and sparkles that flash and fade. The fish config stops it
+before the next command runs, since new output scrolls the logo away from
+where it is drawn. Colours come from the logo colours matugen writes into the
+fastfetch config: 1 primary, 2 secondary, 3 tertiary, 4 highlight.
 """
 import json
 import math
 import os
+import random
 import re
 import select
 import shutil
@@ -24,7 +25,12 @@ import time
 import unicodedata
 
 CONFIG = os.path.expanduser("~/.config/fastfetch/config.jsonc")
-FRAMES, FRAME_TIME, BAND, PAUSE = 36, 0.04, 0.12, 1.0
+FRAME_TIME = 0.04          # 25 fps
+REVEAL, SWEEP_EVERY = 1.5, 5.0   # seconds: intro reveal, then one light sweep per period
+BAND = 0.12                # width of the light band, as a fraction of the logo
+FLOW_SPEED = 0.12          # palette cycles per second
+SPARKLES, SPARKLE_FADE = 1.2, 0.82   # new sparkles per frame, brightness kept per frame
+RIPPLE = 0.25              # depth of the brightness ripples travelling with the flow
 
 
 def hex_rgb(value, fallback):
@@ -43,9 +49,17 @@ def logo_colors():
             colors = json.load(f).get("logo", {}).get("color", {})
     except (OSError, ValueError):
         colors = {}
-    return (hex_rgb(colors.get("1"), "89b4fa"),
-            hex_rgb(colors.get("3"), "94e2d5"),
-            hex_rgb(colors.get("4"), "e1e2e8"))
+    palette = [hex_rgb(colors.get("1"), "89b4fa"),
+               hex_rgb(colors.get("2"), "bac2de"),
+               hex_rgb(colors.get("3"), "94e2d5")]
+    return palette, hex_rgb(colors.get("4"), "e1e2e8")
+
+
+def flow(palette, u):
+    """Colour at u on a looping gradient through the palette."""
+    u = (u % 1) * len(palette)
+    i = int(u)
+    return mix(palette[i], palette[(i + 1) % len(palette)], u - i)
 
 
 def rows_used(output, cols):
@@ -70,7 +84,12 @@ def rows_used(output, cols):
     return row, wrapped
 
 
-def frame(logo, width, start, end, light, phase, reveal):
+def frame(logo, width, palette, light, t, sparkles):
+    """Logo lines at t seconds: reveal, flowing palette, periodic sweep, sparkles."""
+    if t < REVEAL:
+        phase, reveal = -0.3 + 1.6 * t / REVEAL, True
+    else:
+        phase, reveal = -0.3 + 1.6 * ((t - REVEAL) % SWEEP_EVERY) / 1.2, False
     out = []
     for r, line in enumerate(logo):
         cells = []
@@ -78,12 +97,16 @@ def frame(logo, width, start, end, light, phase, reveal):
             if ch == " ":
                 cells.append(" ")
                 continue
-            pos = (c + r * 0.5) / width
-            glow = math.exp(-((pos - phase) / BAND) ** 2)
-            # first sweep: 1 once the band has passed; later sweeps: always lit
+            pos = (c + r * 0.5) / width  # 0 at the top-left, 1 at the bottom-right
+            colour = flow(palette, pos * 0.8 - t * FLOW_SPEED)
+            # Ripples keep the motion visible when the palette's colours are close
+            shade = RIPPLE * (0.5 + 0.5 * math.sin(2 * math.pi * (pos * 1.5 - t * 0.4)))
+            colour = mix(colour, (0, 0, 0), shade)
+            # During the reveal, cells stay dim until the band has passed them
             lit = 1 / (1 + math.exp((pos - phase) / 0.03)) if reveal else 1
-            colour = mix(start, end, min(pos, 1))
-            rgb = mix(mix(mix(colour, (0, 0, 0), 0.7), colour, lit), light, glow)
+            glow = math.exp(-((pos - phase) / BAND) ** 2)
+            rgb = mix(mix(colour, (0, 0, 0), 0.7), colour, lit)
+            rgb = mix(rgb, light, max(glow, sparkles.get((r, c), 0)))
             cells.append("\x1b[38;2;%d;%d;%dm%s" % (*rgb, ch))
         out.append("\x1b[1m" + "".join(cells) + "\x1b[0m")
     return out
@@ -124,17 +147,20 @@ def stop_previous(path):
 
 def animate(tty, logo, top, width, colours):
     size = os.get_terminal_size(tty)
-    first = True
+    cells = [(r, c) for r, line in enumerate(logo) for c, ch in enumerate(line) if ch != " "]
+    sparkles = {}
+    start = time.monotonic()
     while os.get_terminal_size(tty) == size:  # a resize reflows the logo
-        for i in range(FRAMES + 1):
-            phase = -0.3 + 1.6 * i / FRAMES  # the band enters left and leaves right
-            lines = frame(logo, width, *colours, phase, first)
-            os.write(tty, ("\x1b7" + "".join("\x1b[%d;1H%s" % (top + r, line)
-                                              for r, line in enumerate(lines))
-                           + "\x1b8").encode())
-            time.sleep(FRAME_TIME)
-        first = False
-        time.sleep(PAUSE)
+        t = time.monotonic() - start
+        if t > REVEAL:
+            sparkles = {cell: v * SPARKLE_FADE for cell, v in sparkles.items() if v > 0.05}
+            for _ in range(int(SPARKLES) + (random.random() < SPARKLES % 1)):
+                sparkles[random.choice(cells)] = 1.0
+        lines = frame(logo, width, *colours, t, sparkles)
+        os.write(tty, ("\x1b7" + "".join("\x1b[%d;1H%s" % (top + r, line)
+                                          for r, line in enumerate(lines))
+                       + "\x1b8").encode())
+        time.sleep(FRAME_TIME)
 
 
 def main():
