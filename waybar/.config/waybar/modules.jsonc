@@ -1,17 +1,17 @@
 {
     "battery": {
         "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% <span size='130%' rise='-1536'>󰂄</span>",
+        "format-charging": "{capacity}% <span size='130%' rise='-1382'>󰂄</span>",
         "states": {
             "warning": 20,
             "critical": 10,
         },
         "format-icons": [
-            "<span size='130%' rise='-1536'></span>",
-            "<span size='130%' rise='-1536'></span>",
-            "<span size='130%' rise='-1536'></span>",
-            "<span size='130%' rise='-1536'></span>",
-            "<span size='130%' rise='-1536'></span>"
+            "<span size='130%' rise='-1382'></span>",
+            "<span size='130%' rise='-1382'></span>",
+            "<span size='130%' rise='-1382'></span>",
+            "<span size='130%' rise='-1382'></span>",
+            "<span size='130%' rise='-1382'></span>"
         ],
         "on-click": "xfce4-power-manager-settings"
     },
@@ -26,15 +26,22 @@
         "persistent-workspaces": {},
     },
     "hyprland/window": {
-        "format": "{}",
-        // Logo is added only when there is a title, so an empty workspace hides the module
-        "rewrite": { "(.+)": "<span size='130%' rise='-1536'></span> $1" },
+        // "{class}<US>{title}": rules key on the class. Apps with an icon get rules from
+        // ~/.cache/waybar/window-rules.jsonc (waybar-window-rules.py) that drop the app name;
+        // anything else falls through to these: Arch logo + full title, or nothing
+        "format": "{class}\u001f{title}",
+        "icon": true,
+        "icon-size": 14,
+        "rewrite": {
+            "^[^\u001f]*\u001f(.+)$": "<span size='130%' rise='-1382'></span> $1",
+            "^[^\u001f]*\u001f$": "",
+        },
         "separate-outputs": true,
         "max-length": 50,
     },
     "clock": {
         "format": "{:%H:%M:%S}",
-        "format-alt": "{:%H:%M:%S | <span size='130%' rise='-1536'>󰃭</span> %d·%m·%y}",
+        "format-alt": "{:%H:%M:%S | <span size='130%' rise='-1382'>󰃭</span> %d·%m·%y}",
         "rotate": 0,
         "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>",
@@ -55,18 +62,18 @@
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon} <span size='130%' rise='-1536'></span>",
-        "format-muted": "{volume}% <span size='130%' rise='-1536'>󰖁</span>",
+        "format-bluetooth": "{volume}% {icon} <span size='130%' rise='-1382'></span>",
+        "format-muted": "{volume}% <span size='130%' rise='-1382'>󰖁</span>",
         "format-icons": {
-            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "<span size='130%' rise='-1536'></span>",
-            "headphone": "<span size='130%' rise='-1536'></span>",
-            "phone": "<span size='130%' rise='-1536'></span>",
-            "phone-muted": "<span size='130%' rise='-1536'></span>",
-            "portable": "<span size='130%' rise='-1536'></span>",
-            "car": "<span size='130%' rise='-1536'></span>",
+            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "<span size='130%' rise='-1382'></span>",
+            "headphone": "<span size='130%' rise='-1382'></span>",
+            "phone": "<span size='130%' rise='-1382'></span>",
+            "phone-muted": "<span size='130%' rise='-1382'></span>",
+            "portable": "<span size='130%' rise='-1382'></span>",
+            "car": "<span size='130%' rise='-1382'></span>",
             "default": [
-                "<span size='130%' rise='-1536'></span>",
-                "<span size='130%' rise='-1536'></span>"
+                "<span size='130%' rise='-1382'></span>",
+                "<span size='130%' rise='-1382'></span>"
             ],
         },
         "scroll-step": 1,
@@ -81,15 +88,15 @@
         "format": "{ifname}",
         "format-wifi": "{essid} {icon}",
         "format-icons": [
-            "<span size='130%' rise='-1536'>󰤯</span>",
-            "<span size='130%' rise='-1536'>󰤟</span>",
-            "<span size='130%' rise='-1536'>󰤢</span>",
-            "<span size='130%' rise='-1536'>󰤥</span>",
-            "<span size='130%' rise='-1536'>󰤨</span>"
+            "<span size='130%' rise='-1382'>󰤯</span>",
+            "<span size='130%' rise='-1382'>󰤟</span>",
+            "<span size='130%' rise='-1382'>󰤢</span>",
+            "<span size='130%' rise='-1382'>󰤥</span>",
+            "<span size='130%' rise='-1382'>󰤨</span>"
         ],
-        "format-ethernet": "{ipaddr}/{cidr} <span size='130%' rise='-1536'>󰊗</span>",
-        "format-disconnected": "<span size='130%' rise='-1536'>󰤭</span>",
-        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+        "format-ethernet": "{ipaddr}/{cidr} <span size='130%' rise='-1382'>󰈀</span>",
+        "format-disconnected": "<span size='130%' rise='-1382'>󰤭</span>",
+        "tooltip-format": "{ifname} via {gwaddr} 󰈀",
         "tooltip-format-wifi": "{essid} ({signalStrength}%)\nClick: Wi-Fi menu · Right-click: saved connections",
         "tooltip-format-ethernet": "{ifname} ",
         "tooltip-format-disconnected": "Disconnected",
@@ -97,15 +104,25 @@
         "on-click": "~/.local/bin/rofi-menus/wifi-menu.sh",
         "on-click-right": "nm-connection-editor",
     },
+    // Wired link; only visible while a cable is connected (the Wi-Fi module above is pinned to Wi-Fi)
+    "network#ethernet": {
+        "interface": "en*",
+        "format-ethernet": "<span size='130%' rise='-1382'>󰈀</span>",
+        "format-linked": "",
+        "format-disconnected": "",
+        "format-disabled": "",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\nvia {gwaddr}",
+        "on-click": "nm-connection-editor",
+    },
     "custom/mail": {
         // Betterbird Unified Inbox unread count; the script streams updates as the inbox changes
         "exec": "~/.local/bin/waybar-mail.sh --watch",
         "on-click": "~/.local/bin/waybar-mail.sh --open",
         "format": "{text}{icon}",
         "format-icons": {
-            "unread": "<span size='130%' rise='-1536'>󰛏</span>",
-            "none": "<span size='130%' rise='-1536'>󰇰</span>",
-            "closed": "<span size='130%' rise='-1536'>󱏤</span>",
+            "unread": "<span size='130%' rise='-1382'>󰛏</span>",
+            "none": "<span size='130%' rise='-1382'>󰇰</span>",
+            "closed": "<span size='130%' rise='-1382'>󱏤</span>",
         },
         "return-type": "json",
         "tooltip": true,
@@ -114,14 +131,14 @@
         // swaync streams count + state itself; "alt" picks the icon
         "format": "{text}{icon}",
         "format-icons": {
-            "notification": "<span size='130%' rise='-1536'></span>",
-            "none": "<span size='130%' rise='-1536'></span>",
-            "dnd-notification": "<span size='130%' rise='-1536'>󰂛</span>",
-            "dnd-none": "<span size='130%' rise='-1536'>󰂛</span>",
-            "inhibited-notification": "<span size='130%' rise='-1536'></span>",
-            "inhibited-none": "<span size='130%' rise='-1536'></span>",
-            "dnd-inhibited-notification": "<span size='130%' rise='-1536'>󰂛</span>",
-            "dnd-inhibited-none": "<span size='130%' rise='-1536'>󰂛</span>",
+            "notification": "<span size='130%' rise='-1382'></span>",
+            "none": "<span size='130%' rise='-1382'></span>",
+            "dnd-notification": "<span size='130%' rise='-1382'>󰂛</span>",
+            "dnd-none": "<span size='130%' rise='-1382'>󰂛</span>",
+            "inhibited-notification": "<span size='130%' rise='-1382'></span>",
+            "inhibited-none": "<span size='130%' rise='-1382'></span>",
+            "dnd-inhibited-notification": "<span size='130%' rise='-1382'>󰂛</span>",
+            "dnd-inhibited-none": "<span size='130%' rise='-1382'>󰂛</span>",
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
@@ -134,8 +151,8 @@
         "format": "{text}{icon}",
         "return-type": "json",
         "format-icons": {
-            "has-updates": "<span size='130%' rise='-1536'>󱍷</span>",
-            "updated": "<span size='130%' rise='-1536'>󰂪</span>",
+            "has-updates": "<span size='130%' rise='-1382'>󱍷</span>",
+            "updated": "<span size='130%' rise='-1382'>󰂪</span>",
         },
         "exec": "~/.local/bin/waybar-updates.sh",
         "on-click": "~/.local/bin/waybar-updates.sh --upgrade",
@@ -150,10 +167,10 @@
         "exec-on-event": true,
         "format": "Tailscale {icon}",
         "format-icons": {
-            "connected": "<span size='130%' rise='-1536'>󰖂</span>",
-            "stopped": "<span size='130%' rise='-1536'>󰌙</span>",
-            "connecting": "<span size='130%' rise='-1536'>󰑮</span>",
-            "disconnecting": "<span size='130%' rise='-1536'>󰑮</span>",
+            "connected": "<span size='130%' rise='-1382'>󰖂</span>",
+            "stopped": "<span size='130%' rise='-1382'>󰌙</span>",
+            "connecting": "<span size='130%' rise='-1382'>󰑮</span>",
+            "disconnecting": "<span size='130%' rise='-1382'>󰑮</span>",
         },
         "tooltip": true,
         "return-type": "json",
@@ -166,15 +183,15 @@
         "on-click-right": "~/.local/bin/waybar-protonvpn.sh --select-country",
         "format": "{icon}{text}",
         "format-icons": {
-            "connected": "<span size='130%' rise='-1536'>󰦝</span>",
-            "disconnected": "<span size='130%' rise='-1536'>󰦜</span>",
+            "connected": "<span size='130%' rise='-1382'>󰦝</span>",
+            "disconnected": "<span size='130%' rise='-1382'>󰦜</span>",
             // Animation frames: the shield fills up while connecting, drains while disconnecting
-            "connecting-0": "<span size='130%' rise='-1536'>󰒙</span>",
-            "connecting-1": "<span size='130%' rise='-1536'>󰞀</span>",
-            "connecting-2": "<span size='130%' rise='-1536'>󰒘</span>",
-            "disconnecting-0": "<span size='130%' rise='-1536'>󰒘</span>",
-            "disconnecting-1": "<span size='130%' rise='-1536'>󰞀</span>",
-            "disconnecting-2": "<span size='130%' rise='-1536'>󰒙</span>",
+            "connecting-0": "<span size='130%' rise='-1382'>󰒙</span>",
+            "connecting-1": "<span size='130%' rise='-1382'>󰞀</span>",
+            "connecting-2": "<span size='130%' rise='-1382'>󰒘</span>",
+            "disconnecting-0": "<span size='130%' rise='-1382'>󰒘</span>",
+            "disconnecting-1": "<span size='130%' rise='-1382'>󰞀</span>",
+            "disconnecting-2": "<span size='130%' rise='-1382'>󰒙</span>",
         },
         "tooltip": true,
         "return-type": "json",
@@ -184,7 +201,7 @@
     // --- Groups: right-side modules share one pill per group ---
     "group/connectivity": {
         "orientation": "inherit",
-        "modules": ["network", "custom/protonvpn", "bluetooth"],
+        "modules": ["network#ethernet", "network", "custom/protonvpn", "bluetooth"],
     },
     "group/hardware": {
         "orientation": "inherit",
@@ -200,20 +217,20 @@
     },
     "group/session": {
         "orientation": "inherit",
-        "modules": ["custom/updates", "custom/mail", "custom/notification", "custom/power"],
+        "modules": ["idle_inhibitor#indicator", "custom/updates", "custom/mail", "custom/notification", "custom/power"],
     },
     "custom/expand": {
-        "format": "<span size='130%' rise='-1536'>󰅁</span>",
+        "format": "<span size='130%' rise='-1382'>󰅁</span>",
         "tooltip-format": "Tray & stay awake",
     },
     "custom/power": {
-        "format": "<span size='130%' rise='-1536'>󰐥</span>",
+        "format": "<span size='130%' rise='-1382'>󰐥</span>",
         "on-click": "~/.local/bin/rofi-menus/powermenu.sh",
         "tooltip-format": "Power menu",
     },
     "privacy": {
-        "icon-size": 16,
-        "icon-spacing": 8,
+        "icon-size": 14,
+        "icon-spacing": 7,
         "transition-duration": 250,
         // Symbolic icons take the CSS text color, so they follow the theme
         "modules": [
@@ -224,17 +241,27 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "<span size='130%' rise='-1536'>󰅶</span>",
-            "deactivated": "<span size='130%' rise='-1536'>󰛊</span>",
+            "activated": "<span size='130%' rise='-1382'>󰅶</span>",
+            "deactivated": "<span size='130%' rise='-1382'>󰛊</span>",
         },
         "tooltip-format-activated": "Staying awake",
         "tooltip-format-deactivated": "Idle as usual",
+        "signal": 12, // pkill -RTMIN+12 waybar toggles stay-awake
+    },
+    // Mirrors the drawer's idle inhibitor (waybar syncs them) so "stay awake" is visible while on
+    "idle_inhibitor#indicator": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "<span size='130%' rise='-1382'>󰅶</span>",
+            "deactivated": "",
+        },
+        "tooltip-format-activated": "Staying awake · click to stop",
     },
     "bluetooth": {
-        "format": "<span size='130%' rise='-1536'>󰂯</span>",
-        "format-off": "<span size='130%' rise='-1536'>󰂲</span>",
-        "format-disabled": "<span size='130%' rise='-1536'>󰂲</span>",
-        "format-connected": "<span size='130%' rise='-1536'>󰂱</span> {num_connections}",
+        "format": "<span size='130%' rise='-1382'>󰂯</span>",
+        "format-off": "<span size='130%' rise='-1382'>󰂲</span>",
+        "format-disabled": "<span size='130%' rise='-1382'>󰂲</span>",
+        "format-connected": "<span size='130%' rise='-1382'>󰂱</span> {num_connections}",
         "tooltip-format": "{controller_alias}: {status}",
         "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}",
@@ -244,19 +271,19 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{percent}% {icon}",
-        "format-icons": ["<span size='130%' rise='-1536'>󰃝</span>", "<span size='130%' rise='-1536'>󰃞</span>", "<span size='130%' rise='-1536'>󰃟</span>", "<span size='130%' rise='-1536'>󰃠</span>"],
+        "format-icons": ["<span size='130%' rise='-1382'>󰃝</span>", "<span size='130%' rise='-1382'>󰃞</span>", "<span size='130%' rise='-1382'>󰃟</span>", "<span size='130%' rise='-1382'>󰃠</span>"],
         "on-scroll-up": "brightnessctl -d intel_backlight set 5%+",
         "on-scroll-down": "brightnessctl -d intel_backlight set 5%-",
         "tooltip-format": "Brightness {percent}%",
     },
     "tray": {
-        "icon-size": 18,
+        "icon-size": 16,
         "rotate": 0,
         "spacing": 5,
     },
     "cpu": {
         "interval": 1,
-        "format": "<span size='130%' rise='-1536'></span> {usage}%",
+        "format": "<span size='130%' rise='-1382'></span> {usage}%",
         "states": {
             "warning": 70,
             "critical": 90,
@@ -265,7 +292,7 @@
     },
     "memory": {
         "interval": 1,
-        "format": "<span size='130%' rise='-1536'>󰾅</span> {used:.1f}/{total:.1f} GB",
+        "format": "<span size='130%' rise='-1382'>󰾅</span> {used:.1f}/{total:.1f} GB",
         "states": {
             "warning": 70,
             "critical": 90,

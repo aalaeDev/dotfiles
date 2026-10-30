@@ -1,0 +1,8 @@
+[Desktop Entry]
+# Hidden alias so icon lookups that match the window class "ONLYOFFICE" against
+# desktop file names (waybar's window module) find OnlyOffice's icon.
+Type=Application
+Name=ONLYOFFICE
+Icon=onlyoffice-desktopeditors
+Exec=/usr/bin/onlyoffice-desktopeditors %U
+NoDisplay=true
