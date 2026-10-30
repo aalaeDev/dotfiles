@@ -6,7 +6,7 @@ if status is-interactive
         tmux new-session; and exit
     end
 
-    # fastfetch
+    # fetch
 end
 
 alias c='clear'                                                        # but don't use this one tho! just press `CLTR+l`
@@ -22,9 +22,22 @@ alias pa='$aurhelper -Ss'                                              # list av
 alias pc='$aurhelper -Sc'                                              # remove unused cache
 alias po='$aurhelper -Qtdq | $aurhelper -Rns -'                        # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
 alias vc='code'                                                        # gui code editor
-alias fastfetch='fastfetch --logo-type sixel'
-alias ff='fastfetch --logo-type sixel'
-alias neofetch='fastfetch --logo-type sixel'
+alias neofetch='ff'
+
+# fastfetch with a logo that keeps animating while you type; the animation
+# stops before the next command runs or the screen clears, since either
+# moves the logo away from where it is drawn
+function ff --description 'fastfetch with an animated logo'
+    fetch $argv; and set -g __fetch_running 1
+end
+function __fetch_stop --on-event fish_preexec
+    set -q __fetch_running; or return
+    set -e __fetch_running
+    set -l pidfile $XDG_RUNTIME_DIR/fetch-(path basename (tty)).pid
+    test -f $pidfile; and kill (cat $pidfile) 2>/dev/null
+    rm -f $pidfile
+end
+bind ctrl-l '__fetch_stop; commandline -f clear-screen'
 
 starship init fish | source
 set -U fish_greeting ""
