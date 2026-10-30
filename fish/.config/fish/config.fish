@@ -43,6 +43,7 @@ bind ctrl-l '__fetch_stop; commandline -f clear-screen'
 abbr -a gs 'git status --short --branch'
 abbr -a gl 'git log --graph --format="%C(auto)%h%d %s %C(dim)%cr" -20'
 abbr -a gd 'git diff'
+abbr -a lg 'lazygit'
 
 starship init fish | source
 set -U fish_greeting ""
