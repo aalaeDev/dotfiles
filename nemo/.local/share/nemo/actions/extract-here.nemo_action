@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Extract Here
+Comment=Extract beside the archive
+Icon-Name=extract-archive
+Exec=sh -c '"$HOME/.local/bin/file-archive.sh" extract "$@"' _ %F
+Selection=notnone
+Extensions=zip;rar;7z;tar;gz;tgz;bz2;tbz2;xz;txz;zst;tzst;iso;cab;
+Quote=double

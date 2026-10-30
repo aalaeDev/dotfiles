@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Convert To...
+Comment=Convert images, video, audio or PDF pages to another format
+Icon-Name=applications-graphics
+Exec=sh -c '"$HOME/.local/bin/file-convert.sh" "$@"' _ %F
+Selection=notnone
+Mimetypes=image/*;video/*;audio/*;application/pdf;
+Quote=double

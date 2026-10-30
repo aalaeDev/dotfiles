@@ -1,0 +1,8 @@
+[Nemo Action]
+Name=Compress...
+Comment=Pick a format and compress the selection
+Icon-Name=package-x-generic
+Exec=sh -c '"$HOME/.local/bin/file-archive.sh" compress "$@"' _ %F
+Selection=notnone
+Extensions=any;
+Quote=double
