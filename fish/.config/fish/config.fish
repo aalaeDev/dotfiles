@@ -4,7 +4,7 @@ if status is-interactive
     #     tmux attach; or tmux new
     # end
 
-    fastfetch
+    # fastfetch
 end
 
 alias c='clear'                                                        # but don't use this one tho! just press `CLTR+l`
