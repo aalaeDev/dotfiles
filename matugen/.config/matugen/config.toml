@@ -78,3 +78,7 @@ post_hook = 'copyq exit && copyq &;  copyq select 0'
 [templates.vscode]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/vscode-color-theme.jsonc'
 output_path = '~/.vscode/extensions/hyprluna.hyprluna-theme-1.0.2/themes/hyprluna.json'
+
+[templates.fastfetch]
+input_path = "~/dotfiles/matugen/.config/matugen/templates/fastfetch.jsonc"
+output_path = "~/dotfiles/fastfetch/.config/fastfetch/config.jsonc"
