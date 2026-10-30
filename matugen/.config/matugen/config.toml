@@ -24,6 +24,11 @@ input_path = '~/dotfiles/matugen/.config/matugen/templates/hyprland-colors.lua'
 output_path = '~/dotfiles/hypr/.config/hypr/colors.lua'
 post_hook = 'hyprctl reload'
 
+[templates.icons]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/icon-colors.sh'
+output_path = '~/.cache/icon-colors.sh'
+post_hook = '~/.local/bin/icons-matugen.sh'
+
 [templates.tmux]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/tmux-colors.conf'
 output_path = '~/dotfiles/tmux/.config/tmux/colors.conf'

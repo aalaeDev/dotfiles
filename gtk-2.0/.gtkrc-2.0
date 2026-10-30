@@ -3,7 +3,7 @@
 
 include "/home/aalaeDev/.gtkrc-2.0.mine"
 gtk-theme-name="adw-gtk3-dark"
-gtk-icon-theme-name="Tela-circle-dracula-dark"
+gtk-icon-theme-name="Matugen"
 gtk-font-name="JetBrainsMonoNL Nerd Font Mono 9"
 gtk-cursor-theme-name="default"
 gtk-cursor-theme-size=24
