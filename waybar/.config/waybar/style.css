@@ -90,6 +90,13 @@ tooltip label {
     margin-right: 7px;
 }
 
+/* Group members placed directly on the bar (layouts/compact.jsonc) get a pill too */
+.modules-right > widget > #battery,
+.modules-right > widget > #custom-notification {
+    background-color: @background;
+    margin-left: 7px;
+}
+
 window#waybar.empty #window {
     background: transparent;
 }

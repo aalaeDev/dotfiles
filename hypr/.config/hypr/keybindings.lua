@@ -29,6 +29,7 @@ hl.bind(var_mainMod .. " + C", hl.dsp.exec_cmd("hyprpicker -a"))
 hl.bind(var_mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(var_mainMod .. " + Tab", hl.dsp.exec_cmd("rofi -show window"))
 hl.bind(var_mainMod .. " + W", hl.dsp.exec_cmd("sh " .. var_binPath .. "/wallset.sh"))
+hl.bind(var_mainMod .. " + B", hl.dsp.exec_cmd(var_binPath .. "/waybar-layout.sh toggle"))
 hl.bind(var_mainMod .. " + code:60", hl.dsp.exec_cmd("sh " .. var_binPath .. "/rofi-menus/rofimoji.sh"))
 
 -- ######################

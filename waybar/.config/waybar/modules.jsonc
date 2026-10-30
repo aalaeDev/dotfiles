@@ -45,6 +45,7 @@
         "rotate": 0,
         "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>",
+        "on-click-middle": "~/.local/bin/waybar-layout.sh toggle",
         "calendar": {
             "mode": "month",
             "mode-mon-col": 3,

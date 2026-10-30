@@ -6,4 +6,5 @@ swaync-client -R
 swaync-client --reload-css
 
 ~/.local/bin/waybar-window-rules.py
+~/.local/bin/waybar-layout.sh init
 waybar &

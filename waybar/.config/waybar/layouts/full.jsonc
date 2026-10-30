@@ -1,0 +1,14 @@
+// Detailed bar. Switch with Super+B or a middle click on the clock (waybar-layout.sh).
+{
+    "modules-left": ["cpu", "memory", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": [
+        "privacy",
+        "group/connectivity",
+        // "custom/tailscale",
+        "group/hardware",
+        "group/extras",
+        "clock",
+        "group/session",
+    ],
+}
