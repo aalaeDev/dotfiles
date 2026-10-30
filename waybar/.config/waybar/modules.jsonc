@@ -294,9 +294,10 @@
         "interval": 1,
         "format": "<span size='130%' rise='-1382'>󰾅</span> {used:.1f}/{total:.1f} GB",
         "states": {
-            "warning": 70,
+            "warning": 75,
             "critical": 90,
         },
-        "tooltip": true,
+        "tooltip-format": "RAM {used:.1f}/{total:.1f} GB ({percentage}%)\nSwap (zram) {swapUsed:.1f}/{swapTotal:.1f} GB\nClick: btop",
+        "on-click": "kitty -e btop",
     },
 }

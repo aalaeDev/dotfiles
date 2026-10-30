@@ -143,9 +143,11 @@ window#waybar.empty #window {
     color: @tertiary;
 }
 
+/* Blink red like a critical battery: earlyoom closes an app soon after this */
 #cpu.critical,
 #memory.critical {
     color: @error;
+    animation: critical_blink 0.8s ease-in-out infinite alternate;
 }
 
 #battery {
@@ -162,10 +164,10 @@ window#waybar.empty #window {
 
 #battery.critical:not(.charging) {
     color: @error;
-    animation: battery_blink 0.8s ease-in-out infinite alternate;
+    animation: critical_blink 0.8s ease-in-out infinite alternate;
 }
 
-@keyframes battery_blink {
+@keyframes critical_blink {
     to {
         color: @on_error;
         background-color: @error;
