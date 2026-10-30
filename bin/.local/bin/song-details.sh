@@ -29,6 +29,10 @@ fi
 title=$(playerctl metadata --format '{{title}}' 2>/dev/null | cut -c 1-40)
 artist=$(playerctl metadata --format '{{artist}}' 2>/dev/null | cut -c 1-30)
 
+# Hyprlock renders this as Pango markup, where a bare & blanks the whole label
+title=${title//&/&amp;}
+artist=${artist//&/&amp;}
+
 # 6. Format the final output
 if [[ -n "$artist" ]]; then
     echo "$icon  $title - $artist"
