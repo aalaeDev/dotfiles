@@ -1,0 +1,28 @@
+/* Wikipedia (Codex design tokens) in the matugen palette, light and night themes alike. */
+@-moz-document domain("wikipedia.org") {
+    html {
+        --background-color-base: var(--site-bg) !important;
+        --background-color-neutral: var(--surface_container) !important;
+        --background-color-neutral-subtle: var(--surface_container_low) !important;
+        --background-color-interactive: var(--surface_container_high) !important;
+        --background-color-interactive-subtle: var(--surface_container) !important;
+        --background-color-progressive-subtle: rgb(var(--primary_rgb) / 0.12) !important;
+        --background-color-progressive: var(--primary) !important;
+
+        --color-base: var(--on_surface) !important;
+        --color-emphasized: var(--on_surface) !important;
+        --color-subtle: var(--on_surface_variant) !important;
+        --color-placeholder: var(--outline) !important;
+        --color-progressive: var(--primary) !important;
+        --color-progressive--hover: var(--primary_fixed_dim) !important;
+        --color-visited: var(--tertiary) !important;
+        --color-inverted-fixed: var(--on_primary) !important;
+
+        --border-color-base: var(--outline_variant) !important;
+        --border-color-subtle: var(--outline_variant) !important;
+        --border-color-muted: var(--surface_container_high) !important;
+        --border-color-progressive: var(--primary) !important;
+
+        background-color: var(--site-bg) !important;
+    }
+}

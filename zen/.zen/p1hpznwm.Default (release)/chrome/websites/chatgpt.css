@@ -1,0 +1,29 @@
+/* chatgpt.com in the matugen palette. Its tokens (--color-surface*, --color-text*,
+* --color-border*) are redefined on many elements by utility classes, so they are
+* overridden on every element; a user-sheet !important wins over all of them. */
+@-moz-document domain("chatgpt.com") {
+    html,
+    html * {
+        /* Surfaces */
+        --color-surface: var(--site-bg) !important;
+        --color-surface-secondary: var(--surface_container) !important;
+        --color-surface-tertiary: var(--surface_container_high) !important;
+        --color-surface-elevated: var(--surface_container) !important;
+        --color-surface-elevated-secondary: var(--surface_container_high) !important;
+        --color-background-user-message: var(--surface_container_high) !important;
+        --color-background-primary-ghost-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+
+        /* Text */
+        --color-text: var(--on_surface) !important;
+        --color-text-prose: var(--on_surface) !important;
+        --color-text-secondary: var(--on_surface_variant) !important;
+        --color-text-tertiary: var(--outline) !important;
+        --color-text-user-message: var(--on_surface) !important;
+        --color-text-info: var(--primary) !important;
+
+        /* Borders */
+        --color-border: var(--outline_variant) !important;
+        --color-border-subtle: rgb(var(--outline_variant_rgb) / 0.6) !important;
+        --color-border-strong: var(--outline) !important;
+    }
+}

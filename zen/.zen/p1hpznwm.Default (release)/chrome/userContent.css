@@ -1,0 +1,58 @@
+/*
+* Web content in the matugen palette: Zen/Firefox internal pages and a few sites.
+* Firefox only loads this file when it is named userContent.css (lower-case "u").
+* @import rules must come before any other rule.
+*/
+@import url("colors.css");
+@import url("websites/bitwarden.css");
+@import url("websites/github.css");
+@import url("websites/youtube.css");
+@import url("websites/google.css");
+@import url("websites/wikipedia.css");
+@import url("websites/reddit.css");
+@import url("websites/claude.css");
+@import url("websites/chatgpt.css");
+
+/* One page background for every themed site and internal page; change it here.
+   (A uniquely named variable, so defining it on all pages is harmless.) */
+:root {
+    --site-bg: var(--surface_container_low);
+}
+
+/* New tab / home */
+@-moz-document url("about:newtab"), url("about:home"), url("about:blank") {
+    :root {
+        --newtab-background-color: var(--site-bg) !important;
+        --newtab-background-color-secondary: var(--surface_container) !important;
+        --newtab-text-primary-color: var(--on_surface) !important;
+        --newtab-text-secondary-color: var(--on_surface_variant) !important;
+        --newtab-primary-action-background: var(--primary) !important;
+        --newtab-element-hover-color: var(--surface_container_high) !important;
+        --newtab-border-color: var(--outline_variant) !important;
+    }
+
+    body {
+        background-color: var(--site-bg) !important;
+    }
+}
+
+/* Settings, add-ons and the other about: pages */
+@-moz-document url-prefix("about:preferences"), url-prefix("about:addons"), url-prefix("about:config"),
+    url-prefix("about:downloads"), url-prefix("about:profiles"), url-prefix("about:support") {
+    :root {
+        --background-color-canvas: var(--site-bg) !important;
+        --background-color-box: var(--surface_container) !important;
+        --text-color: var(--on_surface) !important;
+        --text-color-deemphasized: var(--on_surface_variant) !important;
+        --border-color: var(--outline_variant) !important;
+        --color-accent-primary: var(--primary) !important;
+        --color-accent-primary-hover: var(--primary_fixed_dim) !important;
+        --button-text-color-primary: var(--on_primary) !important;
+        --in-content-page-background: var(--site-bg) !important;
+        --in-content-page-color: var(--on_surface) !important;
+        --in-content-box-background: var(--surface_container) !important;
+        --in-content-box-border-color: var(--outline_variant) !important;
+        --in-content-primary-button-background: var(--primary) !important;
+        --in-content-primary-button-text-color: var(--on_primary) !important;
+    }
+}

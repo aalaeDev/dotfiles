@@ -1,0 +1,45 @@
+/* Google Search (dark mode) in the matugen palette. Class names are obfuscated,
+* so this sticks to ids and stable attributes. */
+@-moz-document domain("google.com") {
+    body,
+    #main,
+    #cnt,
+    #appbar,
+    #top_nav,
+    .sfbg,
+    #searchform {
+        background-color: var(--site-bg) !important;
+    }
+
+
+    textarea[name="q"],
+    input[name="q"] {
+        color: var(--on_surface) !important;
+    }
+
+    /* Results */
+    #search,
+    #rso {
+        color: var(--on_surface) !important;
+    }
+
+    #search a h3,
+    #rso a h3 {
+        color: var(--primary) !important;
+    }
+
+    #search a:visited h3,
+    #rso a:visited h3 {
+        color: var(--tertiary) !important;
+    }
+
+    cite {
+        color: var(--on_surface_variant) !important;
+    }
+
+    /* Selected search tab underline */
+    [role="navigation"] a[aria-current="page"] {
+        border-color: var(--primary) !important;
+        color: var(--primary) !important;
+    }
+}

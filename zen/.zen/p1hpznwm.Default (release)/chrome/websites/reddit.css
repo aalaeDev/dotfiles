@@ -1,0 +1,25 @@
+/* Reddit (new "shreddit" interface, dark mode) in the matugen palette. */
+@-moz-document domain("reddit.com") {
+    :root,
+    .theme-dark,
+    .theme-beta {
+        --color-neutral-background: var(--site-bg) !important;
+        --color-neutral-background-weak: var(--surface_container) !important;
+        --color-neutral-background-strong: var(--surface_container) !important;
+        --color-neutral-background-hover: var(--surface_container_high) !important;
+        --color-neutral-background-selected: var(--surface_container_highest) !important;
+        --color-neutral-background-container: var(--surface_container) !important;
+        --color-neutral-content: var(--on_surface) !important;
+        --color-neutral-content-strong: var(--on_surface) !important;
+        --color-neutral-content-weak: var(--on_surface_variant) !important;
+        --color-neutral-border: var(--outline_variant) !important;
+        --color-neutral-border-weak: var(--surface_container_high) !important;
+        --color-primary: var(--primary) !important;
+        --color-primary-background: var(--primary) !important;
+        --color-primary-background-hover: var(--primary_fixed_dim) !important;
+        --color-primary-onBackground: var(--on_primary) !important;
+        --color-secondary-background: var(--surface_container_high) !important;
+        --color-secondary-background-hover: var(--surface_container_highest) !important;
+        --shreddit-content-background: var(--site-bg) !important;
+    }
+}

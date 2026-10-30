@@ -1,0 +1,51 @@
+/* claude.ai in the matugen palette. Claude's "cds" design tokens are plain colors set
+* per theme scope ([data-mode=dark], [data-cds-theme] subtrees), so they are overridden
+* on every element; a user-sheet !important wins over the site's own definitions. */
+@-moz-document domain("claude.ai") {
+    html,
+    html * {
+        /* Surfaces, from page to popover */
+        --cds-surface-0: var(--site-bg) !important;
+        --cds-surface-1: var(--site-bg) !important;
+        --cds-surface-2: var(--surface_container) !important;
+        --cds-surface-3: var(--surface_container_high) !important;
+        --cds-surface-panel: var(--surface_container) !important;
+        --cds-surface-popover: var(--surface_container_high) !important;
+        --df-web-sidebar-bg: var(--surface_container) !important;
+
+        /* Backgrounds */
+        --cds-bg-neutral: var(--surface_container) !important;
+        --cds-bg-neutral-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+        --cds-bg-neutral-chip: var(--surface_container_high) !important;
+        --cds-bg-user-message: var(--surface_container_high) !important;
+        --cds-bg-accent: rgb(var(--primary_rgb) / 0.15) !important;
+        --cds-bg-accent-muted: rgb(var(--primary_rgb) / 0.08) !important;
+
+        /* Text */
+        --cds-text-primary: var(--on_surface) !important;
+        --cds-text-secondary: var(--on_surface_variant) !important;
+        --cds-text-stays-secondary: var(--on_surface_variant) !important;
+        --cds-text-muted: var(--outline) !important;
+        --cds-text-accent: var(--primary) !important;
+        --cds-text-link-color: var(--primary) !important;
+
+        /* Borders */
+        --cds-border: var(--outline_variant) !important;
+        --cds-border-line: var(--outline_variant) !important;
+        --cds-border-strong: var(--outline) !important;
+        --cds-border-stronger: var(--outline) !important;
+        --cds-border-accent: var(--primary) !important;
+
+        /* Fills (controls, fields, accents) */
+        --cds-fill-accent: var(--primary) !important;
+        --cds-fill-accent-hover: var(--primary_fixed_dim) !important;
+        --cds-fill-brand: var(--primary) !important;
+        --cds-fill-brand-hover: var(--primary_fixed_dim) !important;
+        --cds-fill-control: var(--surface_container_high) !important;
+        --cds-fill-control-hover: var(--surface_container_highest) !important;
+        --cds-fill-field: var(--surface_container) !important;
+        --cds-fill-ghost-hover: rgb(var(--on_surface_rgb) / 0.08) !important;
+        --cds-fill-ghost-selected: rgb(var(--on_surface_rgb) / 0.12) !important;
+        --cds-ring-color: var(--primary) !important;
+    }
+}
