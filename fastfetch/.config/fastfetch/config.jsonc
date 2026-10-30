@@ -4,8 +4,8 @@
     "type": "builtin",
     "source": "arch",
     "color": {
-      "1": "#a3c9fe",
-      "2": "#bbc7db"
+      "1": "#bdce80",
+      "2": "#c4caa9"
     }
   },
   "display": {
@@ -23,32 +23,32 @@
     {
       "type": "os",
       "key": "   OS",
-      "keyColor": "#a3c9fe"
+      "keyColor": "#bdce80"
     },
     {
       "type": "kernel",
       "key": "   Kernel",
-      "keyColor": "#a3c9fe"
+      "keyColor": "#bdce80"
     },
     {
       "type": "packages",
       "key": "  󰏗 Packages",
-      "keyColor": "#d8bde3"
+      "keyColor": "#a1d0c5"
     },
     {
       "type": "display",
       "key": "  󰍹 Display",
-      "keyColor": "#d8bde3"
+      "keyColor": "#a1d0c5"
     },
     {
       "type": "wm",
       "key": "  󰖲 WM",
-      "keyColor": "#bbc7db"
+      "keyColor": "#c4caa9"
     },
     {
       "type": "terminal",
       "key": "   Terminal",
-      "keyColor": "#bbc7db"
+      "keyColor": "#c4caa9"
     },
     {
       "type": "custom",
@@ -67,24 +67,24 @@
       "type": "cpu",
       "format": "{1}",
       "key": "   CPU",
-      "keyColor": "#a3c9fe"
+      "keyColor": "#bdce80"
     },
     {
       "type": "gpu",
       "format": "{2}",
       "key": "   GPU",
-      "keyColor": "#a3c9fe"
+      "keyColor": "#bdce80"
     },
     {
       "type": "gpu",
       "format": "{3}",
       "key": "   GPU Driver",
-      "keyColor": "#bbc7db"
+      "keyColor": "#c4caa9"
     },
     {
       "type": "memory",
       "key": "  󰍛 Memory",
-      "keyColor": "#bbc7db"
+      "keyColor": "#c4caa9"
     },
     {
       "type": "command",
@@ -95,7 +95,7 @@
     {
       "type": "uptime",
       "key": "  󱫐 Uptime ",
-      "keyColor": "#a3c9fe"
+      "keyColor": "#bdce80"
     },
     {
       "type": "custom",
