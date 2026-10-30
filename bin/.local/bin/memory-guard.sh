@@ -55,7 +55,9 @@ watch_memory() {
 watch_kills() {
     journalctl -f -n 0 -o cat -u earlyoom 2> /dev/null | while read -r line; do
         [[ "$line" =~ sending\ SIG[A-Z]+\ to\ process\ [0-9]+\ uid\ [0-9]+\ \"([^\"]+)\".*VmRSS\ ([0-9]+)\ MiB ]] || continue
-        notify "critical" "Closed ${BASH_REMATCH[1]} to free memory" "It was using ${BASH_REMATCH[2]} MiB."
+        # GiB with a decimal: swaync offers a "copy" button for bare 4+ digit numbers (2FA codes)
+        notify "critical" "Closed ${BASH_REMATCH[1]} to free memory" \
+            "It was using $(awk -v m="${BASH_REMATCH[2]}" 'BEGIN {printf "%.1f", m / 1024}') GiB."
     done
 }
 
