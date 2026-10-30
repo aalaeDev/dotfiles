@@ -99,3 +99,8 @@ output_path = "~/dotfiles/fastfetch/.config/fastfetch/config.jsonc"
 [templates.zen]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/zen-colors.css'
 output_path = '~/dotfiles/zen/.zen/p1hpznwm.Default (release)/chrome/colors.css'
+
+# Betterbird picks up a new colors.css live too, through the same dotfiles.cfg
+[templates.betterbird]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/zen-colors.css'
+output_path = '~/dotfiles/betterbird/.thunderbird/7corxhpe.default-default/chrome/colors.css'
