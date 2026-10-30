@@ -2,10 +2,11 @@
 #
 # -m 6,3 / -s 15,5  SIGTERM when available RAM < 6% AND free swap < 15%, SIGKILL below 3% / 5%
 # -r 0              no periodic memory report in the journal
-# -g                kill the whole process group of the chosen process
+# (no -g: apps started by Hyprland share its process group, so killing a
+#  group would take the whole session down with one Zen tab)
 # --prefer          Zen tab processes first (only that tab crashes), then Electron apps
 # --avoid           never the desktop session itself
 #
 # systemd splits this variable on whitespace and does not honour quotes, so the
 # regexes use "." where a process name has a space (names are the 15-char comm).
-EARLYOOM_ARGS="-m 6,3 -s 15,5 -r 0 -g --prefer ^(Isolated.Web.Co|Web.Content|WebExtensions|vesktop|electron)$ --avoid ^(Hyprland|Xwayland|waybar|kitty|swaync|hyprlock|hypridle|sddm|systemd.*|pipewire.*|wireplumber|dbus.*)$"
+EARLYOOM_ARGS="-m 6,3 -s 15,5 -r 0 --prefer ^(Isolated.Web.Co|Web.Content|WebExtensions|vesktop|electron)$ --avoid ^(Hyprland|Xwayland|waybar|kitty|swaync|hyprlock|hypridle|sddm|systemd.*|pipewire.*|wireplumber|dbus.*)$"
