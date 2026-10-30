@@ -1,8 +1,10 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    # if not set -q TMUX
-    #     tmux attach; or tmux new
-    # end
+    # Each kitty window gets its own tmux session; exiting tmux closes the
+    # window, and closing the window destroys the session (destroy-unattached)
+    if not set -q TMUX; and test "$TERM" = xterm-kitty
+        tmux new-session; and exit
+    end
 
     # fastfetch
 end
