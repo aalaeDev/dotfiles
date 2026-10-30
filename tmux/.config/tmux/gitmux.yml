@@ -1,0 +1,11 @@
+tmux:
+  symbols:
+    branch: ""
+    ahead: "󰁝"
+    behind: "󰁅"
+    staged: "󰄬 "
+    conflict: "󰅖 "
+    modified: "󰏫 "
+    untracked: "󰐕 "
+    stashed: "󰀼 "
+    clean: "󰗠"
