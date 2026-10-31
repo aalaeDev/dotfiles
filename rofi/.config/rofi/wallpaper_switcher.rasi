@@ -1,214 +1,109 @@
-/*****----- Configuration -----*****/
+/* Filmstrip docked to the bottom of the screen. The cards come from wallpaper-cards.sh. */
 configuration {
-    // CHANGE 1: Use 'filebrowser' mode instead of 'drun'
-    modi:                          "filebrowser";
-
-    // You may want to set a starting directory for your wallpapers
-    // Replace /path/to/your/wallpapers with your actual directory
-    // file-browser-dir:              "/home/user/Pictures/Wallpapers";
-
-    show-icons:                    true;
-    // The prompt is no longer for drun, so we can change the text
-    display-filebrowser:           "🖼️ ";
-    // drun-display-format is ignored in filebrowser mode
-
-    // Optional: Hide the full path to make the display cleaner
-    // file-browser-display-format:   "{name}";
-    hover-select: true;
+    show-icons: true;
 }
 
-/*****----- Global Properties -----*****/
-@import                       "./colors.rasi"
+@import "./colors.rasi"
 
-/*****----- Main Window -----*****/
 * {
-    font: "JetBrainsMono NF 10";
-    border-colour:               var(selected);
-    handle-colour:               var(selected);
-    background-colour:           var(background);
-    foreground-colour:           var(foreground);
-    alternate-background:        var(background-alt);
-    normal-background:           var(background);
-    normal-foreground:           var(foreground);
-    urgent-background:           var(urgent);
-    urgent-foreground:           var(background);
-    active-background:           var(active);
-    active-foreground:           var(background);
-    selected-normal-background:  var(selected);
-    selected-normal-foreground:  var(background);
-    selected-urgent-background:  var(active);
-    selected-urgent-foreground:  var(background);
-    selected-active-background:  var(urgent);
-    selected-active-foreground:  var(background);
-    alternate-normal-background: var(background);
-    alternate-normal-foreground: var(foreground);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
+    font:             "JetBrainsMono Nerd Font 10";
+    background-color: transparent;
+    text-color:       @foreground;
 }
 
-/*****----- Main Window -----*****/
 window {
-    /* properties for window widget */
-    transparency:                "real";
-    location:                    center;
-    anchor:                      center;
-    fullscreen:                  false;
-    width:                       700px;
-    x-offset:                    0px;
-    y-offset:                    0px;
-
-    /* properties for all widgets */
-    enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      2px solid;
-    border-radius:               10px;
-    border-color:                @border-colour;
-    cursor:                      "default";
-    /* Backgroud Colors */
-    background-color:            @background-colour;
-    /* Backgroud Image */
-    //background-image:          url("/path/to/image.png", none);
-    /* Simple Linear Gradient */
-    //background-image:          linear-gradient(red, orange, pink, purple);
-    /* Directional Linear Gradient */
-    //background-image:          linear-gradient(to bottom, pink, yellow, magenta);
-    /* Angle Linear Gradient */
-    //background-image:          linear-gradient(45, cyan, purple, indigo);
+    transparency:     "real";
+    location:         south;
+    anchor:           south;
+    y-offset:         -14px;
+    width:            97%;
+    border:           1px solid;
+    border-radius:    22px;
+    border-color:     @outline-variant;
+    background-color: @background-glass;
+    cursor:           "default";
 }
-/*****----- Main Box -----*****/
 
 mainbox {
-    enabled:                       true;
-    spacing:                       20px;
-    margin:                        0px;
-    padding:                       20px;
-    border:                        0px solid;
-    border-radius:                 0px 0px 0px 0px;
-    border-color:                  @selected;
-    background-color:              transparent;
-    children:                      [ "inputbar", "listview" ];
+    spacing:  12px;
+    padding:  16px;
+    children: [ "inputbar", "message", "listview" ];
 }
 
-/*****----- Inputbar -----*****/
 inputbar {
-    enabled:                       false;
-    spacing:                       10px;
-    margin:                        0px;
-    padding:                       0px;
-    border:                        0px solid;
-    border-radius:                 0px;
-    border-color:                  @selected;
-    background-color:              @background;
-    text-color:                    @foreground;
-    children:                      [ "prompt", "entry" ]; // Added prompt back to children
+    padding:          10px 14px;
+    spacing:          8px;
+    border-radius:    12px;
+    background-color: @surface-container;
+    children:         [ "textbox-icon", "entry", "num-filtered-rows", "textbox-num-sep", "num-rows" ];
 }
-
-prompt {
-    enabled:                       false;
-    background-color:              inherit;
-    text-color:                    inherit;
+textbox-icon {
+    expand:     false;
+    str:        "󰸉";
+    text-color: @selected;
 }
-// Removed textbox-prompt-colon as it is less common in modern themes,
-// but you can put it back if you like a colon after the prompt
 entry {
-    enabled:                       false;
-    background-color:              inherit;
-    text-color:                    inherit;
-    cursor:                        text;
-    placeholder:                   "Search Wallpapers...";
-    placeholder-color:             inherit;
-    vertical-align:                0.5;
-    horizontal-align:              0.0; // Left align the text for easier file path reading
+    cursor:            text;
+    placeholder:       "Search wallpapers";
+    placeholder-color: @foreground-dim;
 }
-
-/*****----- Listview -----*****/
-listview {
-    enabled:                       true;
-    // CHANGE 2: Increase columns and lines to show a grid of images
-    columns:                       4;
-    lines:                         20;
-    cycle:                         true;
-    dynamic:                       true;
-    scrollbar:                     false;
-    layout:                        horizontal;
-    reverse:                       false;
-    fixed-height:                  true;
-    fixed-columns:                 true;
-
-    spacing:                       10px;
-    margin:                        0px;
-    padding:                       0px;
-    border:                        0px solid;
-    border-radius:                 0px;
-    border-color:                  @selected;
-    background-color:              transparent;
-    text-color:                    @foreground;
-    cursor:                        "default";
+num-filtered-rows {
+    expand:     false;
+    text-color: @selected;
+    font:       "JetBrainsMono Nerd Font Bold 10";
 }
-scrollbar {
-    handle-width:                  5px ;
-    handle-color:                  @selected;
-    border-radius:                 0px;
-    background-color:              @background-alt;
+textbox-num-sep {
+    expand:     false;
+    str:        "/";
+    text-color: @foreground-dim;
 }
-
-/*****----- Elements -----*****/
-element {
-    enabled:                       true;
-    spacing:                       5px; // Reduced spacing to fit more in the grid
-    margin:                        0px;
-    padding:                       10px; // Reduced padding
-    border:                        0px solid;
-    border-radius:                 10px; // Smaller border radius on elements
-    border-color:                  @selected;
-    background-color:              transparent;
-    text-color:                    @foreground;
-    orientation:                   vertical;
-    cursor:                        pointer;
+num-rows {
+    expand:     false;
+    text-color: @foreground-dim;
 }
-element normal.normal {
-    background-color:              transparent;
-    text-color:                    @foreground;
-}
-element selected.normal {
-    // Keep this a distinct color so the selection is clear
-    background-color:              @selected;
-    text-color:                    @background;
-}
-element-icon {
-    background-color:              transparent;
-    text-color:                    inherit;
-    // CHANGE 3: Increase icon size to better display wallpaper thumbnails
-    size:                          300px;
-    border-radius: 12px;
-    cursor:                        inherit;
-}
-element-text {
-    background-color:              transparent;
-    text-color:                    inherit;
-    highlight:                     inherit;
-    cursor:                        inherit;
-    vertical-align:                0.5;
-    horizontal-align:              0.5;
-    // Hide text in element to focus on the image thumbnail
-    // enabled:                       false;
-}
-/*****----- Message -----*****/
-error-message {
-    padding:                       20px;
-    border:                        0px solid;
-    border-radius:                 0px;
-    border-color:                  @selected;
-    background-color:              black / 10%;
-    text-color:                    @foreground;
+message {
+    border:           0px;
+    padding:          10px 14px;
+    border-radius:    12px;
+    background-color: @surface-container;
 }
 textbox {
-    background-color:              transparent;
-    text-color:                    @foreground;
-    vertical-align:                0.5;
-    horizontal-align:              0.0;
-    highlight:                     none;
+    vertical-align: 0.5;
+    markup:         true;
+    text-color:     @foreground-dim;
+}
+
+listview {
+    border:           0px;
+    layout:           vertical;
+    flow:             horizontal;
+    columns:          5;
+    lines:            1;
+    cycle:            true;
+    dynamic:          false;
+    fixed-columns:    true;
+    fixed-height:     true;
+    scrollbar:        false;
+    spacing:          12px;
+    cursor:           "default";
+}
+
+element {
+    padding:       6px;
+    border:        3px solid;
+    border-radius: 24px;
+    border-color:  transparent;
+    cursor:        pointer;
+    children:      [ "element-icon" ];
+}
+element normal.normal, element alternate.normal {
+    background-color: transparent;
+}
+element selected.normal, element selected.active {
+    border-color:     @selected;
+    background-color: @primary-container;
+}
+element-icon {
+    size:   340px;
+    cursor: inherit;
 }
