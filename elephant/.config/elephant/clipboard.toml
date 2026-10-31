@@ -1,3 +1,5 @@
 # History stays short-lived: anything copied, passwords included, is kept on disk until cleaned up
 max_items = 50
 auto_cleanup = 1440
+# Enter inserts the entry instead of only copying it
+command = "~/.local/bin/clipboard-paste.sh"

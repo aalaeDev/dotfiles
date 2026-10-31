@@ -6,6 +6,8 @@ keybind_symbols = true
 
 [placeholders]
 "default" = { input = "Search apps, files, windows, or do the math…", list = "Nothing found" }
+"clipboard" = { input = "Search clipboard history…", list = "Nothing copied yet" }
+"windows" = { input = "Search open windows…", list = "No open windows" }
 
 [providers]
 default = ["desktopapplications", "windows", "calc", "files", "websearch"]
