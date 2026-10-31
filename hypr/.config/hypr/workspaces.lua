@@ -37,3 +37,12 @@ hl.window_rule({
     size = "500 600",
     opacity = 0.95,
 })
+
+-- OnlyOffice's tooltips have a transparent margin for their shadow: xray blur fills it with wallpaper
+hl.window_rule({
+    name = "onlyoffice-no-blur",
+    match = {
+        class = "ONLYOFFICE",
+    },
+    no_blur = true,
+})
