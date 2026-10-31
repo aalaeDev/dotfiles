@@ -2,9 +2,9 @@
 
 # Prayer times from Aladhan, cached by month so they keep working offline.
 #   athan.sh waybar   Waybar custom module JSON
-#   athan.sh card     Text for the notification center card: state line, then the timetable
 #   athan.sh percent  How far along the bar is, 0-100
 #   athan.sh status   "mode epoch name" of the current state, for nc-daemon.sh
+#   athan.sh json     Hijri date, place, state and today's times, for nc-daemon.sh
 # After an athan it shows how late you are for ATHAN_LATE_MINUTES, then counts down to the next one.
 
 # shellcheck source=/dev/null
@@ -15,7 +15,6 @@ source "$(dirname "$(readlink -f "$0")")/rice-env.sh"
 PRAYERS=(Fajr Dhuhr Asr Maghrib Isha)
 ICON=$'\U000F1827'         # Mosque
 BAR_CELLS=20
-CARD_WIDTH=50              # Characters that fit one line of the notification center card
 RETRY_AFTER=300            # Seconds to wait after a failed download
 NOW="${NOW:-$(date +%s)}"  # Overridable to test any moment
 
@@ -132,28 +131,25 @@ print_waybar() {
         '{text: $text, tooltip: $tooltip, class: $class}'
 }
 
-# swaync labels are plain text, so columns come from a monospaced font and counted spaces
-print_card() {
-    local left right names="" times="" n e i start
+# Sunrise isn't a prayer, so it's only listed here and never part of the state
+print_json() {
+    local state
     compute_state || return 0
-    left="$ICON  $name"
-    if [[ "$mode" == late ]]; then right="${late_min}m late"; else right="in $(remaining)"; fi
-    printf '%s%*s\n' "$left" $(( CARD_WIDTH - ${#left} )) "$right"
-    # Five columns spread across the width, the last one flush right
-    i=0
-    while read -r n e; do
-        start=$(( i * (CARD_WIDTH - 5) / 4 ))
-        names+="$(printf '%*s%s' $(( start - ${#names} )) "" "$n")"
-        times+="$(printf '%*s%s' $(( start - ${#times} )) "" "$(clock_of "$e")")"
-        i=$(( i + 1 ))
-    done < <(day_times "$(date -d "@$NOW" +%F)")
-    echo "$names"
-    echo "$times"
+    if [[ "$mode" == late ]]; then state="$name, ${late_min}m late"; else state="$name in $(remaining)"; fi
+    jq -c --arg day "$(date -d "@$NOW" +%d-%m-%Y)" --arg city "$CITY" --arg country "$COUNTRY" \
+        --arg mode "$mode" --arg name "$name" --arg state "$state" '
+        .data[] | select(.date.gregorian.date == $day)
+        | .timings as $t | .date.hijri as $h
+        | {city: $city, country: $country, mode: $mode, name: $name, state: $state,
+           hijri: "\($h.day | tonumber) \($h.month.en) \($h.year) \($h.designation.abbreviated)",
+           times: [{Fajr: "\uDB81\uDD9A", Sunrise: "\uDB81\uDD9C", Dhuhr: "\uDB81\uDD99",
+                    Asr: "\uDB81\uDD95", Maghrib: "\uDB81\uDD9B", Isha: "\uDB81\uDD94"}
+                   | to_entries[] | {name: .key, icon: .value, time: ($t[.key] | split(" ")[0])}]}' "$(month_file "$(date -d "@$NOW" +%Y-%m)")"
 }
 
 case "${1:-waybar}" in
     waybar)  print_waybar ;;
-    card)    print_card ;;
+    json)    print_json ;;
     percent) compute_state && echo "$percent" ;;
     status)  compute_state && echo "$mode $at $name" ;;
 esac

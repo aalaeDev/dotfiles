@@ -2,8 +2,8 @@
 
 # Current weather from Open-Meteo, cached so it keeps showing the last value offline.
 #   weather.sh waybar   Waybar custom module JSON
-#   weather.sh card     Text for the notification center card
-# The city name is never printed: this bar shows up in screenshots.
+#   weather.sh json     Current details and forecast, for the notification center (nc-daemon.sh)
+# The city name never reaches the bar, which shows up in screenshots. Only the notification center names it.
 
 # shellcheck source=/dev/null
 source "$(dirname "$(readlink -f "$0")")/rice-env.sh"
@@ -12,12 +12,14 @@ source "$(dirname "$(readlink -f "$0")")/rice-env.sh"
 # --- Configuration ---
 MAX_AGE=1800     # Seconds before the forecast is refreshed
 RETRY_AFTER=300  # Seconds to wait after a failed download
-CARD_WIDTH=50    # Characters that fit one line of the notification center card
 
 key=$(printf '%s|%s|%s' "$CITY" "$COUNTRY" "$WEATHER_UNITS" | md5sum | cut -c1-8)
 place="$RICE_CACHE/weather-$key-place.json"
 forecast="$RICE_CACHE/weather-$key.json"
+air="$RICE_CACHE/weather-$key-air.json"
 failed="$forecast.failed"
+wind_unit=kmh
+[[ "$WEATHER_UNITS" == fahrenheit ]] && wind_unit=mph
 
 # --- Helpers ---
 age_of() {
@@ -42,6 +44,19 @@ fetch_place() {
     fi
 }
 
+# Nice to have: when it fails the panel just shows a dash
+fetch_air() {
+    local tmp
+    tmp=$(mktemp "$air.XXXXXX")
+    if curl -fsS -m 8 --get https://air-quality-api.open-meteo.com/v1/air-quality \
+        -d "latitude=$(jq -r .latitude "$place")" -d "longitude=$(jq -r .longitude "$place")" \
+        -d current=us_aqi -o "$tmp" 2> /dev/null && jq -e .current "$tmp" > /dev/null 2>&1; then
+        mv "$tmp" "$air"
+    else
+        rm -f "$tmp"
+    fi
+}
+
 refresh() {
     [[ -s "$forecast" ]] && (( $(age_of "$forecast") < MAX_AGE )) && return 0
     [[ -e "$failed" ]] && (( $(age_of "$failed") < RETRY_AFTER )) && return 0
@@ -49,12 +64,13 @@ refresh() {
     tmp=$(mktemp "$forecast.XXXXXX")
     if fetch_place && curl -fsS -m 8 --get https://api.open-meteo.com/v1/forecast \
         -d "latitude=$(jq -r .latitude "$place")" -d "longitude=$(jq -r .longitude "$place")" \
-        -d current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day \
+        -d current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day,wind_speed_10m,visibility \
         -d daily=weather_code,temperature_2m_max,temperature_2m_min \
-        -d "temperature_unit=$WEATHER_UNITS" -d timezone=auto -d forecast_days=3 \
+        -d "temperature_unit=$WEATHER_UNITS" -d "wind_speed_unit=$wind_unit" -d timezone=auto -d forecast_days=3 \
         -o "$tmp" 2> /dev/null && jq -e .current "$tmp" > /dev/null 2>&1; then
         mv "$tmp" "$forecast"
         rm -f "$failed"
+        fetch_air
     else
         rm -f "$tmp"
         touch "$failed"
@@ -100,8 +116,21 @@ case "${1:-waybar}" in
         jq -cn --arg text "$temp° <span size='130%' rise='-1451'>$icon</span>" --arg tooltip "$tooltip" \
             '{text: $text, tooltip: $tooltip}'
         ;;
-    card)
-        left="$icon  $temp°  $desc"
-        printf '%s%*s\n' "$left" $(( CARD_WIDTH - ${#left} )) "feels like $feels°"
+    json)
+        days=$(while read -r day high low day_code; do
+            IFS='|' read -r day_icon day_desc <<< "$(describe "$day_code" 1)"
+            jq -cn --arg day "$(date -d "$day" +%A)" --arg high "$high" --arg low "$low" \
+                --arg icon "$day_icon" --arg desc "$day_desc" '$ARGS.named'
+        done < <(jq -r '.daily | range(1; .time | length) as $i
+            | "\(.time[$i]) \(.temperature_2m_max[$i] | round) \(.temperature_2m_min[$i] | round) \(.weather_code[$i])"' "$forecast") | jq -cs .)
+        jq -c --arg city "$CITY" --arg icon "$icon" --arg desc "$desc" --arg temp "$temp" \
+            --arg humidity "$humidity" --arg wind_unit "${wind_unit/kmh/km/h}" --arg units "$WEATHER_UNITS" \
+            --arg aqi "$(jq -r '.current.us_aqi // empty' "$air" 2> /dev/null)" --argjson days "$days" '
+            .current as $c
+            | {city: $city, icon: $icon, desc: $desc, temp: $temp, humidity: $humidity, aqi: $aqi, days: $days,
+               wind: (if $c.wind_speed_10m == null then "" else "\($c.wind_speed_10m | round) \($wind_unit)" end),
+               visibility: (if $c.visibility == null then ""
+                   elif $units == "fahrenheit" then "\(($c.visibility / 160.934 | round) / 10) mi"
+                   else "\(($c.visibility / 100 | round) / 10) km" end)}' "$forecast"
         ;;
 esac
