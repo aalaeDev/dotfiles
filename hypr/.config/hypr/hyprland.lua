@@ -130,6 +130,36 @@ hl.animation({
     speed = 3,
     bezier = "default",
 })
+-- Layers: the same curves as windows; rofi grows into place instead of sliding from an edge
+hl.animation({
+    leaf = "layersIn",
+    enabled = true,
+    speed = 3,
+    bezier = "wind",
+})
+hl.animation({
+    leaf = "layersOut",
+    enabled = true,
+    speed = 1.5,
+    bezier = "winOut",
+})
+hl.animation({
+    leaf = "fadeLayersIn",
+    enabled = true,
+    speed = 3,
+    bezier = "wind",
+})
+hl.animation({
+    leaf = "fadeLayersOut",
+    enabled = true,
+    speed = 1.5,
+    bezier = "winOut",
+})
+hl.layer_rule({
+    name = "rofi-popin",
+    match = { namespace = "^rofi$" },
+    animation = "popin 92%",
+})
 hl.animation({
     leaf = "workspaces",
     enabled = true,
