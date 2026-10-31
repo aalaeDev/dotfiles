@@ -38,6 +38,10 @@ while IFS= read -r -d '' file; do
 done < <(find "$SRC/autoconfig" -type f -print0)
 sudo rm -f /etc/pacman.d/hooks/zen-autoconfig.hook       # replaced by dotfiles-autoconfig.hook
 
+echo ":: Patching OnlyOffice editors for local themes"
+# The pacman hook runs this again after app updates
+sudo sh /etc/pacman.d/scripts/onlyoffice-theme-patch.sh
+
 echo ":: Applying"
 sudo systemctl daemon-reload                      # zram-generator creates dev-zram0.swap
 sudo systemctl start dev-zram0.swap

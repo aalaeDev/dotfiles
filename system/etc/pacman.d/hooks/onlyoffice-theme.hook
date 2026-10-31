@@ -1,0 +1,11 @@
+# OnlyOffice updates replace its editor pages: put the local theme fix back
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = onlyoffice-bin
+
+[Action]
+Description = Patching OnlyOffice editors for local themes...
+When = PostTransaction
+Exec = /usr/bin/sh /etc/pacman.d/scripts/onlyoffice-theme-patch.sh

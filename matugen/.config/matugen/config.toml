@@ -127,3 +127,10 @@ output_path = '~/dotfiles/betterbird/.thunderbird/7corxhpe.default-default/chrom
 [templates.vesktop]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/vesktop.css'
 output_path = '~/.config/vesktop/themes/matugen.theme.css'
+
+# OnlyOffice reads this at startup; the post_hook updates open pages live. Only its native
+# tab strip, menus and tooltips wait for a restart
+[templates.onlyoffice]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/onlyoffice.json'
+output_path = '~/.local/share/onlyoffice/desktopeditors/uithemes/matugen.json'
+post_hook = '~/.local/bin/onlyoffice-live-theme.sh'
