@@ -1,7 +1,7 @@
 @import "colors.css";
 
 /* Pill background: only the wallpaper sits behind the bar, so it can be quite see-through */
-@define-color pill_background alpha(@background, 0.8);
+@define-color pill_background alpha(@background, 0.85);
 
 * {
     border: none;
