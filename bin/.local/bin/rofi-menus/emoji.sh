@@ -8,6 +8,7 @@
 # --- Configuration ---
 SELF="$HOME/.local/bin/rofi-menus/emoji.sh"
 BUILD="$HOME/.local/bin/rofi-menus/emoji-data.py"
+INSERT="$HOME/.local/bin/clipboard-insert.sh"
 CACHE="$HOME/.cache/rofi-emoji"
 HISTORY="$HOME/.local/state/rofi-emoji"
 PICK="${XDG_RUNTIME_DIR:-/tmp}/rofi-emoji-pick"
@@ -60,39 +61,6 @@ rank() {
         }' "$base" > "$all.tmp" && mv "$all.tmp" "$all"
 }
 
-# The one format worth keeping from the clipboard: text, else an image, never an app's private type
-clipboard_type() {
-    local types
-    types=$(wl-paste --list-types 2> /dev/null)
-    grep -m1 -Fx 'text/plain;charset=utf-8' <<< "$types" \
-        || grep -m1 -Fx 'text/plain' <<< "$types" \
-        || grep -m1 '^image/' <<< "$types"
-}
-
-# Pastes rather than types: wtype's fake keyboard garbles emoji in Chromium and Electron apps. Shift+Insert
-# works in every toolkit, and terminals read it from primary. The clipboard ends up as it was.
-insert() {
-    local saved type
-    saved=$(mktemp)
-    type=$(clipboard_type)
-    [[ -n "$type" ]] && wl-paste --no-newline --type "$type" > "$saved"
-
-    # Marked sensitive so clipboard managers leave the emoji out of their history
-    printf '%s' "$1" | wl-copy --sensitive
-    printf '%s' "$1" | wl-copy --primary --sensitive
-    sleep 0.15
-    hyprctl dispatch 'hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert" })' > /dev/null
-
-    # Slow apps read the paste late
-    sleep 0.4
-    if [[ -s "$saved" ]]; then
-        wl-copy --type "$type" < "$saved"
-    else
-        wl-copy --clear
-    fi
-    rm -f "$saved"
-}
-
 open_menu() {
     local kind="$1" tab modi="" tabs first
     if [[ "$kind" == "emoji" ]]; then
@@ -133,7 +101,7 @@ while true; do
             [[ "$kind" == "emoji" ]] && kind="kaomoji" || kind="emoji"
             continue
             ;;
-        insert) insert "$text" ;;
+        insert) "$INSERT" "$text" ;;
         copy)   printf '%s' "$text" | wl-copy ;;
     esac
     echo "$text" >> "$HISTORY/$kind"
