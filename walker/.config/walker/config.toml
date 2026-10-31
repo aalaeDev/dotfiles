@@ -1,0 +1,17 @@
+# Only what differs from /etc/xdg/walker/config.toml
+theme = "rice"
+selection_wrap = true
+hide_action_hints = true
+keybind_symbols = true
+
+[placeholders]
+"default" = { input = "Search apps, files, windows, or do the math…", list = "Nothing found" }
+
+[providers]
+default = ["desktopapplications", "windows", "calc", "files", "websearch"]
+empty = ["desktopapplications"]
+max_results = 30
+
+[providers.max_results_provider]
+files = 6
+windows = 4

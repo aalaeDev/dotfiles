@@ -26,6 +26,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("[workspace special:background silent] swaync")
     hl.exec_cmd("[workspace special:background silent] nm-applet --indicator")
     hl.exec_cmd("[workspace special:background silent] copyq --start-server")
+    hl.exec_cmd("[workspace special:background silent] elephant")
+    hl.exec_cmd("[workspace special:background silent] walker --gapplication-service")
     hl.exec_cmd("[workspace special:background silent] localsend --hidden")
     hl.exec_cmd("[workspace special:background silent] xfce4-power-manager")
     hl.exec_cmd("[workspace special:mail silent] betterbird")
@@ -159,6 +161,11 @@ hl.layer_rule({
     name = "rofi-popin",
     match = { namespace = "^rofi$" },
     animation = "popin 92%",
+})
+hl.layer_rule({
+    name = "walker-popin",
+    match = { namespace = "^walker$" },
+    animation = "popin 96%",
 })
 hl.animation({
     leaf = "workspaces",

@@ -1,0 +1,224 @@
+/* The same design as the rofi menus: a hero from the current wallpaper, tinted surfaces, filled pills */
+@import url("colors.css");
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+}
+
+popover {
+  background: @surface_container;
+  border: 1px solid @outline_variant;
+  border-radius: 14px;
+  padding: 8px;
+}
+
+scrollbar {
+  opacity: 0;
+}
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 28px;
+}
+
+.box-wrapper {
+  background: @surface;
+  border: 1px solid @outline_variant;
+  border-radius: 18px;
+  min-width: 1058px; /* The width with a preview open, so the panel never resizes for one */
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Hero */
+.search-container {
+  background-image: url("banner.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.input {
+  margin: 114px 16px 16px 16px;
+  background: alpha(@surface, 0.95);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: @on_surface;
+  caret-color: @primary;
+}
+
+.input placeholder {
+  color: @on_surface_variant;
+}
+
+.input selection {
+  background: @primary_container;
+  color: @on_primary_container;
+}
+
+/* Results */
+.content-container {
+  margin: 2px 12px 12px 12px;
+}
+
+.placeholder,
+.elephant-hint {
+  color: @on_surface_variant;
+}
+
+.list {
+  color: @on_surface;
+}
+
+.item-box {
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+child:selected .item-box,
+row:selected .item-box {
+  background: @primary_container;
+  color: @on_primary_container;
+}
+
+.item-text {
+  font-weight: 500;
+}
+
+child:selected .item-text,
+row:selected .item-text {
+  font-weight: 700;
+}
+
+.item-subtext {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.providerlist .item-subtext {
+  opacity: 0.75;
+}
+
+.item-image-text {
+  font-size: 22px;
+}
+
+.item-quick-activation {
+  background: @surface_container_high;
+  color: @on_surface_variant;
+  border-radius: 7px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.calc .item-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: @primary;
+}
+
+child:selected .calc .item-text,
+row:selected .calc .item-text {
+  color: @on_primary_container;
+}
+
+.symbols .item-image {
+  font-size: 22px;
+}
+
+/* Walker only shows and hides the preview, so it comes in on keyframes. It moves without touching the layout. */
+@keyframes preview-open {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.preview {
+  color: @on_surface;
+}
+
+.preview-box {
+  background: @surface_container;
+  border-radius: 12px;
+  animation: preview-open 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.preview-stack {
+  margin: 12px;
+}
+
+.preview .large-icons {
+  -gtk-icon-size: 64px;
+}
+
+.preview-content.archlinuxpkgs,
+.preview-content.dnfpackages,
+.preview-content.aptpackages {
+  font-family: "JetBrainsMono Nerd Font";
+}
+
+:not(.calc).current {
+  font-style: italic;
+}
+
+/* The prefix guide under the results */
+.guide {
+  margin: 0 12px 12px 12px;
+  font-size: 11px;
+}
+
+.guide-key {
+  color: @primary;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.guide-label {
+  color: @on_surface_variant;
+  font-size: 11px;
+}
+
+/* Key hints */
+.keybinds {
+  margin: 0 12px 10px 12px;
+  padding: 8px 12px;
+  background: @surface_container;
+  border-radius: 10px;
+  font-size: 11px;
+  color: @on_surface_variant;
+}
+
+.keybind-button {
+  opacity: 0.8;
+}
+
+.keybind-button:hover {
+  opacity: 1;
+}
+
+.keybind-bind {
+  color: @primary;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.keybind-label {
+  font-size: 11px;
+}
+
+.error {
+  margin: 0 12px 10px 12px;
+  padding: 10px;
+  border-radius: 10px;
+  background: @error;
+  color: @on_error;
+}

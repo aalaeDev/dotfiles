@@ -52,6 +52,10 @@ post_hook = 'kill -SIGUSR1 $(pgrep kitty)'
 input_path = '~/dotfiles/matugen/.config/matugen/templates/rofi-colors.rasi'
 output_path = '~/dotfiles/rofi/.config/rofi/colors.rasi'
 
+[templates.walker]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/walker-colors.css'
+output_path = '~/dotfiles/walker/.config/walker/themes/rice/colors.css'
+
 [templates.waybar]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/colors.css'
 output_path = '~/dotfiles/waybar/.config/waybar/colors.css'

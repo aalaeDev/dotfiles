@@ -19,5 +19,8 @@ if pgrep -x rofi > /dev/null; then
     done
 fi
 
+# Walker has its own toggle, but can't stay open under a menu
+hyprctl layers | grep -q 'namespace: walker' && walker --close
+
 echo "$name" > "$STATE"
 exec "$@"

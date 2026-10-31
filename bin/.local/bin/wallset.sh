@@ -41,6 +41,8 @@ rofi_color() {
 # wallpaper's own colors: only the bottom, behind the search, is darkened a little.
 build_banner() {
     mkdir -p "${BANNER%/*}"
+    # Walker's theme loads it by a relative path
+    ln -sf "$BANNER" "$HOME/.config/walker/themes/rice/banner.png"
     magick -define jpeg:size=2856x680 "$1[0]" -thumbnail '1428x340^' -gravity center -extent 1428x340 \
         \( -size 1428x340 gradient:'#ffffff-#a8a8a8' \) -compose Multiply -composite \
         -strip "$BANNER.tmp.png" && mv "$BANNER.tmp.png" "$BANNER"
