@@ -5,6 +5,9 @@ Rofi's surface is only as big as its menu, so it never hears about clicks outsid
 While rofi is open this puts an invisible layer over the windows and bar, below rofi,
 and any click on it closes the menu. It follows Hyprland's layer events, so every menu
 is covered without its script knowing.
+
+The notification center covers everything but the bar and closes itself on a click away,
+so while it's open only the bar gets a layer like this.
 """
 
 import fcntl
@@ -25,6 +28,7 @@ RUNTIME = os.environ["XDG_RUNTIME_DIR"]
 EVENTS = f"{RUNTIME}/hypr/{os.environ['HYPRLAND_INSTANCE_SIGNATURE']}/.socket2.sock"
 LOCK = f"{RUNTIME}/rofi-backdrop.lock"
 # Not fully transparent: GTK then never draws a buffer, and the surface never maps
+BAR_HEIGHT = 36
 CSS = "window.rofi-backdrop { background: rgba(0, 0, 0, 0.01); }"
 
 
@@ -32,6 +36,7 @@ class Backdrop:
     def __init__(self, app):
         self.app = app
         self.windows = []
+        self.bar_windows = []
         self.buffer = b""
         self.events = socket.socket(socket.AF_UNIX)
         self.events.connect(EVENTS)
@@ -55,6 +60,10 @@ class Backdrop:
                 self.show()
             elif line == b"closelayer>>rofi":
                 self.hide()
+            elif line == b"openlayer>>swaync-control-center":
+                self.show_bar()
+            elif line == b"closelayer>>swaync-control-center":
+                self.hide_bar()
         return True
 
     def show(self):
@@ -62,14 +71,26 @@ class Backdrop:
             return
         monitors = Gdk.Display.get_default().get_monitors()
         for index in range(monitors.get_n_items()):
-            self.windows.append(self.cover(monitors.get_item(index)))
+            self.windows.append(self.cover(monitors.get_item(index), self.on_click))
 
     def hide(self):
         for window in self.windows:
             window.destroy()
         self.windows = []
 
-    def cover(self, monitor):
+    def show_bar(self):
+        if self.bar_windows:
+            return
+        monitors = Gdk.Display.get_default().get_monitors()
+        for index in range(monitors.get_n_items()):
+            self.bar_windows.append(self.cover(monitors.get_item(index), self.on_bar_click, BAR_HEIGHT))
+
+    def hide_bar(self):
+        for window in self.bar_windows:
+            window.destroy()
+        self.bar_windows = []
+
+    def cover(self, monitor, on_click, height=None):
         window = Gtk.ApplicationWindow(application=self.app)
         window.add_css_class("rofi-backdrop")
         LayerShell.init_for_window(window)
@@ -80,10 +101,12 @@ class Backdrop:
         LayerShell.set_exclusive_zone(window, -1)
         LayerShell.set_keyboard_mode(window, LayerShell.KeyboardMode.NONE)
         for edge in (LayerShell.Edge.TOP, LayerShell.Edge.BOTTOM, LayerShell.Edge.LEFT, LayerShell.Edge.RIGHT):
-            LayerShell.set_anchor(window, edge, True)
+            LayerShell.set_anchor(window, edge, edge != LayerShell.Edge.BOTTOM or height is None)
+        if height is not None:
+            window.set_size_request(-1, height)
 
         click = Gtk.GestureClick(button=0)  # Any button
-        click.connect("pressed", self.on_click)
+        click.connect("pressed", on_click)
         window.add_controller(click)
         window.present()
         return window
@@ -92,6 +115,10 @@ class Backdrop:
     def on_click(self, *_args):
         subprocess.run(["pkill", "-x", "rofi"], check=False)
         self.hide()
+
+    def on_bar_click(self, *_args):
+        subprocess.run(["swaync-client", "-sw", "-cp"], stdout=subprocess.DEVNULL, check=False)
+        self.hide_bar()
 
 
 def main():
