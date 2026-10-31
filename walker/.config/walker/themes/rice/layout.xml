@@ -85,7 +85,7 @@
                       <class name="scroll"></class>
                     </style>
                     <property name="can_focus">false</property>
-                    <property name="overlay-scrolling">true</property>
+                    <property name="overlay-scrolling">false</property>
                     <property name="hexpand">true</property>
                     <property name="vexpand">true</property>
                     <property name="max-content-width">500</property>

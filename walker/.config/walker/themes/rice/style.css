@@ -15,7 +15,19 @@ popover {
 }
 
 scrollbar {
-  opacity: 0;
+  background: transparent;
+  border: none;
+}
+
+scrollbar slider {
+  min-width: 6px;
+  border: none;
+  border-radius: 3px;
+  background: @outline_variant;
+}
+
+scrollbar slider:hover {
+  background: @primary;
 }
 
 .normal-icons {
