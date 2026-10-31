@@ -5,31 +5,31 @@ gui:
   showBottomLine: false
   theme:
     activeBorderColor:
-      - "#ffb4a6"
+      - "#ffb59e"
       - bold
     inactiveBorderColor:
-      - "#534340"
+      - "#53433f"
     searchingActiveBorderColor:
-      - "#dcc48c"
+      - "#d7c68d"
       - bold
     optionsTextColor:
-      - "#ffb4a6"
+      - "#ffb59e"
     selectedLineBgColor:
-      - "#322826"
+      - "#322825"
     inactiveViewSelectedLineBgColor:
-      - "#271d1c"
+      - "#271d1b"
     cherryPickedCommitFgColor:
-      - "#ffdad3"
+      - "#ffdbd0"
     cherryPickedCommitBgColor:
-      - "#5d3f3a"
+      - "#5d4037"
     markedBaseCommitFgColor:
-      - "#fae0a6"
+      - "#f4e2a7"
     markedBaseCommitBgColor:
-      - "#554519"
+      - "#52461a"
     unstagedChangesColor:
       - "#ffb4ab"
     defaultFgColor:
-      - "#f1dfdb"
+      - "#f1dfda"
 git:
   pagers:
     - pager: delta --dark --paging=never
