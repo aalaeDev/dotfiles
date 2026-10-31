@@ -20,7 +20,7 @@ menu() {
 
 ask_password() {
     rofi -dmenu -password -p "Password" -mesg "$1" -l 0 \
-        -theme-str 'entry { placeholder: "Password"; }' < /dev/null
+        -theme-str 'entry { placeholder: "Password"; } counter { enabled: false; }' < /dev/null
 }
 
 signal_icon() {
@@ -114,7 +114,7 @@ scan_networks() {
     nmcli -t --escape no -f IN-USE,SIGNAL,SECURITY,SSID device wifi list --rescan "$rescan" > "$out" 2> /dev/null &
     scanner=$!
     rofi -dmenu -p "$PROMPT" -mesg "󰑐  Scanning for networks…" \
-        -theme-str 'entry { placeholder: "Scanning…"; }' < /dev/null > /dev/null 2>&1 &
+        -theme-str 'entry { placeholder: "Scanning…"; } counter { enabled: false; }' < /dev/null > /dev/null 2>&1 &
     loader=$!
 
     wait -n "$scanner" "$loader"

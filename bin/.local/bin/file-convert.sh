@@ -14,7 +14,7 @@ IMAGE_FORMATS=(png jpg webp avif heic jxl gif bmp tiff ico pdf)
 VIDEO_FORMATS=(mp4 mkv webm mov gif mp3)
 AUDIO_FORMATS=(mp3 flac opus ogg m4a wav)
 PDF_FORMATS=(png jpg)
-MENU_THEME='window { width: 420px; } listview { lines: 8; fixed-height: true; }'
+MENU_THEME='window { width: 420px; } prompt { enabled: false; } listview { lines: 8; fixed-height: true; }'
 
 # --- Helpers ---
 notify() {

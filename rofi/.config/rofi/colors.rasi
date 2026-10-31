@@ -1,8 +1,16 @@
 * {
-    background:     #1a1110;
-    background-alt: #1a1110;
-    foreground:     #f1dfdb;
-    selected:       #ffb4a6;
-    active:         #e7bdb5;
-    urgent:         #ffb4ab;
+    background:             #1a110f;
+    background-alt:         #1a110f;
+    background-glass:       #1a110fF2;
+    foreground:             #f1dfda;
+    foreground-dim:         #d8c2bc;
+    selected:               #ffb59e;
+    active:                 #e7bdb1;
+    tertiary:               #d7c68d;
+    urgent:                 #ffb4ab;
+    surface-container:      #271d1b;
+    surface-container-high: #322825;
+    primary-container:      #723521;
+    on-primary-container:   #ffdbd0;
+    outline-variant:        #53433f;
 }

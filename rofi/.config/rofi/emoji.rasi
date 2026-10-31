@@ -1,109 +1,84 @@
 @import "./colors.rasi"
 
 configuration {
-    show-icons:                  true;
-    drun-display-format:         "{name}";
-    window-format:               "{w}{t}";
-    font:                        "JetBrainsMono NF 10";
-    icon-theme:                  "Tela-circle-dracula";
-    show-icons: true;
+    show-icons: false;
 }
 
 * {
-    main-bg: var(background);
-    main-br: var(selected);
-    main-fg: var(foreground);
-    select-fg: var(selected);
-    select-bg: var(background);
+    font:             "JetBrainsMono Nerd Font 10";
+    background-color: transparent;
+    text-color:       @foreground;
 }
 
 window {
-    height:                      15em;
-    width:                       33em;
-    transparency:                "real";
-    fullscreen:                  false;
-    enabled:                     true;
-    cursor:                      "default";
-    spacing:                     0em;
-    padding:                     0em;
-    border:						 3px solid;
-    border-radius: 				 15px;
-    border-color:                @main-br;
-    background-color:            @main-bg;
+    transparency:     "real";
+    height:           23em;
+    width:            44em;
+    border:           1px solid;
+    border-radius:    18px;
+    border-color:     @outline-variant;
+    background-color: @background;
+    cursor:           "default";
 }
 
 mainbox {
-    spacing: 0;
+    spacing:  0px;
+    padding:  12px;
     children: [ inputbar, listview ];
 }
 
 inputbar {
-    enabled:                     true;
-    children:                    [ prompt, entry ];
-    spacing:                     0em;
-    padding:                     0em;
-    cursor:                      pointer;
-    background-color:            @main-bg;
-    text-color:                  @main-fg;
-    border:  0px 0px 2px 0px solid;
-    border-color:                @main-br;
+    spacing:  8px;
+    children: [ prompt, entry ];
 }
 
 prompt {
-	enabled:                     true;
-	padding:                     0.5em 1em 0.5em 1em;
-    text-align: 				 center;
-    cursor:                      default;
-    background-color:            transparent;
-    text-color:                  @select-fg;
-    background-color:            @main-br;
+    padding:          10px 14px;
+    border-radius:    12px;
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+    font:             "JetBrainsMono Nerd Font Bold 10";
 }
 
 entry {
-    enabled:                     true;
-    padding:                     0.5em 0.5em 0.5em 0.5em;
-    cursor:                      text;
-    background-color:            transparent;
-    text-color:                  @main-fg;
-    background-color:            transparent;
+    padding:           10px 14px;
+    border-radius:     12px;
+    background-color:  @surface-container;
+    cursor:            text;
+    placeholder:       "Search emoji…";
+    placeholder-color: @foreground-dim;
 }
 
 listview {
-	columns:       13;
-	lines:         7;
-	spacing:                     0em;
-	padding:                     0.3em 0 0 0.3em;
-	cycle:         true;
-	dynamic:       true;
-	layout:        vertical;
-	flow:          horizontal;
-	reverse:       false;
-	fixed-height:  true;
-	fixed-columns: true;
-	cursor:                      "default";
-	background-color:            @main-bg;
-	text-color:                  @main-fg;
+    border:        0px;
+    columns:       13;
+    lines:         7;
+    spacing:       2px;
+    padding:       10px 0px 0px 0px;
+    cycle:         true;
+    dynamic:       true;
+    layout:        vertical;
+    fixed-height:  true;
+    fixed-columns: true;
+    cursor:        "default";
 }
 
 element {
-	background-color:            transparent;
-	border-radius: 10px;
+    border-radius: 10px;
+    cursor:        pointer;
 }
 
+element normal.normal, element alternate.normal {
+    background-color: transparent;
+}
 element selected.normal {
-	background-color:            @select-bg;
-}
-
-element-icon {
-	size: 0;
-    background-color:            transparent;
+    background-color: @primary-container;
 }
 
 element-text {
-	cursor:                      pointer;
-	vertical-align:   0.5;
-	horizontal-align: 0.5;
-	font:            "FiraCode Nerd Font 24";
-	background-color:            transparent;
-	color: @main-bg;
+    cursor:           pointer;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+    font:             "FiraCode Nerd Font 24";
+    text-color:       @foreground;
 }

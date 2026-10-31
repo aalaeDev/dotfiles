@@ -12,7 +12,7 @@ set -uo pipefail
 APP_NAME="Archives"
 ICON="package-x-generic"
 FORMATS=(zip tar.gz tar.zst tar.xz 7z)
-MENU_THEME='window { width: 420px; } listview { lines: 5; fixed-height: true; }'
+MENU_THEME='window { width: 420px; } prompt { enabled: false; } listview { lines: 5; fixed-height: true; }'
 
 # --- Helpers ---
 notify() {
