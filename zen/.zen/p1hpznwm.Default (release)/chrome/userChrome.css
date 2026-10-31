@@ -56,7 +56,8 @@
 
 /* Selection and focus in the UI */
 ::selection {
-    background-color: rgb(var(--primary_rgb) / 0.35) !important;
+    background-color: var(--primary_container) !important;
+    color: var(--on_primary_container) !important;
 }
 
 :focus-visible {

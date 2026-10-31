@@ -60,3 +60,9 @@
         --in-content-primary-button-text-color: var(--on_primary) !important;
     }
 }
+
+/* Selected text on every page */
+::selection {
+    background-color: var(--primary_container) !important;
+    color: var(--on_primary_container) !important;
+}

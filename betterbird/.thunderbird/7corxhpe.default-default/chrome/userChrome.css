@@ -106,7 +106,8 @@
 }
 
 ::selection {
-    background-color: rgb(var(--primary_rgb) / 0.35) !important;
+    background-color: var(--primary_container) !important;
+    color: var(--on_primary_container) !important;
 }
 
 /* Message preview with nothing (or several messages) selected: no black canvas */

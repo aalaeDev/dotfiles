@@ -61,3 +61,8 @@
     --input-border-default: {{colors.outline_variant.default.hex}} !important;
     --input-placeholder-text-default: {{colors.outline.default.hex}} !important;
 }
+
+::selection {
+    background-color: {{colors.primary_container.default.hex}} !important;
+    color: {{colors.on_primary_container.default.hex}} !important;
+}

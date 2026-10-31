@@ -1,2 +1,7 @@
 /* Colors load from ~/.local/share/themes/adw-gtk3-dark: defining them here too would
    pin running apps to the palette they started with. */
+
+selection {
+    background-color: @selection_bg_color;
+    color: @selection_fg_color;
+}

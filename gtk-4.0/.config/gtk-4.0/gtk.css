@@ -1,1 +1,6 @@
 @import 'colors.css';
+
+selection {
+    background-color: @selection_bg_color;
+    color: @selection_fg_color;
+}
