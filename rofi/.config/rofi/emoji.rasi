@@ -12,7 +12,7 @@ configuration {
 
 window {
     transparency:     "real";
-    height:           23em;
+    height:           31em;
     width:            44em;
     border:           1px solid;
     border-radius:    18px;
@@ -24,7 +24,7 @@ window {
 mainbox {
     spacing:  0px;
     padding:  12px;
-    children: [ inputbar, listview ];
+    children: [ inputbar, message, listview, mode-switcher ];
 }
 
 inputbar {
@@ -49,6 +49,39 @@ entry {
     placeholder-color: @foreground-dim;
 }
 
+message {
+    border:  0px;
+    padding: 8px 0px 0px 0px;
+}
+
+textbox {
+    padding:        0px 4px;
+    font:           "JetBrainsMono Nerd Font 9";
+    text-color:     @foreground-dim;
+    markup:         true;
+}
+
+mode-switcher {
+    border:  0px;
+    spacing: 2px;
+    padding: 8px 0px 0px 0px;
+}
+
+button {
+    padding:          7px 2px;
+    border-radius:    9px;
+    background-color: @surface-container;
+    text-color:       @foreground-dim;
+    font:             "JetBrainsMono Nerd Font Medium 8";
+    cursor:           pointer;
+}
+
+button selected {
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+    font:             "JetBrainsMono Nerd Font Bold 8";
+}
+
 listview {
     border:        0px;
     columns:       13;
@@ -58,9 +91,19 @@ listview {
     cycle:         true;
     dynamic:       true;
     layout:        vertical;
+    flow:          horizontal;
+    scrollbar:     true;
     fixed-height:  true;
     fixed-columns: true;
     cursor:        "default";
+}
+
+scrollbar {
+    handle-width:     5px;
+    handle-color:     @selected;
+    border-radius:    5px;
+    margin:           0px 0px 0px 6px;
+    background-color: @surface-container;
 }
 
 element {

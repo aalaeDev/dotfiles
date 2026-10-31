@@ -32,7 +32,8 @@ hl.bind(var_mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(var_mainMod .. " + Tab", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh windows rofi -show window"))
 hl.bind(var_mainMod .. " + W", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh wallpaper " .. var_binPath .. "/wallset.sh"))
 hl.bind(var_mainMod .. " + B", hl.dsp.exec_cmd(var_binPath .. "/waybar-layout.sh toggle"))
-hl.bind(var_mainMod .. " + code:60", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh emoji sh " .. var_binPath .. "/rofi-menus/rofimoji.sh"))
+hl.bind(var_mainMod .. " + code:60", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh emoji " .. var_binPath .. "/rofi-menus/emoji.sh"))
+hl.bind(var_mainMod .. " + SHIFT + code:60", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh kaomoji " .. var_binPath .. "/rofi-menus/emoji.sh kaomoji"))
 
 -- ######################
 

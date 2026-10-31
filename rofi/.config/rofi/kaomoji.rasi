@@ -1,0 +1,128 @@
+@import "./colors.rasi"
+
+configuration {
+    show-icons: false;
+}
+
+* {
+    font:             "JetBrainsMono Nerd Font 10";
+    background-color: transparent;
+    text-color:       @foreground;
+}
+
+window {
+    transparency:     "real";
+    height:           31em;
+    width:            44em;
+    border:           1px solid;
+    border-radius:    18px;
+    border-color:     @outline-variant;
+    background-color: @background;
+    cursor:           "default";
+}
+
+mainbox {
+    spacing:  0px;
+    padding:  12px;
+    children: [ inputbar, message, listview, mode-switcher ];
+}
+
+inputbar {
+    spacing:  8px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    padding:          10px 14px;
+    border-radius:    12px;
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+    font:             "JetBrainsMono Nerd Font Bold 10";
+}
+
+entry {
+    padding:           10px 14px;
+    border-radius:     12px;
+    background-color:  @surface-container;
+    cursor:            text;
+    placeholder:       "Search kaomoji…";
+    placeholder-color: @foreground-dim;
+}
+
+message {
+    border:  0px;
+    padding: 8px 0px 0px 0px;
+}
+
+textbox {
+    padding:        0px 4px;
+    font:           "JetBrainsMono Nerd Font 9";
+    text-color:     @foreground-dim;
+    markup:         true;
+}
+
+mode-switcher {
+    border:  0px;
+    spacing: 2px;
+    padding: 8px 0px 0px 0px;
+}
+
+button {
+    padding:          7px 2px;
+    border-radius:    9px;
+    background-color: @surface-container;
+    text-color:       @foreground-dim;
+    font:             "JetBrainsMono Nerd Font Medium 8";
+    cursor:           pointer;
+}
+
+button selected {
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+    font:             "JetBrainsMono Nerd Font Bold 8";
+}
+
+listview {
+    border:        0px;
+    columns:       3;
+    lines:         11;
+    spacing:       2px;
+    padding:       10px 0px 0px 0px;
+    cycle:         true;
+    dynamic:       true;
+    layout:        vertical;
+    flow:          horizontal;
+    scrollbar:     true;
+    fixed-height:  true;
+    fixed-columns: true;
+    cursor:        "default";
+}
+
+scrollbar {
+    handle-width:     5px;
+    handle-color:     @selected;
+    border-radius:    5px;
+    margin:           0px 0px 0px 6px;
+    background-color: @surface-container;
+}
+
+element {
+    padding:       7px;
+    border-radius: 10px;
+    cursor:        pointer;
+}
+
+element normal.normal, element alternate.normal {
+    background-color: transparent;
+}
+element selected.normal {
+    background-color: @primary-container;
+}
+
+element-text {
+    cursor:           pointer;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+    font:             "JetBrainsMono Nerd Font 11";
+    text-color:       @foreground;
+}
