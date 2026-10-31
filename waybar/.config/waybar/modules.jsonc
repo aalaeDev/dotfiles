@@ -285,8 +285,8 @@
         "device": "intel_backlight",
         "format": "{percent}% {icon}",
         "format-icons": ["<span size='130%' rise='-1451'>󰃝</span>", "<span size='130%' rise='-1451'>󰃞</span>", "<span size='130%' rise='-1451'>󰃟</span>", "<span size='130%' rise='-1451'>󰃠</span>"],
-        "on-scroll-up": "brightnessctl -d intel_backlight set 5%+",
-        "on-scroll-down": "brightnessctl -d intel_backlight set 5%-",
+        "on-scroll-up": "~/.local/bin/brightness.sh up",
+        "on-scroll-down": "~/.local/bin/brightness.sh down",
         "tooltip-format": "Brightness {percent}%",
     },
     "tray": {

@@ -44,11 +44,13 @@ hl.bind(var_mainMod .. " + SHIFT + code:60", hl.dsp.exec_cmd(var_binPath .. "/ro
 -- ######################
 
 -- ## VOLUME
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl -- set-sink-volume 0 -5%"), {
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(var_binPath .. "/volume.sh down"), {
     locked = true,
+    repeating = true,
 })
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl -- set-sink-volume 0 +5%"), {
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(var_binPath .. "/volume.sh up"), {
     locked = true,
+    repeating = true,
 })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl -- set-sink-mute 0 toggle; ~/.local/bin/sound.sh volume"), {
     locked = true,
@@ -75,10 +77,10 @@ hl.bind("XF86AudioStop", hl.dsp.exec_cmd("playerctl stop"), {
 })
 
 -- ## BRIGHTNESS
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), {
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(var_binPath .. "/brightness.sh down"), {
     locked = true,
 })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s +5%"), {
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(var_binPath .. "/brightness.sh up"), {
     locked = true,
 })
 
