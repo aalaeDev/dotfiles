@@ -31,7 +31,7 @@
         // anything else falls through to these: Arch logo + full title, or nothing
         "format": "{class}\u001f{title}",
         "icon": true,
-        "icon-size": 15,
+        "icon-size": 16,
         "rewrite": {
             "^[^\u001f]*\u001f(.+)$": "<span size='130%' rise='-1451'></span> $1",
             "^[^\u001f]*\u001f$": "",
@@ -230,7 +230,7 @@
         "tooltip-format": "Power menu",
     },
     "privacy": {
-        "icon-size": 15,
+        "icon-size": 16,
         "icon-spacing": 7,
         "transition-duration": 250,
         // Symbolic icons take the CSS text color, so they follow the theme
@@ -278,7 +278,7 @@
         "tooltip-format": "Brightness {percent}%",
     },
     "tray": {
-        "icon-size": 17,
+        "icon-size": 18,
         "rotate": 0,
         "spacing": 5,
     },
