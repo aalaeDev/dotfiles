@@ -26,6 +26,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("[workspace special:background silent] awww-daemon")
     hl.exec_cmd("[workspace special:background silent] swaync")
     hl.exec_cmd("[workspace special:background silent] ~/.local/bin/nc-daemon.sh")
+    hl.exec_cmd("[workspace special:background silent] LD_PRELOAD=libgtk4-layer-shell.so ~/.local/bin/rofi-backdrop.py")
     hl.exec_cmd("[workspace special:background silent] nm-applet --indicator")
     hl.exec_cmd("[workspace special:background silent] copyq --start-server")
     hl.exec_cmd("[workspace special:background silent] elephant")
@@ -168,6 +169,11 @@ hl.layer_rule({
     name = "walker-popin",
     match = { namespace = "^walker$" },
     animation = "popin 96%",
+})
+hl.layer_rule({
+    name = "rofi-backdrop-instant",
+    match = { namespace = "^rofi-backdrop$" },
+    no_anim = true,
 })
 hl.layer_rule({
     name = "swaync-slide",
