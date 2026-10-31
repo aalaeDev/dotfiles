@@ -8,7 +8,7 @@
         // "custom/tailscale",
         "group/hardware",
         "group/extras",
-        "clock",
+        "group/datetime",
         "group/session",
     ],
 }

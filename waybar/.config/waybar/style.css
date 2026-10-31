@@ -1,5 +1,8 @@
 @import "colors.css";
 
+/* Pill background: only the wallpaper sits behind the bar, so it can be quite see-through */
+@define-color pill_background alpha(@background, 0.8);
+
 * {
     border: none;
     border-radius: 0; /* Hardcoded */
@@ -35,7 +38,7 @@ tooltip label {
 
 /* Its own pill, not in the list below: margin-left would pull it off center */
 #workspaces {
-    background-color: @background;
+    background-color: @pill_background;
     border-radius: 11px;
 }
 
@@ -61,7 +64,7 @@ tooltip label {
 
 /* --- Pills: standalone modules and groups --- */
 
-#clock,
+#datetime,
 #window,
 #cpu,
 #memory,
@@ -71,12 +74,11 @@ tooltip label {
 #hardware,
 #extras,
 #session {
-    background-color: @background;
+    background-color: @pill_background;
     border-radius: 11px;
     margin-left: 7px;
 }
 
-#clock,
 #window,
 #cpu,
 #memory,
@@ -95,7 +97,7 @@ tooltip label {
 /* Group members placed directly on the bar (layouts/compact.jsonc) get a pill too */
 .modules-right > widget > #battery,
 .modules-right > widget > #custom-notification {
-    background-color: @background;
+    background-color: @pill_background;
     margin-left: 7px;
 }
 
@@ -104,6 +106,7 @@ window#waybar.empty #window {
 }
 
 /* No padding: edge children's hover background then meets the pill's rounded corners */
+#datetime,
 #connectivity,
 #hardware,
 #extras,
@@ -112,6 +115,8 @@ window#waybar.empty #window {
 }
 
 /* Modules inside a group: no pill of their own, highlight on hover */
+#clock,
+#custom-today,
 #network,
 #custom-protonvpn,
 #bluetooth,
@@ -131,6 +136,7 @@ window#waybar.empty #window {
 }
 
 #clock:hover,
+#custom-today:hover,
 #network:hover,
 #custom-protonvpn:hover,
 #bluetooth:hover,
@@ -146,6 +152,10 @@ window#waybar.empty #window {
 }
 
 /* --- Module states --- */
+
+#custom-today.late {
+    color: @tertiary;
+}
 
 #cpu.warning,
 #memory.warning {

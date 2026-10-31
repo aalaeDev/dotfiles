@@ -2,5 +2,5 @@
 {
     "modules-left": [],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["privacy", "battery", "clock", "custom/notification"],
+    "modules-right": ["privacy", "battery", "group/datetime", "custom/notification"],
 }

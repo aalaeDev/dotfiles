@@ -148,6 +148,18 @@
         "on-click": "sleep 0.1 && swaync-client -t -sw",
         "on-click-right": "sleep 0.1 && swaync-client -C -sw",
     },
+    "group/datetime": {
+        "orientation": "inherit",
+        "modules": ["custom/today", "clock"],
+    },
+    "custom/today": {
+        // Weather, plus a late badge after an athan. Hover for prayer times and forecast.
+        // Empty until CITY is set in .env
+        "return-type": "json",
+        "exec": "~/.local/bin/waybar-today.sh",
+        "interval": 30,
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+    },
     "custom/updates": {
         "format": "{text}{icon}",
         "return-type": "json",
