@@ -8,6 +8,7 @@ keybind_symbols = true
 "default" = { input = "Search apps, files, windows, or do the math…", list = "Nothing found" }
 "clipboard" = { input = "Search clipboard history…", list = "Nothing copied yet" }
 "windows" = { input = "Search open windows…", list = "No open windows" }
+"menus:screenshots" = { input = "Enter copy · Ctrl+O open · Ctrl+E edit · Ctrl+D delete", list = "No screenshots yet" }
 
 [providers]
 default = ["desktopapplications", "windows", "calc", "files", "websearch"]
@@ -17,3 +18,11 @@ max_results = 30
 [providers.max_results_provider]
 files = 6
 windows = 4
+
+[providers.actions]
+"menus:screenshots" = [
+  { action = "copy", default = true, bind = "Return" },
+  { action = "open", bind = "ctrl o" },
+  { action = "edit", bind = "ctrl e" },
+  { action = "delete", bind = "ctrl d", after = "AsyncReload" },
+]

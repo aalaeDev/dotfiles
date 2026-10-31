@@ -20,6 +20,8 @@ hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd(var_term .. " -e btop"))
 hl.bind("CTRL + Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh region"))
 hl.bind("Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh output"))
 hl.bind("CTRL + ALT + Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh window"))
+hl.bind(var_mainMod .. " + Print", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh screenshot " .. var_binPath .. "/rofi-menus/screenshot.sh"))
+hl.bind(var_mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh gif"))
 hl.bind(var_mainMod .. " + P", hl.dsp.exec_cmd("pavucontrol"))
 hl.bind(var_mainMod .. " + V", hl.dsp.exec_cmd("pkill -x rofi; walker -m clipboard"))
 -- Walker toggles itself; rofi can't stay open under it

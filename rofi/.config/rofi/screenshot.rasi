@@ -1,0 +1,65 @@
+/* A row of big tiles */
+configuration {
+    show-icons: false;
+}
+
+@import "./colors.rasi"
+
+* {
+    font:             "JetBrainsMono Nerd Font 10";
+    background-color: transparent;
+    text-color:       @foreground;
+}
+
+window {
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    width:            760px;
+    border:           1px solid;
+    border-radius:    18px;
+    border-color:     @outline-variant;
+    background-color: @background;
+    cursor:           "default";
+}
+
+mainbox {
+    spacing:  0px;
+    children: [ "listview" ];
+}
+
+listview {
+    border:       0px;
+    columns:      7;
+    lines:        1;
+    cycle:        true;
+    dynamic:      false;
+    fixed-height: true;
+    scrollbar:    false;
+    spacing:      8px;
+    padding:      12px;
+    cursor:       "default";
+}
+
+element {
+    padding:          16px 4px;
+    border-radius:    14px;
+    background-color: @surface-container;
+    cursor:           pointer;
+}
+element normal.normal, element alternate.normal {
+    background-color: @surface-container;
+    text-color:       @foreground;
+}
+element selected.normal {
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+}
+element-text {
+    text-color:       inherit;
+    cursor:           inherit;
+    font:             "JetBrainsMono Nerd Font Medium 9";
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    markup:           true;
+}
