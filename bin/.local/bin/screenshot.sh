@@ -15,6 +15,7 @@ SAVE_PATH="$SCREENSHOTS_DIR/$(date +%Y-%m)"
 FILE_NAME="$(date +%Y-%m-%d_%H%M%S)"
 COLORS="$HOME/.config/rofi/colors.rasi"
 SELF="$(realpath "$0")"
+BIN="$(dirname "$SELF")"
 OVERLAY="$HOME/.local/bin/screenshot-overlay.py"
 NOTIFY_TIMEOUT=8000
 OPAQUE_SETTLE=0.1
@@ -94,6 +95,7 @@ frame() {
 # Called by hyprshot on each saved capture
 finish() {
     local file="$1"
+    "$BIN/sound.sh" screenshot &
     [[ -n "$SCREENSHOT_FRAME" ]] && frame "$file"
     # Lossless: only the file gets smaller. Nothing to wait for, the clipboard already has the image
     command -v oxipng > /dev/null && oxipng --quiet --opt 2 --strip safe "$file" &
@@ -127,6 +129,7 @@ read_text() {
 record_gif() {
     local geometry position size width height video overlay file="$SAVE_PATH/$FILE_NAME.gif"
     if pkill -INT -x wf-recorder; then
+        "$BIN/sound.sh" record-stop &
         return 0
     fi
     if ! command -v wf-recorder > /dev/null; then
@@ -142,6 +145,7 @@ record_gif() {
 
     video=$(mktemp --suffix=.mp4)
     trap 'rm -f "$video"' RETURN
+    "$BIN/sound.sh" record-start &
     notify-send -a Screenshot -t 3000 "Recording GIF" "Press Super+Shift+Print to stop"
     # Python loads Wayland first otherwise, and the overlay ends up a regular window
     LD_PRELOAD=libgtk4-layer-shell.so "$OVERLAY" "$position ${width}x${height}" &> /dev/null &

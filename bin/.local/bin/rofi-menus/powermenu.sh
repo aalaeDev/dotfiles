@@ -43,9 +43,9 @@ choice=$( {
     -theme "~/.config/rofi/powermenu.rasi")
 
 case "$choice" in
-    0) hyprlock ;;
-    1) hyprctl dispatch 'hl.dsp.exit()' ;;
+    0) "$HOME/.local/bin/lock.sh" ;;
+    1) "$HOME/.local/bin/sound.sh" session-end; hyprctl dispatch 'hl.dsp.exit()' ;;
     2) systemctl suspend ;;
-    3) systemctl reboot ;;
-    4) systemctl poweroff ;;
+    3) "$HOME/.local/bin/sound.sh" session-end; systemctl reboot ;;
+    4) "$HOME/.local/bin/sound.sh" session-end; systemctl poweroff ;;
 esac

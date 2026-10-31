@@ -102,7 +102,7 @@
         "tooltip-format-ethernet": "{ifname} ",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
-        "on-click": "~/.local/bin/rofi-menus/wifi-menu.sh",
+        "on-click": "~/.local/bin/sound.sh menu & ~/.local/bin/rofi-menus/wifi-menu.sh",
         "on-click-right": "nm-connection-editor",
     },
     // Wired link; only visible while a cable is connected (the Wi-Fi module above is pinned to Wi-Fi)
@@ -238,7 +238,7 @@
     },
     "custom/power": {
         "format": "<span size='130%' rise='-1451'>󰐥</span>",
-        "on-click": "~/.local/bin/rofi-menus/powermenu.sh",
+        "on-click": "~/.local/bin/sound.sh menu & ~/.local/bin/rofi-menus/powermenu.sh",
         "tooltip-format": "Power menu",
     },
     "privacy": {

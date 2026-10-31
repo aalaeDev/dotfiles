@@ -7,7 +7,7 @@ RICE_ENV="${RICE_ENV:-$HOME/dotfiles/.env}"
 RICE_CACHE="${RICE_CACHE:-$HOME/.cache/rice}"
 
 # --- Actions ---
-CITY="" COUNTRY="" ATHAN_METHOD=3 ATHAN_LATE_MINUTES=30 WEATHER_UNITS=celsius
+CITY="" COUNTRY="" ATHAN_METHOD=3 ATHAN_LATE_MINUTES=30 WEATHER_UNITS=celsius SOUND_VOLUME=1
 # shellcheck source=/dev/null
 [[ -r "$RICE_ENV" ]] && source "$RICE_ENV"
 mkdir -p "$RICE_CACHE"

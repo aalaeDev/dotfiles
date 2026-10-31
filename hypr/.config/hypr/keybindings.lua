@@ -23,15 +23,15 @@ hl.bind("CTRL + ALT + Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh win
 hl.bind(var_mainMod .. " + Print", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh screenshot " .. var_binPath .. "/rofi-menus/screenshot.sh"))
 hl.bind(var_mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd(var_binPath .. "/screenshot.sh gif"))
 hl.bind(var_mainMod .. " + P", hl.dsp.exec_cmd("pavucontrol"))
-hl.bind(var_mainMod .. " + V", hl.dsp.exec_cmd("pkill -x rofi; walker -m clipboard"))
+hl.bind(var_mainMod .. " + V", hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/sound.sh walker; walker -m clipboard"))
 -- Walker toggles itself; rofi can't stay open under it
-hl.bind(var_mainMod .. " + S", hl.dsp.exec_cmd("pkill -x rofi; walker"))
+hl.bind(var_mainMod .. " + S", hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/sound.sh walker; walker"))
 hl.bind(var_mainMod .. " + A", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh apps rofi -show drun"))
 hl.bind(var_mainMod .. " + X", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh power " .. var_binPath .. "/rofi-menus/powermenu.sh"))
 hl.bind(var_mainMod .. " + R", hl.dsp.exec_cmd("sh " .. var_binPath .. "/launch.sh"))
 hl.bind(var_mainMod .. " + C", hl.dsp.exec_cmd("hyprpicker -a"))
-hl.bind(var_mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(var_mainMod .. " + Tab", hl.dsp.exec_cmd("pkill -x rofi; walker -m windows"))
+hl.bind(var_mainMod .. " + L", hl.dsp.exec_cmd(var_binPath .. "/lock.sh"))
+hl.bind(var_mainMod .. " + Tab", hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/sound.sh walker; walker -m windows"))
 hl.bind(var_mainMod .. " + W", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh wallpaper " .. var_binPath .. "/wallset.sh"))
 hl.bind(var_mainMod .. " + B", hl.dsp.exec_cmd(var_binPath .. "/waybar-layout.sh toggle"))
 hl.bind(var_mainMod .. " + code:60", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh emoji " .. var_binPath .. "/rofi-menus/emoji.sh"))
@@ -50,7 +50,7 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl -- set-sink-volume 0 -5%"
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl -- set-sink-volume 0 +5%"), {
     locked = true,
 })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl -- set-sink-mute 0 toggle"), {
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl -- set-sink-mute 0 toggle; ~/.local/bin/sound.sh volume"), {
     locked = true,
 })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("pactl -- set-source-mute 0 toggle"), {

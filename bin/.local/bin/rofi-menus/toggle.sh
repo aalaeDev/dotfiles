@@ -22,5 +22,6 @@ fi
 # Walker has its own toggle, but can't stay open under a menu
 hyprctl layers | grep -q 'namespace: walker' && walker --close
 
+"$HOME/.local/bin/sound.sh" menu &
 echo "$name" > "$STATE"
 exec "$@"
