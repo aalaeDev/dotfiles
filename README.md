@@ -71,7 +71,13 @@ stow *
 stow hypr fish
 ```
 
-### 3. Apply the Theme
+### 3. Personal Settings
+Athan and weather read your city from a gitignored `.env`, so it never lands in the repo. They stay hidden until `CITY` is set:
+```bash
+cp ~/dotfiles/.env.example ~/dotfiles/.env
+```
+
+### 4. Apply the Theme
 To initialize the colors, use the provided wallpaper script:
 ```bash
 bash ~/.local/bin/wallset.sh

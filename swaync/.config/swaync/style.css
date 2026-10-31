@@ -1,271 +1,589 @@
-/* Import Matugen-generated dynamic colors */
+/* Same language as Waybar and Walker: tinted surfaces, quiet borders, primary only for what's active */
 @import url("colors.css");
+@import url("athan-bar.css"); /* The bar's fill, written by nc-daemon.sh */
 
-/* Config */
-* {
-    font-family: "JetbrainsMono NFP SemiBold";
+/* Panel background: windows sit behind it unblurred, so it stays mostly solid to keep text readable */
+@define-color panel_background alpha(@background, 0.9);
+
+:root {
+    --notification-icon-size: 40px;
+    --notification-app-icon-size: 16px;
+    --notification-group-icon-size: 20px;
+    --radius-panel: 14px;
+    --radius-row: 11px;
+    --radius-control: 8px;
+    --gap: 8px;
 }
 
-/* Control Center */
+* {
+    font-family: "JetBrainsMono NFP", "JetBrainsMono NF";
+    font-weight: 500;
+    text-shadow: none;
+}
+
+/* --- Panel --- */
+
 .control-center {
-    background-color: @background;
-    color: @on_background;
-    outline: 2px solid @primary;
-    padding: 0px;
-    margin: 0px;
+    background: @panel_background;
+    color: @on_surface;
+    border: 1px solid @outline_variant;
+    border-radius: var(--radius-panel);
+    padding: 4px;
+}
+
+.control-center .control-center-list {
+    background: transparent;
+}
+
+.control-center .control-center-list .notification {
+    box-shadow: none;
+}
+
+.control-center .control-center-list-placeholder {
+    opacity: 1;
+    color: @on_surface_variant;
+    font-size: 13px;
+}
+
+/* Only the words: there's nothing to show, so no big icon either */
+.control-center .control-center-list-placeholder image {
+    -gtk-icon-size: 0;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    opacity: 0;
+}
+
+/* Every card sits on the same edges: 8px from the panel, 8px apart */
+.widget {
+    margin: 4px;
+    padding: 8px 12px;
+    border-radius: var(--radius-row);
 }
 
 .widget-notifications {
-    /* background: red; */
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
-.notification-row .notification-background {}
+/* --- Notifications, both as popups and in the panel --- */
 
-/* Notification */
-.notification {
-    background: @background;
-    color: @on_background;
-    border: 1px solid @primary;
-    border-radius: 10px;
+.floating-notifications,
+notificationwindow,
+blankwindow {
+    background: transparent;
+}
+
+.notification-row {
+    background: none;
+    outline: none;
+}
+
+.notification-row:focus,
+.notification-group:focus {
+    background: none;
+}
+
+.notification-row .notification-background {
+    padding: 4px;
+}
+
+.floating-notifications .notification-row .notification-background {
+    padding: 4px 8px;
+}
+
+/* Same edges as the cards above the list */
+.control-center .notification-row .notification-background {
+    padding: 4px 2px;
+}
+
+.notification-row .notification-background .notification {
+    background: @surface_container_high;
+    border: 1px solid @outline_variant;
+    border-radius: var(--radius-row);
+    box-shadow: none;
+    padding: 0;
+}
+
+.floating-notifications .notification-row .notification-background .notification {
+    background: @surface_container;
+}
+
+.notification-row .notification-background .notification.critical {
+    border-color: @error;
+}
+
+.notification-row .notification-background .notification .notification-default-action,
+.notification-row .notification-background .notification .notification-action > button {
+    background: transparent;
+    color: @on_surface;
+    border: none;
+    box-shadow: none;
+    border-radius: var(--radius-row);
+    transition: background 0.15s ease-in-out;
+}
+
+.notification-row .notification-background .notification .notification-default-action {
     padding: 8px;
 }
 
-.body {
-    color: @on_background;
-    font-size: 12px;
-    margin-left: 8px;
+/* Hover lights the whole card's border. A fill on the text area alone would stop short of the buttons */
+.control-center .control-center-list .notification .notification-default-action:hover,
+.notification-row .notification-background .notification .notification-default-action:hover {
+    background: transparent;
 }
 
-.summary {
-    font-size: 14px;
-    font-weight: 500;
-    background: transparent;
-    color: @primary;
-    text-shadow: none;
-    margin-left: 8px;
+.notification-row .notification-background .notification:hover {
+    border-color: @outline;
 }
 
-.time {
-    font-size: 12px;
-    font-weight: 400;
-    background: transparent;
-    color: @outline;
-    text-shadow: none;
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+    -gtk-icon-size: var(--notification-icon-size);
+    border-radius: var(--radius-control);
+    margin: 2px 10px 2px 2px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
+    -gtk-icon-size: var(--notification-app-icon-size);
+    -gtk-icon-shadow: none;
     margin: 2px;
 }
 
-.close-button {
-    background-color: @primary;
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
+    color: @on_surface;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+    color: @on_surface_variant;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+    color: @outline;
+    font-size: 11px;
+    font-weight: 400;
+    margin-right: 26px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content progressbar {
+    margin-top: 6px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .body-image {
+    background-color: transparent;
+    border-radius: var(--radius-control);
+}
+
+progressbar trough {
+    min-height: 4px;
+    background: @outline_variant;
+    border-radius: 2px;
+}
+
+progressbar progress {
+    min-height: 4px;
+    background: @primary;
+    border-radius: 2px;
+}
+
+.notification.critical progressbar progress {
+    background: @error;
+}
+
+.notification-row .notification-background .notification .notification-alt-actions {
+    padding: 0 8px 8px;
+}
+
+.notification-row .notification-background .notification .notification-action {
+    margin: 0 2px;
+}
+
+.notification-row .notification-background .notification .notification-action > button {
+    background: @surface_container_highest;
+    border-radius: var(--radius-control);
+    font-size: 12px;
+    min-height: 26px;
+}
+
+.notification-row .notification-background .notification .notification-action > button:hover {
+    background: @primary;
     color: @on_primary;
-    margin-top: 5px;
-    margin-right: 5px;
-    border-radius: 6px;
 }
 
-.notification-default-action:hover,
-.notification-action:hover {
-    color: @on_background;
+.inline-reply-entry {
+    background: @surface_container;
+    color: @on_surface;
+    caret-color: @primary;
+    border: 1px solid @outline_variant;
+    border-radius: var(--radius-control);
+}
+
+.inline-reply-button {
+    background: @surface_container_highest;
+    color: @on_surface;
+    border: none;
+    border-radius: var(--radius-control);
+}
+
+.inline-reply-button:hover {
+    background: @primary;
+    color: @on_primary;
+}
+
+.inline-reply-button:disabled {
     background: transparent;
+    color: @outline;
 }
 
-.notification.critical progress {
-    background-color: @error;
+/* Quiet until you need it */
+.close-button {
+    background: transparent;
+    color: @on_surface_variant;
+    border: none;
+    box-shadow: none;
+    border-radius: var(--radius-control);
+    min-width: 22px;
+    min-height: 22px;
+    margin: 6px;
 }
 
-.notification.low progress,
-.notification.normal progress {
-    background-color: @primary;
+.close-button:hover {
+    background: @surface_container_highest;
+    color: @on_surface;
 }
 
+/* --- Groups --- */
 
-/* Notifications expanded-group */
-.notification-group {
-    background-color: @background;
-    /* margin: 2px 8px 2px 8px; */
-    font-size: 10px;
+.notification-group .notification-group-headers,
+.notification-group .notification-group-buttons {
+    margin: 2px 8px;
+    color: @on_surface_variant;
 }
 
-.notification-group-icon {
-    color: @on_background;
+.notification-group .notification-group-headers .notification-group-icon {
+    color: @on_surface_variant;
+    margin-right: 6px;
 }
 
-.notification-group-headers {
-    color: @on_background;
+.notification-group .notification-group-headers .notification-group-header {
+    color: @on_surface_variant;
+    font-size: 12px;
 }
 
 .notification-group-collapse-button,
 .notification-group-close-all-button {
-    background: @primary;
-    color: @on_primary;
-    margin: 4px;
-    border-radius: 6px;
-    padding: 4px;
+    background: transparent;
+    color: @on_surface_variant;
+    border: none;
+    box-shadow: none;
+    border-radius: var(--radius-control);
+    min-width: 24px;
+    min-height: 24px;
+    margin-left: 4px;
+    padding: 0;
 }
 
 .notification-group-collapse-button:hover,
 .notification-group-close-all-button:hover {
-    background: @primary;
-    color: @on_primary;
+    background: @surface_container_highest;
+    color: @on_surface;
 }
 
-/* widget title */
-.widget-title {
-    color: @on_background;
-    /* margin: 0px; */
+.notification-group.collapsed .notification-row .notification {
+    background-color: @surface_container_high;
 }
 
-.widget-title>button {
-    font-size: 1rem;
-    color: @on_background;
+/* The notification on top of a stack stays fully readable */
+.notification-group.collapsed .notification-row:last-child .notification-default-action,
+.notification-group.collapsed .notification-row:last-child .notification-action {
+    opacity: 1;
+}
+
+.notification-group.collapsed:hover .notification-row:not(:only-child) .notification {
+    background-color: @surface_container_high;
+}
+
+/* --- Athan and weather cards --- */
+
+/* Three widgets reading as one card: state, bar, timetable */
+.widget-label {
     background: @surface_container_high;
-    box-shadow: none;
-}
-
-.widget-title>button:hover {
-    background: @primary;
-    color: @on_primary;
-}
-
-/* widget button grid */
-button {
-    border: 0px;
-    min-width: 35px;
-    background: @surface_container;
-}
-
-.widget-buttons-grid {
-    font-size: x-large;
-    background: @surface_container_high;
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button {
-    color: @on_background;
-    margin: 8px;
-    /* padding: 16px; */
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button:hover {
-    background: @primary;
-    color: @on_primary;
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked {
-    background: @primary;
-}
-
-.widget-buttons-grid>flowbox>flowboxchild>button.toggle:checked label {
-    color: @on_primary;
-}
-
-/* dnd widget */
-.widget-dnd {
-    background: transparent;
-    border: 1px solid transparent;
-    font-size: large;
-    color: @on_background;
-}
-
-.widget-dnd>label {
-    color: @on_background;
-}
-
-.widget-dnd>switch {
-    background: @surface_container;
-    color: @on_background;
-    border-radius: 6px;
-}
-
-.widget-dnd>switch:checked {
-    background: @primary;
-    /* border: 1px solid @error; */
-}
-
-/* volume & backlight widget */
-.widget-volume,
-.widget-backlight {
-    background: @surface_container_high;
-    color: @on_background;
-    font-size: x-large;
-}
-
-/* music player widget */
-.widget-mpris {
-    background: transparent;
-    margin: 0px 8px;
-    padding: 0px;
-    border: none;
+    color: @on_surface;
     border: 1px solid @outline_variant;
 }
 
-.widget-mpris button {
-    background-color: transparent;
-    border-radius: 6px;
-
+/* Monospaced: columns line up with spaces, and labels can't hold markup */
+.widget-label > label {
+    font-family: "JetBrainsMono NF", "JetBrainsMono Nerd Font";
+    font-size: 12px;
 }
 
-.widget-mpris button:hover {
-    background-color: @primary;
+.widget-label.athan {
+    margin-bottom: 0;
+    padding: 10px 12px 4px;
+    border-bottom: none;
+    border-radius: var(--radius-row) var(--radius-row) 0 0;
+}
+
+.widget-label.athan > label {
+    font-weight: 700;
+}
+
+.widget-label.athan-bar {
+    margin: 0 4px;
+    padding: 2px 12px;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0;
+}
+
+/* No text inside, and font size would otherwise set the height */
+.widget-label.athan-bar > label {
+    font-size: 1px;
+    min-height: 6px;
+    border-radius: 3px;
+    background-color: @outline_variant;
+}
+
+.widget-label.athan-times {
+    margin-top: 0;
+    padding: 4px 12px 10px;
+    border-top: none;
+    border-radius: 0 0 var(--radius-row) var(--radius-row);
+}
+
+.widget-label.athan-times > label {
+    color: @on_surface_variant;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* --- Title and Do Not Disturb --- */
+
+.widget-title {
+    padding: 4px 4px 0 12px;
+}
+
+.widget-title > label {
+    color: @on_surface;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.widget-title > button {
+    background: transparent;
+    color: @on_surface_variant;
+    border: none;
+    box-shadow: none;
+    border-radius: var(--radius-control);
+    font-size: 12px;
+    min-height: 24px;
+    padding: 0 8px;
+}
+
+.widget-title > button:hover {
+    background: @surface_container_highest;
+    color: @on_surface;
+}
+
+.widget-dnd {
+    background: @surface_container_high;
+    border: 1px solid @outline_variant;
+    padding: 6px 12px;
+}
+
+.widget-dnd label {
+    color: @on_surface;
+    font-size: 12px;
+    margin: 0;
+}
+
+.widget-dnd switch {
+    background: @surface_container_highest;
+    border: none;
+    border-radius: 11px;
+    min-height: 20px;
+}
+
+.widget-dnd switch:checked {
+    background: @primary;
+}
+
+.widget-dnd switch slider {
+    background: @on_surface;
+    border: none;
+    box-shadow: none;
+    border-radius: 11px;
+    min-width: 16px;
+    min-height: 16px;
+    margin: 2px;
+}
+
+.widget-dnd switch:checked slider {
+    background: @on_primary;
+}
+
+/* --- Quick actions --- */
+
+/* Button gaps come from the children, so the grid gives that much back to keep the card edges */
+.widget-buttons-grid {
+    background: transparent;
+    margin: 4px 1px;
+    padding: 0;
+}
+
+.widget-buttons-grid flowbox {
+    padding: 0;
+    margin: 0;
+}
+
+.widget-buttons-grid flowboxchild {
+    padding: 0 3px;
+    margin: 0;
+}
+
+.widget-buttons-grid flowboxchild > button {
+    background: @surface_container_high;
+    color: @on_surface;
+    border: 1px solid @outline_variant;
+    box-shadow: none;
+    border-radius: var(--radius-row);
+    font-size: 16px;
+    min-height: 38px;
+    min-width: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.widget-buttons-grid flowboxchild > button:hover {
+    background: @surface_container_highest;
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+    background: @primary;
     color: @on_primary;
 }
 
-
-.widget.widget-mpris>carouselindicatordots {
-    margin: 0;
-    margin-top: 12px;
+.widget-buttons-grid flowboxchild > button.toggle:checked label {
+    color: @on_primary;
 }
 
-.widget-mpris-player {
+/* --- Sliders --- */
+
+.widget-volume,
+.widget-backlight {
+    background: @surface_container_high;
+    color: @on_surface;
+    border: 1px solid @outline_variant;
+    font-size: 16px;
+    padding: 6px 12px;
+}
+
+scale trough {
+    background: @outline_variant;
+    border: none;
+    border-radius: 3px;
+    min-height: 6px;
+}
+
+scale trough highlight {
+    background: @primary;
+    border: none;
+    border-radius: 3px;
+}
+
+scale trough slider {
+    background: @primary;
+    border: none;
+    box-shadow: none;
+    min-width: 14px;
+    min-height: 14px;
+    margin: -5px;
+}
+
+/* --- Media --- */
+
+.widget-mpris {
+    background: transparent;
+    padding: 0;
+}
+
+/* Its own card: the album art only tints it, so it can't bleed into the panel */
+.widget-mpris .widget-mpris-player {
+    background: @surface_container_high;
+    border: 1px solid @outline_variant;
+    border-radius: var(--radius-row);
     box-shadow: none;
     margin: 0;
-    background: @background;
 }
 
-
-
-/* sliders in backlight and volume */
-trough slider {
-    background: @on_background;
+.widget-mpris .widget-mpris-player .mpris-overlay {
+    background-color: alpha(@surface_container_high, 0.86);
+    padding: 10px;
 }
 
-trough slider:hover {
-    background: @primary;
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
+    -gtk-icon-size: 64px;
+    border-radius: var(--radius-control);
+    box-shadow: none;
 }
 
-trough highlight {
-    background: @primary;
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+    font-size: 13px;
+    font-weight: 600;
 }
 
-scrollbar {
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+    color: @on_surface_variant;
+    font-size: 12px;
+}
+
+.widget-mpris button {
     background: transparent;
-    width: 8px;
-    /* Total area width */
+    color: @on_surface;
     border: none;
-    padding: 0px;
-    margin: 0px;
-    /* Force GTK to allow a thin profile */
-    -GtkScrollbar-has-backward-stepper: false;
-    -GtkScrollbar-has-forward-stepper: false;
+    box-shadow: none;
+    border-radius: var(--radius-control);
 }
 
+.widget-mpris .widget-mpris-player .mpris-overlay button:hover,
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover,
+.widget-mpris button:hover {
+    background: @primary;
+    color: @on_primary;
+}
+
+/* --- Scrollbar: a thin floating line in the gutter, clear of the cards --- */
+
+scrollbar,
+scrollbar.overlay-indicator,
 scrollbar trough {
     background: transparent;
     border: none;
-    min-width: 0px;
+    box-shadow: none;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
 }
 
-scrollbar slider {
-    background: @primary;
-    border-radius: 20px;
-    min-width: 8px;
-    /* This is your actual thickness */
+scrollbar slider,
+scrollbar.overlay-indicator slider,
+scrollbar.overlay-indicator:not(.dragging):not(.hovering) slider {
+    background: alpha(@on_surface_variant, 0.35);
     border: none;
-    margin: 0px;
+    box-shadow: none;
+    border-radius: 2px;
+    min-width: 3px;
+    margin: 0;
+    outline: none;
 }
 
-/* Optional: Only show it when you're actually scrolling or hovering the bar */
-scrollbar slider:hover {
-    background: @primary;
-    min-width: 8px;
+scrollbar slider:hover,
+scrollbar.overlay-indicator.hovering slider,
+scrollbar.overlay-indicator.dragging slider {
+    background: alpha(@on_surface_variant, 0.7);
 }

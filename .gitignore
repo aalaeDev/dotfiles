@@ -4,3 +4,6 @@
 tmp/
 tmux/.config/tmux/plugins/*
 fish/.config/fish/fish_variables
+.env
+swaync/.config/swaync/config.json
+swaync/.config/swaync/athan-bar.css
