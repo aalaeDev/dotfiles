@@ -22,9 +22,9 @@
 hl.window_rule({
     name = "transparent-code",
     match = {
-        class = "com.microsoft.VSCode",
+        class = "code-oss",
     },
-    opacity = 0.9,
+    opacity = 0.96,
 })
 
 -- move = (cursor_x) (cursor_y)

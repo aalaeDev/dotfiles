@@ -2,6 +2,9 @@
     // ===== GENERAL SETTINGS =====
     "telemetry.telemetryLevel": "off",
     // ===== EDITOR BASICS =====
+    "editor.smoothScrolling": true,
+    "workbench.list.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
     "editor.formatOnPaste": true,
     "editor.suggestSelection": "first",
     "editor.formatOnSave": true,
@@ -18,8 +21,15 @@
     // ===== EDITOR APPEARANCE =====
     "editor.fontFamily": "JetBrainsMono NF",
     "editor.fontWeight": "500",
-    "editor.lineHeight": 1.4,
+    "editor.lineHeight": 1.6,
     "editor.padding.top": 16,
+    "editor.padding.bottom": 16,
+    "editor.renderLineHighlight": "line",
+    "editor.overviewRulerBorder": false,
+    "editor.scrollbar.verticalScrollbarSize": 8,
+    "editor.scrollbar.horizontalScrollbarSize": 8,
+    "editor.bracketPairColorization.enabled": false,
+    "breadcrumbs.enabled": false,
     "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
     "editor.minimap.enabled": false,
     "editor.minimap.maxColumn": 250,
@@ -43,6 +53,10 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.editorActionsLocation": "hidden",
     "workbench.tree.indent": 15,
+    "workbench.tree.renderIndentGuides": "none",
+    "workbench.editor.tabHeight": "compact",
+    "workbench.layoutControl.enabled": false,
+    "workbench.reduceMotion": "off",
     // ===== FILES AND EXPLORER =====
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
@@ -67,6 +81,8 @@
     "diffEditor.wordWrap": "on",
     // ===== WINDOW =====
     "window.newWindowDimensions": "inherit",
+    "window.titleBarStyle": "custom",
+    "window.dialogStyle": "custom",
     "problems.decorations.enabled": false,
     // ===== TYPOGRAPHY =====
     "editor.suggestFontSize": 16,
@@ -80,9 +96,6 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit",
         },
-    },
-    "[c]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools",
     },
     "[xml]": {
         "editor.defaultFormatter": "redhat.vscode-xml",
@@ -115,7 +128,7 @@
     "notebook.lineNumbers": "on",
     // ===== CHAT =====
     "chat.editor.wordWrap": "on",
-    "chat.fontFamily": "JetBrainsMono NF",
+    "chat.fontFamily": "SF Pro Text",
     // ===== TOKEN COLORS =====
     "editor.tokenColorCustomizations": {
         "textMateRules": [
@@ -159,7 +172,7 @@
     "chat.disableAIFeatures": true,
     "geminicodeassist.inlineSuggestions.nextEditPredictions": true,
     "geminicodeassist.enableTelemetry": false,
-    "markdown.preview.fontFamily": "JetBrainsMono NF, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+    "markdown.preview.fontFamily": "SF Pro Text, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
     "markdown.preview.fontSize": 16,
     "python.languageServer": "None",
     "ty.disableLanguageServices": true,
@@ -205,5 +218,5 @@
     "claudeCode.hideOnboarding": true,
     "terminal.integrated.lineHeight": 1,
     "[cpp]": {},
-    "window.menuBarVisibility": "compact"
+    "claudeCode.preferredLocation": "panel"
 }
