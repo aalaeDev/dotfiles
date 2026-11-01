@@ -8,6 +8,8 @@ SIGNAL=10                                                   # Must match "signal
 STATE_FILE="${XDG_RUNTIME_DIR:-/tmp}/protonvpn-waybar.state" # Used to track transition states
 APP_NAME="Proton VPN"                                       # Notification app name
 CLI_LOG="$HOME/.cache/Proton/VPN/logs/vpn-cli.log"          # Where the CLI logs failures
+SERVER_LIST="$HOME/.cache/Proton/VPN/serverlist.json"       # CLI cache, MaxTier is the account's plan
+PREMIUM_ICON=$'\U000F033E'                                  # nf-md-lock, marks choices that need a paid plan
 ICON="network-vpn"                                          # Notification icon
 FRAMES=3                                                    # Animation frames, "<state>-N" keys in format-icons
 FRAME_MS=250                                                # Animation frame duration
@@ -103,8 +105,13 @@ toggle() {
 select_country() {
     [[ -f "$STATE_FILE" ]] && return 0
 
-    local selected
-    selected=$(printf '%s\n' "Fastest" "${COUNTRIES[@]}" "Disconnect" \
+    # The CLI refuses every country on the free plan, even ones with free servers
+    local selected countries=("${COUNTRIES[@]}")
+    if [[ "$(jq -r '.MaxTier' "$SERVER_LIST" 2> /dev/null)" == "0" ]]; then
+        countries=("${COUNTRIES[@]/%/ $PREMIUM_ICON}")
+    fi
+
+    selected=$(printf '%s\n' "Fastest" "${countries[@]}" "Disconnect" \
         | rofi -dmenu -i -p "Proton VPN")
 
     # User cancelled
@@ -113,7 +120,7 @@ select_country() {
     case "$selected" in
         Fastest) connect ;;
         Disconnect) disconnect ;;
-        *) connect --country "$selected" ;;
+        *) connect --country "${selected% "$PREMIUM_ICON"}" ;;
     esac
 }
 
