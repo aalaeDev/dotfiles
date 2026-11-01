@@ -95,3 +95,14 @@ hl.window_rule({
     },
     no_blur = true,
 })
+
+-- Sushi, on Space in Nemo: it can't size itself here because GTK gets no monitor for its window on Hyprland
+hl.window_rule({
+    name = "quick-look",
+    match = {
+        class = "org.gnome.NautilusPreviewer",
+    },
+    float = true,
+    center = true,
+    size = "1100 800",
+})

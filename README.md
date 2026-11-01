@@ -57,7 +57,7 @@ Ensure you have the following installed on your system:
 - `stow`, `hyprland`, `fish`, `kitty`, `tmux`, `waybar`, `rofi-wayland`, `swaync`, `matugen-bin`, `swww`, `jq`, `playerctl`, `tailscale`.
 - Sounds: `pipewire`, `bluez-utils`, `ffmpeg` (only to regenerate them).
 - Screenshots: `hyprshot`, `elephant-menus-bin`, `satty`, `tesseract`, `tesseract-data-eng`, `tesseract-data-fra`, `oxipng`, `wf-recorder`, `ffmpeg`, `imagemagick`.
-- Documents: `zathura`, `zathura-pdf-mupdf`.
+- Documents: `zathura`, `zathura-pdf-mupdf`, `sushi`.
 
 ### 2. Clone and Stow
 I use **GNU Stow** to manage these files. Each top-level directory represents a "package."

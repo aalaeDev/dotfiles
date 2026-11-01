@@ -1,0 +1,4 @@
+# Overrides the packaged service: nemo-preview draws badly under XWayland and crashes on Wayland, so Sushi takes over
+[D-BUS Service]
+Name=org.nemo.Preview
+Exec=/bin/sh -c 'exec "$HOME/.local/bin/nemo-quicklook.py"'

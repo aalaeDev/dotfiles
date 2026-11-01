@@ -1,0 +1,4 @@
+# Overrides the packaged service: Sushi aborts on MP3s with an ID3 tag while id3demux is enabled
+[D-BUS Service]
+Name=org.gnome.NautilusPreviewer
+Exec=/usr/bin/env GST_PLUGIN_FEATURE_RANK=id3demux:NONE /usr/lib/org.gnome.NautilusPreviewer
