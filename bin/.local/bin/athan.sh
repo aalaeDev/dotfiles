@@ -124,11 +124,10 @@ print_waybar() {
     else
         headline="$name in $(remaining)"
     fi
-    # Columns line up with spaces, so they keep a monospaced font
     times=$(while read -r n e; do
-        printf '%-8s %s\n' "$n" "$(clock_of "$e")"
-    done < <(day_times "$(date -d "@$NOW" +%F)"))
-    jq -cn --arg text "$text" --arg tooltip "$headline"$'\n'"$(bar)"$'\n\n'"<span font_family='JetBrainsMono NF'>$times</span>" --arg class "$mode" \
+        printf '%s\t%s\n' "$n" "$(clock_of "$e")"
+    done < <(day_times "$(date -d "@$NOW" +%F)") | pad_tooltip)
+    jq -cn --arg text "$text" --arg tooltip "$headline"$'\n'"$(bar)"$'\n\n'"$times" --arg class "$mode" \
         '{text: $text, tooltip: $tooltip, class: $class}'
 }
 

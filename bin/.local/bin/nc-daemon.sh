@@ -9,7 +9,10 @@ BIN="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=/dev/null
 source "$BIN/rice-env.sh"
 SWAYNC="$HOME/.config/swaync"
-CARD_WIDTH=50  # Characters that fit one line of the weather card
+# Rows are one label each, so pad-columns.py lines them up: these must match the card rows in style.css
+ROW_FONT="SF Pro Text"
+ROW_SIZE=12
+ROW_WIDTH=360  # Pixels that fit one line of a card
 STAMP="$RICE_CACHE/athan-notified"
 LOCK="${XDG_RUNTIME_DIR:-/tmp}/nc-daemon.lock"
 CLAUDE_TICK=5  # Seconds between Claude Code bar updates while a session is active
@@ -43,12 +46,11 @@ render_config() {
     weather=$("$BIN/weather.sh" json)
     claude=$("$BIN/claude-widget.sh" --nc)
     jq --argjson athan "${athan:-null}" --argjson weather "${weather:-null}" --argjson claude "${claude:-[]}" \
-        --arg clock "$(date +%H:%M)" --arg date "$(date '+%A, %-d %B')" --argjson width "$CARD_WIDTH" '
-        def row($left; $right): $left + (" " * ([$width - ($left | length) - ($right | length), 1] | max)) + $right;
-        def pad($size): . + (" " * ([$size - length, 0] | max));
+        --arg clock "$(date +%H:%M)" --arg date "$(date '+%A, %-d %B')" '
+        def row($left; $right): "\($left)\t\($right)";
         def or_dash: if . == "" or . == null then "–" else . end;
         def info($text): {label: $text, command: ""};
-        def align_right: (map(length) | max) as $size | map(" " * ($size - length) + .) | join("\n");
+        def align_right: map("\t\(.)") | join("\n");
         ([if $athan then "menubar#today-head", "label#athan-bar", "menubar#athan-state" else empty end,
             if $weather then "menubar#weather" else empty end,
             if ($claude | length) > 0 then "menubar#claude", "label#claude-bar" else empty end]) as $cards
@@ -90,9 +92,10 @@ render_config() {
                         info(row("Visibility"; $weather.visibility | or_dash)),
                         info(row("Air quality"; $weather.aqi | or_dash)),
                         info(row("Humidity"; "\($weather.humidity)%")),
-                        ($weather.days[] | info(row("\(.icon)  \(.day | pad(11))\(.desc)"; "\(.low)° / \(.high)°")))]},
+                        ($weather.days[] | info(row("\(.icon)  \(.day)\t\(.desc)"; "\(.low)° / \(.high)°")))]},
                 "buttons#temp": {position: "right", actions: [info("\($weather.icon) \($weather.temp)°")]}}
-          else . end' "$SWAYNC/config.base.json"
+          else . end' "$SWAYNC/config.base.json" \
+        | "$BIN/pad-columns.py" --json --fractional --font "$ROW_FONT" --size "$ROW_SIZE" --width "$ROW_WIDTH"
 }
 
 # A style reload leaves the widgets alone, so unlike the text this also runs with the panel open

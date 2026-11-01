@@ -425,7 +425,7 @@ progressbar progress {
 .widget-menubar.weather > revealer button {
     color: @on_surface_variant;
     font-weight: 400;
-    padding: 3px 16px 3px 12px; /* Exactly CARD_WIDTH characters wide, so the text starts on the card's edge */
+    padding: 3px 16px 3px 12px; /* ROW_WIDTH in nc-daemon.sh fits exactly, so the text starts on the card's edge */
     margin: 0;
 }
 

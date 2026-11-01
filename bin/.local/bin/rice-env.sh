@@ -11,3 +11,8 @@ CITY="" COUNTRY="" ATHAN_METHOD=3 ATHAN_LATE_MINUTES=30 WEATHER_UNITS=celsius SO
 # shellcheck source=/dev/null
 [[ -r "$RICE_ENV" ]] && source "$RICE_ENV"
 mkdir -p "$RICE_CACHE"
+
+# Lines up tab-separated columns in a Waybar tooltip: must match "tooltip label" in waybar/style.css
+pad_tooltip() {
+    "$(dirname "$(readlink -f "$0")")/pad-columns.py" --font "SF Pro Text" --size 12 --weight 500 "$@"
+}
