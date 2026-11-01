@@ -32,7 +32,7 @@ fetch_place() {
     local tmp
     tmp=$(mktemp "$place.XXXXXX")
     if curl -fsS -m 8 --get https://geocoding-api.open-meteo.com/v1/search \
-        --data-urlencode "name=$CITY" -d count=10 -d format=json 2> /dev/null \
+        --data-urlencode "name=$CITY" -d count=100 -d format=json 2> /dev/null \
         | jq -e --arg country "${COUNTRY,,}" '
             .results as $all
             | ([$all[] | select((.country // "" | ascii_downcase) == $country)] | first) // $all[0]
