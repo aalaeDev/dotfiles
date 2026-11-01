@@ -128,7 +128,10 @@ hook() {
                 return 0
             fi
             update_state "$file" "$filter" --argjson now "$now"
-            [[ "$state" == waiting ]] && refresh_widgets
+            # An if, not &&: this ends the hook, and a failed test would become its exit status
+            if [[ "$state" == waiting ]]; then
+                refresh_widgets
+            fi
             ;;
         Notification)
             [[ -f "$file" ]] || return 0
