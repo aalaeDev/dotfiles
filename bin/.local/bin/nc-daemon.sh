@@ -12,7 +12,8 @@ SWAYNC="$HOME/.config/swaync"
 # Rows are one label each, so pad-columns.py lines them up: these must match the card rows in style.css
 ROW_FONT="SF Pro Text"
 ROW_SIZE=12
-ROW_WIDTH=360  # Pixels that fit one line of a card
+ROW_WEIGHT=500
+ROW_WIDTH=365  # Pixels that fit one line of a card: the width of its bar
 STAMP="$RICE_CACHE/athan-notified"
 LOCK="${XDG_RUNTIME_DIR:-/tmp}/nc-daemon.lock"
 CLAUDE_TICK=5  # Seconds between Claude Code bar updates while a session is active
@@ -96,7 +97,7 @@ render_config() {
                         ($weather.days[] | info(row("\(.icon)  \(.day)\t\(.desc)"; "\(.low)° / \(.high)°")))]},
                 "buttons#temp": {position: "right", actions: [info("\($weather.icon) \($weather.temp)°")]}}
           else . end' "$SWAYNC/config.base.json" \
-        | "$BIN/pad-columns.py" --json --fractional --font "$ROW_FONT" --size "$ROW_SIZE" --width "$ROW_WIDTH"
+        | "$BIN/pad-columns.py" --json --fractional --font "$ROW_FONT" --size "$ROW_SIZE" --weight "$ROW_WEIGHT" --width "$ROW_WIDTH"
 }
 
 # A style reload leaves the widgets alone, so unlike the text this also runs with the panel open
@@ -109,7 +110,8 @@ refresh_bar() {
         # The menu's rows: Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha
         case "$name" in Fajr) row=1 ;; Dhuhr) row=3 ;; Asr) row=4 ;; Maghrib) row=5 ;; Isha) row=6 ;; esac
         new=".widget-label.athan-bar > label { background-image: linear-gradient(to right, @$color $percent%, @outline_variant $percent%); }"
-        new+=$'\n'".widget-menubar.athan-state > revealer button:nth-child($row) label { color: @$color; font-weight: 700; }"
+        # Color only: another weight changes the text's width and undoes the row's padding
+        new+=$'\n'".widget-menubar.athan-state > revealer button:nth-child($row) label { color: @$color; }"
     fi
     [[ "$new" == "$(cat "$SWAYNC/athan-bar.css" 2> /dev/null)" ]] && return 0
     printf '%s\n' "$new" > "$SWAYNC/athan-bar.css"

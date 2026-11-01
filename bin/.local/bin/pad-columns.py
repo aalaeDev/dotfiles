@@ -103,22 +103,22 @@ def pad_rows(rows, ruler, width=None, align=None):
     return [done.get(row, row) for row in rows]
 
 
-def pad_config(node, rows, head, width):
+def pad_config(node, ruler, width):
     if isinstance(node, list):
         for item in node:
-            pad_config(item, rows, head, width)
+            pad_config(item, ruler, width)
     elif isinstance(node, dict):
         actions = node.get("actions")
         if isinstance(actions, list):
             labels = [action for action in actions if isinstance(action, dict) and "\t" in action.get("label", "")]
             for action in labels:  # A label of several lines is a block by itself, sized to its own text
                 if "\n" in action["label"]:
-                    action["label"] = "\n".join(pad_rows(action["label"].split("\n"), head))
+                    action["label"] = "\n".join(pad_rows(action["label"].split("\n"), ruler))
             single = [action for action in labels if "\n" not in action["label"] and "\t" in action["label"]]
-            for action, label in zip(single, pad_rows([action["label"] for action in single], rows, width)):
+            for action, label in zip(single, pad_rows([action["label"] for action in single], ruler, width)):
                 action["label"] = label
         for value in node.values():
-            pad_config(value, rows, head, width)
+            pad_config(value, ruler, width)
 
 
 def main():
@@ -126,7 +126,6 @@ def main():
     parser.add_argument("--font", required=True)
     parser.add_argument("--size", type=float, required=True, help="Pixels")
     parser.add_argument("--weight", type=int, default=400)
-    parser.add_argument("--head-weight", type=int, default=500, help="--json: weight of labels of several lines")
     parser.add_argument("--width", type=float, help="Pixels from the left edge to the end of the last column")
     parser.add_argument("--align", help="One l or r per column")
     parser.add_argument("--fractional", action="store_true", help="The text is shown by GTK4, not GTK3")
@@ -137,7 +136,7 @@ def main():
     ruler = Ruler(args.font, args.size, args.weight, args.fractional)
     if args.json:
         config = json.loads(source)
-        pad_config(config, ruler, Ruler(args.font, args.size, args.head_weight, args.fractional), args.width)
+        pad_config(config, ruler, args.width)
         print(json.dumps(config, ensure_ascii=False, indent=2))
     else:
         print("\n".join(pad_rows(source.rstrip("\n").split("\n"), ruler, args.width, args.align)))
