@@ -46,3 +46,12 @@ hl.window_rule({
     },
     no_blur = true,
 })
+
+-- VLC's menus are separate windows: fading them in shows the desktop through them for a moment
+hl.window_rule({
+    name = "vlc-no-anim",
+    match = {
+        class = "vlc",
+    },
+    no_anim = true,
+})

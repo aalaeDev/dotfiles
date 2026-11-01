@@ -140,3 +140,10 @@ post_hook = '~/.local/bin/onlyoffice-live-theme.sh'
 [templates.krita]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/krita.colors'
 output_path = '~/.local/share/krita/color-schemes/matugen.colors'
+
+# qt5ct reloads open VLC windows when its folder changes, a few seconds later. Only the volume
+# slider waits for a restart: VLC draws it from vlcrc, which it reads at startup
+[templates.vlc]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/vlc.qss'
+output_path = '~/dotfiles/qt5ct/.config/qt5ct/qss/matugen.qss'
+post_hook = 'sed -i "s/^#\?qt-slider-colours=.*/qt-slider-colours={{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.error.default.red}};{{colors.error.default.green}};{{colors.error.default.blue}}/" ~/.config/vlc/vlcrc; touch ~/.config/qt5ct/.reload; rm ~/.config/qt5ct/.reload'

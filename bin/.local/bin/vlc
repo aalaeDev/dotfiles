@@ -1,0 +1,11 @@
+#!/bin/sh
+# Starts VLC on qt5ct, which carries its palette and stylesheet; other Qt apps stay on gtk3.
+# Also preloads vlc-seek-style.cpp, built here on first use; VLC still runs without it
+src="$HOME/.local/bin/vlc-seek-style.cpp"
+so="$HOME/.cache/vlc-seek-style.so"
+if [ ! -e "$so" ] || [ "$src" -nt "$so" ]; then
+    # shellcheck disable=SC2046
+    g++ -shared -fPIC -O2 -o "$so" "$src" $(pkg-config --cflags --libs Qt5Widgets) -ldl 2> /dev/null || rm -f "$so"
+fi
+[ -e "$so" ] && export LD_PRELOAD="$so"
+QT_QPA_PLATFORMTHEME=qt5ct exec /usr/bin/vlc "$@"
