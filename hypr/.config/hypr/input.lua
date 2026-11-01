@@ -16,7 +16,18 @@ hl.config({
         sensitivity = 0,
         touchpad = {
             natural_scroll = true,
+            -- Clickpad without physical buttons: finger count picks the button, not a corner zone
+            clickfinger_behavior = true,
+            scroll_factor = 0.6,
         },
+    },
+    gestures = {
+        workspace_swipe_distance = 500,
+        workspace_swipe_cancel_ratio = 0.25,
+        workspace_swipe_forever = true,
+    },
+    cursor = {
+        hide_on_key_press = true,
     },
 })
 
@@ -26,13 +37,40 @@ hl.gesture({
     direction = "horizontal",
     action = "workspace",
 })
-
--- Example per-device config
+hl.gesture({
+    fingers = 3,
+    direction = "up",
+    action = function()
+        hl.dispatch(hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/sound.sh walker; walker -m windows"))
+    end,
+})
+hl.gesture({
+    fingers = 3,
+    direction = "down",
+    action = "special",
+    workspace_name = "special",
+})
+hl.gesture({
+    fingers = 4,
+    direction = "up",
+    action = "fullscreen",
+})
+hl.gesture({
+    fingers = 4,
+    direction = "down",
+    action = "float",
+})
 
 -- See https://wiki.hypr.land/Configuring/Keywords/#per-device-input-configs for more
 hl.device({
-    name = "epic-mouse-v1",
-    sensitivity = 1,
+    name = "elan0511:00-04f3:303f-touchpad",
+    accel_profile = "adaptive",
+    sensitivity = 0.2,
+})
+hl.device({
+    name = "mi-silent-mouse",
+    accel_profile = "adaptive",
+    sensitivity = 0,
 })
 hl.device({
     name = "semico-usb-keyboard",
