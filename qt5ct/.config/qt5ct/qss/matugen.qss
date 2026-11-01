@@ -6,14 +6,14 @@ QToolButton {
     padding: 3px;
 }
 QToolButton:hover {
-    background: #33353a;
+    background: #32353a;
 }
 QToolButton:pressed, QToolButton:checked {
-    background: #254777;
+    background: #1e4876;
 }
 QMenuBar {
-    background: #111318;
-    color: #e1e2e9;
+    background: #111418;
+    color: #e1e2e8;
 }
 QMenuBar::item {
     background: transparent;
@@ -21,12 +21,12 @@ QMenuBar::item {
     border-radius: 6px;
 }
 QMenuBar::item:selected, QMenu::item:selected {
-    background: #254777;
-    color: #d5e3ff;
+    background: #1e4876;
+    color: #d3e4ff;
 }
 QMenu {
     background: #1d2024;
-    color: #e1e2e9;
+    color: #e1e2e8;
     border: 1px solid #43474e;
     padding: 4px;
 }
@@ -35,7 +35,7 @@ QMenu::item {
     border-radius: 6px;
 }
 QMenu::item:disabled {
-    color: #8e9199;
+    color: #8d9199;
 }
 QMenu::separator {
     height: 1px;
@@ -43,40 +43,40 @@ QMenu::separator {
     margin: 4px 8px;
 }
 QToolTip {
-    background: #282a2f;
-    color: #e1e2e9;
+    background: #272a2f;
+    color: #e1e2e8;
     border: 1px solid #43474e;
 }
 TimeLabel {
-    color: #c4c6cf;
+    color: #c3c6cf;
 }
 
 /* Only applies because vlc-seek-style.cpp keeps VLC's own style off the seek bar */
 SeekSlider::groove {
     height: 6px;
     border-radius: 3px;
-    background: #33353a;
+    background: #32353a;
 }
 SeekSlider::sub-page {
     border-radius: 3px;
-    background: #a8c8ff;
+    background: #a3c9fe;
 }
 SeekSlider::add-page {
     border-radius: 3px;
-    background: #33353a;
+    background: #32353a;
 }
 SeekSlider::handle {
     width: 12px;
     margin: -3px 0;
     border-radius: 6px;
-    background: #a8c8ff;
+    background: #a3c9fe;
 }
 SeekSlider::handle:hover {
-    background: #e1e2e9;
+    background: #e1e2e8;
 }
 TimeTooltip {
-    background-color: #33353a;
-    color: #e1e2e9;
+    background-color: #32353a;
+    color: #e1e2e8;
 }
 ControlsWidget, InputControlsWidget {
     background: #1d2024;
@@ -89,33 +89,33 @@ QSizeGrip {
 
 /* Dialogs */
 QPushButton {
-    background: #282a2f;
-    color: #e1e2e9;
+    background: #272a2f;
+    color: #e1e2e8;
     border: 1px solid #43474e;
     border-radius: 6px;
     padding: 4px 12px;
 }
 QPushButton:hover {
-    background: #33353a;
+    background: #32353a;
 }
 QPushButton:pressed, QPushButton:checked, QPushButton:default {
-    background: #254777;
-    color: #d5e3ff;
+    background: #1e4876;
+    color: #d3e4ff;
 }
 QPushButton:disabled {
-    color: #8e9199;
+    color: #8d9199;
 }
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
-    background: #282a2f;
-    color: #e1e2e9;
+    background: #272a2f;
+    color: #e1e2e8;
     border: 1px solid #43474e;
     border-radius: 6px;
     padding: 3px 6px;
-    selection-background-color: #254777;
-    selection-color: #d5e3ff;
+    selection-background-color: #1e4876;
+    selection-color: #d3e4ff;
 }
 QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {
-    border-color: #a8c8ff;
+    border-color: #a3c9fe;
 }
 QComboBox::drop-down {
     border: none;
@@ -123,26 +123,26 @@ QComboBox::drop-down {
 }
 QAbstractItemView {
     background: #191c20;
-    color: #e1e2e9;
-    selection-background-color: #254777;
-    selection-color: #d5e3ff;
+    color: #e1e2e8;
+    selection-background-color: #1e4876;
+    selection-color: #d3e4ff;
     outline: none;
 }
 QHeaderView::section {
     background: #1d2024;
-    color: #c4c6cf;
+    color: #c3c6cf;
     border: none;
     padding: 4px 8px;
 }
 QTabBar::tab {
     background: transparent;
-    color: #c4c6cf;
+    color: #c3c6cf;
     padding: 6px 12px;
     border-bottom: 2px solid transparent;
 }
 QTabBar::tab:selected {
-    color: #e1e2e9;
-    border-bottom-color: #a8c8ff;
+    color: #e1e2e8;
+    border-bottom-color: #a3c9fe;
 }
 QTabWidget::pane {
     border: 1px solid #43474e;
@@ -160,7 +160,7 @@ QScrollBar::handle {
     min-width: 24px;
 }
 QScrollBar::handle:hover {
-    background: #8e9199;
+    background: #8d9199;
 }
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {
     background: none;
@@ -170,14 +170,14 @@ QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::su
 QCheckBox::indicator, QRadioButton::indicator {
     width: 12px;
     height: 12px;
-    background: #282a2f;
-    border: 1px solid #8e9199;
+    background: #272a2f;
+    border: 1px solid #8d9199;
     border-radius: 3px;
 }
 QRadioButton::indicator {
     border-radius: 7px;
 }
 QCheckBox::indicator:checked, QRadioButton::indicator:checked {
-    background: #a8c8ff;
-    border-color: #a8c8ff;
+    background: #a3c9fe;
+    border-color: #a3c9fe;
 }
