@@ -19,6 +19,7 @@ BIN="$(dirname "$(readlink -f "$0")")"
 source "$BIN/rice-env.sh"
 STATE="${XDG_RUNTIME_DIR:-/tmp}/claude-widget"
 SELECTED="$STATE/.selected"          # The session the pill shows
+SWITCH_GAP=300                       # Milliseconds between session switches
 NC_CARDS=4                           # Sessions with a card in the notification center
 HISTORY="$RICE_CACHE/claude-turns"   # Seconds per finished turn, one a line
 CLAUDE_HOME="$HOME/.claude"
@@ -256,6 +257,10 @@ status() {
 # whatever their state, so scrolling always walks the same loop.
 switch_session() {
     local next
+    # A touchpad flick sends a burst of scroll events, and that should be one step
+    if [[ -f "$SELECTED" ]] && (( $(date +%s%3N) - $(date -r "$SELECTED" +%s%3N) < SWITCH_GAP )); then
+        return 0
+    fi
     next=$(sessions | jq -r --arg selected "$(cat "$SELECTED" 2> /dev/null)" --argjson step "$1" '
         if length == 0 then empty
         else
