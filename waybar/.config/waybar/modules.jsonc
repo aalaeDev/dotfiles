@@ -218,7 +218,7 @@
     },
     "group/hardware": {
         "orientation": "inherit",
-        "modules": ["pulseaudio", "backlight", "battery"],
+        "modules": ["pulseaudio", "backlight", "custom/power-plan#indicator", "battery"],
     },
     "group/extras": {
         "orientation": "inherit",
@@ -226,7 +226,7 @@
             "transition-duration": 400,
             "transition-left-to-right": false,
         },
-        "modules": ["custom/expand", "tray", "custom/stay-awake"],
+        "modules": ["custom/expand", "tray", "custom/stay-awake", "custom/power-plan"],
     },
     "group/session": {
         "orientation": "inherit",
@@ -234,7 +234,7 @@
     },
     "custom/expand": {
         "format": "<span size='130%' rise='-1451'>󰅁</span>",
-        "tooltip-format": "Tray & stay awake",
+        "tooltip-format": "Tray, stay awake & power plan",
     },
     "custom/power": {
         "format": "<span size='130%' rise='-1451'>󰐥</span>",
@@ -275,6 +275,32 @@
         "format-icons": {
             "on": "<span size='130%' rise='-1451'>󰅶</span>",
             "off": "",
+        },
+    },
+    "custom/power-plan": {
+        "exec": "~/.local/bin/waybar-power-plan.sh --watch",
+        "on-click": "~/.local/bin/waybar-power-plan.sh --cycle",
+        "on-click-right": "~/.local/bin/waybar-power-plan.sh --default",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "power-saver": "<span size='130%' rise='-1451'>󰌪</span>",
+            "balanced": "<span size='130%' rise='-1451'>󰗑</span>",
+            "performance": "<span size='130%' rise='-1451'>󰓅</span>",
+            "unavailable": "",
+        },
+    },
+    // Beside the battery, only while the plan isn't the default one
+    "custom/power-plan#indicator": {
+        "exec": "~/.local/bin/waybar-power-plan.sh --watch",
+        "on-click": "~/.local/bin/waybar-power-plan.sh --default",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "power-saver": "<span size='130%' rise='-1451'>󰌪</span>",
+            "balanced": "",
+            "performance": "<span size='130%' rise='-1451'>󰓅</span>",
+            "unavailable": "",
         },
     },
     "bluetooth": {

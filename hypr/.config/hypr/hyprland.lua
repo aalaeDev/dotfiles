@@ -36,6 +36,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("[workspace special:background silent] walker --gapplication-service")
     hl.exec_cmd("[workspace special:background silent] localsend --hidden")
     hl.exec_cmd("[workspace special:background silent] xfce4-power-manager")
+    hl.exec_cmd("[workspace special:background silent] ~/.local/bin/waybar-power-plan.sh --auto")
     hl.exec_cmd("[workspace special:mail silent] betterbird")
 end)
 

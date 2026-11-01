@@ -9,7 +9,7 @@ set -euo pipefail
 
 # --- Configuration ---
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zram-generator earlyoom)
+PACKAGES=(zram-generator earlyoom power-profiles-daemon)
 
 # --- Actions ---
 echo ":: Installing packages: ${PACKAGES[*]}"
@@ -48,6 +48,7 @@ sudo systemctl start dev-zram0.swap
 sudo sysctl --quiet --system
 sudo systemd-tmpfiles --create /etc/tmpfiles.d/memory.conf
 sudo systemctl enable --now earlyoom
+sudo systemctl enable --now power-profiles-daemon
 sudo systemctl restart earlyoom                   # pick up /etc/default/earlyoom if it was running
 
 echo ":: Done"
