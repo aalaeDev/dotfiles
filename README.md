@@ -78,6 +78,7 @@ Athan and weather read your city from a gitignored `.env`, so it never lands in 
 ```bash
 cp ~/dotfiles/.env.example ~/dotfiles/.env
 ```
+To change the location later, use the settings button (󰒓) in the notification center. The other settings stay in `.env`.
 
 ### 4. Apply the Theme
 To initialize the colors, use the provided wallpaper script:

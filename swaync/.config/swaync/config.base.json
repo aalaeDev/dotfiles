@@ -62,7 +62,7 @@
       "label": ""
     },
     "buttons-grid": {
-      "buttons-per-row": 4,
+      "buttons-per-row": 5,
       "actions": [
         {
           "label": "",
@@ -83,6 +83,10 @@
         {
           "label": "󰂯",
           "command": "blueman-manager"
+        },
+        {
+          "label": "󰒓",
+          "command": "swaync-client -cp; ~/.local/bin/rofi-menus/toggle.sh location ~/.local/bin/rofi-menus/location.sh"
         }
       ]
     }

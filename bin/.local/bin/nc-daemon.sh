@@ -109,10 +109,16 @@ refresh_card() {
 exec 9> "$LOCK"
 flock -n 9 || exit 0
 
+# USR1 ends the wait early: the location menu changed the city
+trap ':' USR1
+
 while true; do
     notify_athan
     refresh_bar
     refresh_card
     # 9>&-: the sleep mustn't inherit the lock, or a restart would find it taken
-    sleep $(( 60 - $(date +%s) % 60 )) 9>&-
+    sleep $(( 60 - $(date +%s) % 60 )) 9>&- &
+    sleeper=$!
+    wait "$sleeper"
+    kill "$sleeper" 2> /dev/null
 done
