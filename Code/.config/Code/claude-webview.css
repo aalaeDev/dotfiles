@@ -1,0 +1,477 @@
+/* Claude Code's webview in Code OSS, modeled on the Claude desktop app: quiet surfaces, one accent,
+   soft corners, controls that appear when needed. claude-code-patch.sh appends this to the
+   extension's index.css. Colors only through theme variables, so matugen's VS Code theme drives
+   them. Class names end in a hash that can change between versions, so match on the name before it. */
+
+html {
+    --dot-soft: color-mix(in srgb, var(--vscode-foreground) 7%, transparent);
+    --dot-softer: color-mix(in srgb, var(--vscode-foreground) 4%, transparent);
+    --dot-line: color-mix(in srgb, var(--vscode-foreground) 10%, transparent);
+
+    /* Accent instead of Claude's orange */
+    --app-claude-orange: var(--vscode-button-background);
+    --app-claude-clay-button-orange: var(--vscode-button-background);
+}
+
+/* These set a fixed light color, which can't be read on a light accent */
+[class*="sendButton_"], [class*="sendIcon_"], [class*="stopIcon_"],
+[class*="fullWidthButton_"][class*="primary_"], [class*="showMeButton_"], [class*="button_"][class*="primary_"] {
+    color: var(--vscode-button-foreground);
+}
+
+/* The mascot and logo: fill is written in the bundle, and CSS outranks the attribute */
+svg [fill="#D97757"], svg [fill="#d97757"] {
+    fill: var(--vscode-button-background);
+}
+
+/* Auto mode borrows the error color. Bypass keeps it: that warning matters */
+[data-permission-mode="auto"] {
+    --app-error-foreground: var(--vscode-button-background);
+}
+
+/* --- Sidebar: the headers only collapse sections. A collapsed usage section has no body, so its header stays --- */
+:has(> [class*="sessionsBody_"]) > [class*="sectionHeader_"]:has(+ [class*="accountUsageBody_"]),
+:has(> [class*="sessionsBody_"]) > [class*="sectionHeader_"]:has(+ [class*="sessionsBody_"]) {
+    display: none;
+}
+
+/* Hidden header, so nothing could reopen a collapsed list */
+[class*="sessionsBodyCollapsed_"] {
+    display: flex !important;
+}
+
+/* --- Usage --- */
+[class*="accountUsageBody_"] {
+    padding: 14px 16px 6px;
+}
+
+[class*="accountUsageBody_"] [class*="section_"]:has([class*="accountRows_"]),
+[class*="accountUsageBody_"] [class*="sectionTitle_"] {
+    display: none;
+}
+
+[class*="accountUsageBody_"] [class*="usageBars_"] {
+    gap: 14px;
+}
+
+[class*="accountUsageBody_"] [class*="usageBarContainer_"] {
+    gap: 6px;
+}
+
+[class*="accountUsageBody_"] [class*="usageLabel_"],
+[class*="accountUsageBody_"] [class*="usagePercent_"] {
+    color: var(--app-secondary-foreground);
+    font-size: 12px;
+}
+
+[class*="accountUsageBody_"] [class*="usagePercent_"] {
+    color: var(--app-primary-foreground);
+}
+
+[class*="accountUsageBody_"] [class*="usageTrack_"] {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--dot-soft);
+}
+
+[class*="accountUsageBody_"] [class*="usageFill_"] {
+    border-radius: 999px;
+}
+
+[class*="accountUsageBody_"] [class*="resetText_"] {
+    color: var(--app-secondary-foreground);
+    font-size: 11px;
+    opacity: .65;
+}
+
+[class*="usageFillHigh_"] {
+    background: var(--vscode-errorForeground);
+}
+
+/* --- New session: soft and raised, the only tinted control at rest --- */
+[class*="headerRow_"]:has(> [class*="newSessionButton_"]) {
+    border-bottom: none;
+    padding: 10px 10px 6px;
+}
+
+[class*="newSessionButton_"] {
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--dot-soft);
+    box-shadow: inset 0 0 0 1px var(--dot-softer);
+    transition: background .12s ease;
+}
+
+[class*="newSessionButton_"]:hover {
+    background: var(--dot-line);
+}
+
+[class*="newSessionIcon_"] {
+    color: var(--vscode-button-background);
+}
+
+/* --- Local/Web, search and New group. The filters appear on hover, and stay while one is on --- */
+:has(> [class*="segmented_"]) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+}
+
+:has(> [class*="segmented_"]) > :not([class*="segmented_"]):not([class*="searchRow_"]) {
+    grid-column: 1 / -1;
+}
+
+[class*="segmented_"] {
+    align-self: center;
+    margin-left: 8px;
+    padding: 0;
+    gap: 0;
+    background: transparent;
+}
+
+[class*="segmented_"] [class*="tab_"] {
+    flex: none;
+    padding: 4px 6px;
+    font-size: 12px;
+}
+
+[class*="segmented_"] [class*="tab_"][class*="tabActive_"] {
+    background: transparent;
+    box-shadow: none;
+    font-weight: 500;
+}
+
+[class*="segmented_"] [class*="tabIcon_"] {
+    display: none;
+}
+
+[class*="searchRow_"] {
+    justify-content: flex-end;
+    padding: 4px 8px 4px 0;
+}
+
+[class*="searchRowActions_"] {
+    flex-wrap: nowrap;
+}
+
+[class*="searchRow_"] [class*="newGroupButton_"] {
+    margin-left: 0;
+    padding: 3px 4px;
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: .6;
+}
+
+[class*="searchRow_"] [class*="newGroupButton_"]:hover,
+[class*="searchRow_"] [class*="filterToggleOn_"] {
+    opacity: 1;
+}
+
+[class*="searchRow_"]:not(:hover):not(:focus-within) [class*="statusFilterMenuButton_"]:not([class*="filterToggleOn_"]):not([aria-expanded="true"]),
+[class*="searchRow_"]:not(:hover):not(:focus-within) [class*="activeFilterToggle_"]:not([class*="filterToggleOn_"]) {
+    display: none;
+}
+
+/* The webview's viewport is the sidebar, so this is its width: no room for the word beside the rest */
+@media (max-width: 300px) {
+    [class*="searchRow_"] [class*="activeFilterToggle_"] {
+        gap: 0;
+        font-size: 0;
+    }
+}
+
+[class*="searchRow_"] [class*="newGroupIcon_"] {
+    width: 14px;
+    height: 14px;
+}
+
+/* New group keeps its title as a tooltip, and font-size 0 hides only its label */
+[class*="searchRowTail_"] > [class*="newGroupButton_"] {
+    gap: 0;
+    font-size: 0;
+}
+
+/* --- Session list --- */
+[class*="sessionsList_"] {
+    padding: 0 8px 8px;
+}
+
+[class*="sessionItem_"] {
+    height: 30px;
+    border-radius: 8px;
+    transition: background .12s ease;
+}
+
+[class*="sessionItem_"][class*="active_"] {
+    background: var(--dot-soft);
+    color: var(--app-primary-foreground);
+}
+
+[class*="sessionItem_"][class*="active_"] [class*="sessionName_"] {
+    color: var(--app-primary-foreground);
+    font-weight: 500;
+}
+
+/* Time and row actions: gone at rest, not just invisible, so names get the full width */
+[class*="sessionItem_"]:not(:hover):not(:focus-within) [class*="sessionMeta_"] {
+    display: none;
+}
+
+[class*="groupHeader_"] {
+    height: 24px;
+    margin-top: 8px;
+    color: var(--app-secondary-foreground);
+    font-size: 11px;
+}
+
+[class*="groupCount_"] {
+    padding: 0;
+    background: transparent;
+    color: var(--app-secondary-foreground);
+    opacity: .7;
+}
+
+/* --- The usage warning above the prompt: the sidebar already shows usage. Errors stay --- */
+[class*="banner_"][data-color]:not([data-color="error"]):has([class*="usageLink_"]) {
+    display: none;
+}
+
+/* --- Prompt --- */
+[class*="inputContainer_"][data-permission-mode],
+[class*="inputContainerBackground_"] {
+    border-radius: 14px;
+}
+
+[class*="inputContainer_"][data-permission-mode] {
+    border-color: var(--dot-line);
+    box-shadow: 0 8px 28px color-mix(in srgb, black 28%, transparent);
+}
+
+[class*="inputContainer_"][data-permission-mode]:focus-within {
+    border-color: color-mix(in srgb, var(--focus-ring-color) 55%, transparent);
+    box-shadow: 0 8px 28px color-mix(in srgb, black 28%, transparent);
+}
+
+[class*="inputFooter_"] {
+    border-top: none;
+    padding: 6px 8px 8px;
+}
+
+[class*="sendButton_"] {
+    border-radius: 50%;
+}
+
+/* --- Chat: no "From the skins plugin" label and box on every row. Permission prompts, held tool
+   calls and "Edited by" notices keep theirs: there it says who is behind a decision --- */
+[class*="marked_"]:not([class*="askMark_"]):not(:has([class*="toolRowHeld_"])) {
+    border: none;
+    background: transparent;
+}
+
+[class*="marked_"]:not([class*="askMark_"]):not(:has([class*="toolRowHeld_"])) > [class*="mark_"][data-engine-mark] {
+    display: none;
+}
+
+/* Mods' fold, Copy and Compact chips */
+[class*="buttonDim_"] {
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    opacity: .6;
+    transition: opacity .12s ease;
+}
+
+[class*="buttonDim_"]:hover {
+    background: var(--dot-soft);
+    opacity: 1;
+}
+
+/* Mods' toasts, such as Skins' "Copied": a small pill, not a full-width bar. The message says enough */
+[data-engine-toast] {
+    align-items: center;
+    align-self: center;
+    width: fit-content;
+    margin-bottom: 4px;
+    padding: 3px 6px 3px 12px;
+    border: 1px solid var(--dot-line);
+    border-radius: 999px;
+    font-size: 12px;
+    box-shadow: 0 4px 16px color-mix(in srgb, black 25%, transparent);
+}
+
+[data-engine-toast] [class*="plugin_"] {
+    display: none;
+}
+
+/* Buttons in mods' panes, such as Savvy's Collapse: text, not filled accent blocks */
+[class*="paneBody_"] [class*="button_"] {
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--app-secondary-foreground);
+}
+
+[class*="paneBody_"] [class*="button_"]:hover {
+    background: var(--dot-soft);
+    color: var(--app-primary-foreground);
+}
+
+/* --- The band above the prompt: mods' meters and status lines in one card, on the prompt's surface --- */
+[class*="abovePrompt_"]:has([data-engine-site="AbovePrompt"] [class*="root_"], [data-engine-status]) {
+    margin-bottom: 8px;
+    padding: 8px 10px 8px 8px;
+    border: 1px solid var(--dot-line);
+    border-radius: 14px;
+    background: var(--app-input-background);
+    box-shadow: 0 8px 28px color-mix(in srgb, black 28%, transparent);
+}
+
+[class*="marked_"] > [data-engine-site="AbovePrompt"] {
+    padding: 0;
+    background: transparent;
+}
+
+/* The meters' bars. Mods can't set a class, so these match the height the engine writes inline */
+[data-engine-site="AbovePrompt"] [class*="box_"][style*="height: 0.25lh"] {
+    border-radius: 999px;
+}
+
+[data-engine-site="AbovePrompt"] [class*="box_"][style*="height: 0.25lh"]:has(> [class*="box_"]) {
+    background: var(--dot-soft);
+}
+
+/* The collapse chevron: a drawn icon. font-size 0 hides the label's glyph */
+[data-press-key="usage-open"], [data-press-key="usage-closed"],
+[data-press-key^="dot-"][data-press-key$="-open"], [data-press-key^="dot-"][data-press-key$="-closed"] {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 0;
+}
+
+[data-press-key="usage-open"]::before, [data-press-key="usage-closed"]::before,
+[data-press-key^="dot-"][data-press-key$="-open"]::before, [data-press-key^="dot-"][data-press-key$="-closed"]::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+}
+
+[data-press-key="usage-open"]::before, [data-press-key^="dot-"][data-press-key$="-open"]::before {
+    transform: translateY(-2px) rotate(45deg);
+}
+
+[data-press-key="usage-closed"]::before, [data-press-key^="dot-"][data-press-key$="-closed"]::before {
+    transform: translateX(-2px) rotate(-45deg);
+}
+
+/* Collapsed means one line, so the status lines go too */
+[class*="abovePrompt_"]:has([data-press-key="usage-closed"]) [data-engine-status] {
+    display: none;
+}
+
+/* Compact: raised like New session */
+[data-press-key="compact"] {
+    align-self: center;
+    margin-left: auto;
+    padding: 3px 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--dot-soft);
+    box-shadow: inset 0 0 0 1px var(--dot-softer);
+    color: var(--app-primary-foreground);
+    font-size: 12px;
+    opacity: 1;
+    transition: background .12s ease;
+}
+
+[data-press-key="compact"]:hover {
+    background: var(--dot-line);
+}
+
+/* "Compact now", from 70% context */
+[data-press-key="compact"][class*="button_"] {
+    background: color-mix(in srgb, var(--vscode-button-background) 18%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vscode-button-background) 35%, transparent);
+    color: var(--vscode-button-background);
+}
+
+/* Mods' status lines, such as Cache Tax's keepwarm: one quiet line, under the meters. The mod's name
+   stays in the tooltip */
+/* The left padding lines it up with the first meter, past the chevron */
+[data-engine-status] {
+    padding: 4px 4px 0 40px;
+    background: transparent;
+    font-size: 11px;
+}
+
+[data-engine-status] [class*="statusLine_"] {
+    padding-left: 0;
+    border-left: none;
+    opacity: .7;
+}
+
+[data-engine-status] [class*="plugin_"] {
+    display: none;
+}
+
+/* --- Chat timeline. The extension draws the line in a color my theme makes transparent --- */
+[class*="timelineMessage_"]::after {
+    background-color: var(--dot-line);
+}
+
+/* A step's row, from claude-webview.js: a node on the line, a chevron after its text */
+[data-dot-step="head"] {
+    cursor: pointer;
+}
+
+[data-dot-step="head"]::before {
+    left: 8px;
+    width: 9px;
+    height: 9px;
+    background-color: var(--vscode-button-background) !important;
+}
+
+[data-dot-step="head"] [data-engine-site="ToolUse"] > [class*="root_"] {
+    display: inline-block;
+}
+
+[data-dot-step="head"] [data-engine-site="ToolUse"]::after {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 10px;
+    border-right: 1.5px solid var(--app-secondary-foreground);
+    border-bottom: 1.5px solid var(--app-secondary-foreground);
+    transform: translateY(-2px) rotate(45deg);
+}
+
+[data-dot-step="head"][data-dot-closed] [data-engine-site="ToolUse"]::after {
+    transform: rotate(-45deg);
+}
+
+/* What ran inside a step: indented, with a smaller dot of its own */
+/* The extension's own 30px, plus the indent */
+[data-dot-step="body"] {
+    padding-left: 52px;
+}
+
+[data-dot-step="body"]::before {
+    left: 30px;
+    width: 5px;
+    height: 5px;
+    margin-top: 1px;
+}
+
+[data-dot-step="body"][data-dot-closed], [data-dot-step="end"] {
+    display: none;
+}

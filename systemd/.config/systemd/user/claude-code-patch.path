@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for Claude Code extension and plugin updates
+
+[Path]
+PathChanged=%h/.vscode-oss/extensions
+PathChanged=%h/.claude/plugins/installed_plugins.json
+
+[Install]
+WantedBy=default.target

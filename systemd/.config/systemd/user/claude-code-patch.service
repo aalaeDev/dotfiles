@@ -1,0 +1,6 @@
+[Unit]
+Description=Reapply the Claude Code look and Filetree patch
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/claude-code-patch.sh

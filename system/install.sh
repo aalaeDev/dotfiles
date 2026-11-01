@@ -51,5 +51,11 @@ sudo systemctl enable --now earlyoom
 sudo systemctl enable --now power-profiles-daemon
 sudo systemctl restart earlyoom                   # pick up /etc/default/earlyoom if it was running
 
+echo ":: Keeping Claude Code's look and mod patches through updates"
+stow --dir="$SRC/.." --target="$HOME" systemd
+systemctl --user daemon-reload
+systemctl --user enable --now claude-code-patch.path
+"$HOME/.local/bin/claude-code-patch.sh"
+
 echo ":: Done"
 swapon --show

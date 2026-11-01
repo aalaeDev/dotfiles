@@ -109,6 +109,12 @@ post_hook = 'copyq exit && copyq &;  copyq select 0'
 input_path = '~/dotfiles/matugen/.config/matugen/templates/vscode-color-theme.jsonc'
 output_path = '~/.vscode-oss/extensions/hyprluna.hyprluna-theme-1.0.2/themes/hyprluna.json'
 
+# Skins reads its store when a session starts, so the colors reach new sessions
+[templates.claude-skin]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/claude-skin.json'
+output_path = '~/.cache/claude-skin.json'
+post_hook = '~/.local/bin/claude-code-patch.sh --skin'
+
 [templates.fastfetch]
 input_path = "~/dotfiles/matugen/.config/matugen/templates/fastfetch.jsonc"
 output_path = "~/dotfiles/fastfetch/.config/fastfetch/config.jsonc"

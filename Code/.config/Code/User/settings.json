@@ -216,6 +216,7 @@
         "*.s3db": "${capture}.${extname}-*"
     },
     "claudeCode.hideOnboarding": true,
+    "claudeCode.showMessageTimestamps": false,
     "terminal.integrated.lineHeight": 1,
     "[cpp]": {},
     "claudeCode.preferredLocation": "panel"
