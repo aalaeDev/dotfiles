@@ -134,3 +134,9 @@ output_path = '~/.config/vesktop/themes/matugen.theme.css'
 input_path = '~/dotfiles/matugen/.config/matugen/templates/onlyoffice.json'
 output_path = '~/.local/share/onlyoffice/desktopeditors/uithemes/matugen.json'
 post_hook = '~/.local/bin/onlyoffice-live-theme.sh'
+
+# Krita picks up a new file live through the matugen_live plugin. Pick the theme once
+# with Settings > Themes > Matugen, and enable the plugin in Python Plugin Manager
+[templates.krita]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/krita.colors'
+output_path = '~/.local/share/krita/color-schemes/matugen.colors'

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=matugen_live
+X-Python-2-Compatible=false
+X-Krita-Manual=
+Name=Matugen Live Theme
+Comment=Applies the matugen color scheme as soon as it changes

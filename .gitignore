@@ -9,3 +9,4 @@ swaync/.config/swaync/config.json
 swaync/.config/swaync/athan-bar.css
 plan.md
 roadmap.hodon.json
+krita/.local/share/krita/pykrita/*/__pycache__/
