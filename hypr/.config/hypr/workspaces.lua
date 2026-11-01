@@ -38,6 +38,37 @@ hl.window_rule({
     opacity = 0.95,
 })
 
+-- File pickers tile unless their app names a parent window, and GTK reopens them at the last tiled size
+hl.window_rule({
+    name = "portal-file-picker",
+    match = {
+        class = "xdg-desktop-portal-gtk",
+    },
+    float = true,
+    center = true,
+    size = "1000 700",
+})
+
+-- Pickers that apps draw themselves can only be told apart by title
+hl.window_rule({
+    name = "app-file-picker",
+    match = {
+        initial_title = "(Open|Save|Save As|File Upload|Add Folder to Workspace|Enter name of file to save to.*|(Open|Save|Select|Choose) (one or multiple )?([Ff]iles?|[Ff]olders?|[Dd]irectory)( .*)?)",
+    },
+    float = true,
+    center = true,
+    size = "1000 700",
+})
+
+-- OnlyOffice's message boxes use their own class and open in the corner of the monitor
+hl.window_rule({
+    name = "onlyoffice-dialogs",
+    match = {
+        class = "DesktopEditors",
+    },
+    center = true,
+})
+
 -- OnlyOffice's tooltips have a transparent margin for their shadow: xray blur fills it with wallpaper
 hl.window_rule({
     name = "onlyoffice-no-blur",
