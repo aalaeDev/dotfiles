@@ -70,6 +70,7 @@ tooltip label {
 #custom-power-plan,
 #cpu,
 #memory,
+#custom-claude,
 #privacy,
 #custom-tailscale,
 #connectivity,
@@ -85,6 +86,7 @@ tooltip label {
 #custom-power-plan,
 #cpu,
 #memory,
+#custom-claude,
 #privacy,
 #custom-tailscale {
     padding: 4px 14px;
@@ -93,7 +95,8 @@ tooltip label {
 #window,
 #custom-power-plan,
 #cpu,
-#memory {
+#memory,
+#custom-claude {
     margin-left: 0px;
     margin-right: 7px;
 }
@@ -274,6 +277,29 @@ window#waybar.empty #window {
     to {
         color: alpha(@tertiary, 0.4);
     }
+}
+
+/* Quiet while working: only a hairline in the state's color, like the privacy pill */
+#custom-claude {
+    border: 1px solid alpha(@primary, 0.35);
+    transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+#custom-claude.waiting {
+    color: @tertiary;
+    border-color: @tertiary;
+    animation: claude_waiting 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes claude_waiting {
+    to {
+        border-color: alpha(@tertiary, 0.25);
+    }
+}
+
+#custom-claude.done {
+    color: @green;
+    border-color: alpha(@green, 0.6);
 }
 
 #custom-mail.unread {

@@ -1,6 +1,7 @@
 /* Same language as Waybar and Walker: tinted surfaces, quiet borders, primary only for what's active */
 @import url("colors.css");
 @import url("athan-bar.css"); /* The bar's fill, written by nc-daemon.sh */
+@import url("claude-bar.css"); /* Same, for the Claude Code card */
 
 /* Panel background: windows sit behind it unblurred, so it stays mostly solid to keep text readable */
 @define-color panel_background alpha(@background, 0.9);
@@ -431,6 +432,74 @@ progressbar progress {
 .widget-menubar.athan-state > revealer * button:last-child,
 .widget-menubar.weather > revealer * button:last-child {
     margin: 0 0 6px;
+}
+
+/* --- Claude Code card --- */
+
+/* Two widgets reading as one card, like the athan card: the sessions, then the bar */
+.widget-menubar.claude {
+    background: @surface_container_high;
+    color: @on_surface;
+    border: 1px solid @outline_variant;
+    border-bottom: none;
+    border-radius: var(--radius-row) var(--radius-row) 0 0;
+    margin: 4px 4px 0;
+    padding: 0;
+}
+
+.widget-menubar.claude > .menu-button-bar > .start,
+.widget-menubar.claude > .menu-button-bar > .end,
+.widget-menubar.claude > revealer * {
+    margin: 0;
+}
+
+.widget-menubar.claude button {
+    background: transparent;
+    color: @on_surface;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 12px 4px;
+    margin: 0;
+    min-height: 0;
+    border-radius: var(--radius-row);
+}
+
+.widget-menubar.claude > .menu-button-bar > .start button:hover {
+    background: @surface_container_highest;
+}
+
+.widget-menubar.claude > revealer button,
+.widget-menubar.claude > revealer button:hover {
+    background: transparent;
+    color: @on_surface_variant;
+    font-weight: 400;
+    padding: 3px 16px 3px 12px;
+}
+
+.widget-label.claude-bar {
+    border-bottom: 1px solid @outline_variant;
+    border-radius: 0 0 var(--radius-row) var(--radius-row);
+    margin-bottom: 4px;
+    padding: 2px 12px 12px;
+}
+
+/* Slimmer than the athan bar: it's a status, not a countdown to read */
+.widget-label.claude-bar > label {
+    font-size: 1px;
+    min-height: 3px;
+    border-radius: 2px;
+    background-color: @outline_variant;
+}
+
+@keyframes claude_breathe {
+    from { opacity: 1; }
+    to { opacity: 0.55; }
+}
+
+.widget-menubar.claude > .menu-button-bar > .end button {
+    font-weight: 600;
 }
 
 /* --- Title and Do Not Disturb --- */

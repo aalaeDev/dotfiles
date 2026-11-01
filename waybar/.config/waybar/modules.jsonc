@@ -233,6 +233,13 @@
         "orientation": "inherit",
         "modules": ["custom/stay-awake#indicator", "custom/updates", "custom/mail", "custom/notification", "custom/power"],
     },
+    "custom/claude": {
+        // Only shows while a Claude Code session is working. ~ marks an estimated percent
+        "exec": "~/.local/bin/claude-widget.sh --watch",
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "return-type": "json",
+        "format": "{text}",
+    },
     "custom/expand": {
         "format": "<span size='130%' rise='-1451'>󰅁</span>",
         "tooltip-format": "Tray & stay awake",

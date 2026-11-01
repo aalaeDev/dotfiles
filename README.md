@@ -80,6 +80,8 @@ cp ~/dotfiles/.env.example ~/dotfiles/.env
 ```
 To change the location later, use the settings button (󰒓) in the notification center. The other settings stay in `.env`.
 
+For the Claude Code widget in Waybar and the notification center, run `claude-widget.sh --install-hooks` once. It adds the hooks and the progress tool to Claude Code.
+
 ### 4. Apply the Theme
 To initialize the colors, use the provided wallpaper script:
 ```bash
