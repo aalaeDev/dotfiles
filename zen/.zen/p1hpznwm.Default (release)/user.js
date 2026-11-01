@@ -9,3 +9,7 @@ user_pref("zen.tab-unloader.timeout-minutes", 15);
 
 // Theme: load chrome/userChrome.css and chrome/userContent.css (matugen palette)
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
+// Pages without their own font use the UI font, not a serif or the mono
+user_pref("font.name.serif.x-western", "SF Pro Text");
+user_pref("font.name.sans-serif.x-western", "SF Pro Text");
