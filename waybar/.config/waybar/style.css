@@ -71,7 +71,7 @@ tooltip label {
 #cpu,
 #memory,
 #custom-claude,
-#privacy,
+#custom-privacy,
 #custom-tailscale,
 #connectivity,
 #hardware,
@@ -87,7 +87,7 @@ tooltip label {
 #cpu,
 #memory,
 #custom-claude,
-#privacy,
+#custom-privacy,
 #custom-tailscale {
     padding: 4px 14px;
 }
@@ -229,23 +229,6 @@ window#waybar.empty #window {
 
 #extras.expanded #custom-expand {
     color: @tertiary;
-}
-
-/* Mic / screen share in use: theme pill with a softly pulsing red icon */
-#privacy {
-    border: 1px solid alpha(@error, 0.5);
-}
-
-#privacy-item,
-#privacy-item image {
-    color: @error;
-    animation: privacy_pulse 1.6s ease-in-out infinite alternate;
-}
-
-@keyframes privacy_pulse {
-    to {
-        color: alpha(@error, 0.45);
-    }
 }
 
 #custom-tailscale.stopped {

@@ -3,7 +3,7 @@
     "modules-left": ["custom/power-plan", "cpu", "memory", "custom/claude", "hyprland/window"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
-        "privacy",
+        "custom/privacy",
         "group/connectivity",
         // "custom/tailscale",
         "group/hardware",

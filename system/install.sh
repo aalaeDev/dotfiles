@@ -9,7 +9,7 @@ set -euo pipefail
 
 # --- Configuration ---
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zram-generator earlyoom power-profiles-daemon)
+PACKAGES=(zram-generator earlyoom power-profiles-daemon geoclue)
 
 # --- Actions ---
 echo ":: Installing packages: ${PACKAGES[*]}"

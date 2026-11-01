@@ -254,15 +254,11 @@
         "on-click": "~/.local/bin/sound.sh menu & ~/.local/bin/rofi-menus/powermenu.sh",
         "tooltip-format": "Power menu",
     },
-    "privacy": {
-        "icon-size": 16,
-        "icon-spacing": 7,
-        "transition-duration": 250,
-        // Symbolic icons take the CSS text color, so they follow the theme
-        "modules": [
-            { "type": "screenshare", "icon-name": "screen-shared-symbolic", "tooltip": true },
-            { "type": "audio-in", "icon-name": "audio-input-microphone-symbolic", "tooltip": true },
-        ],
+    "custom/privacy": {
+        // iPhone style dots: hidden unless something's recording. Prints a line whenever that changes
+        "exec": "~/.local/bin/privacy-dots.py",
+        "return-type": "json",
+        "restart-interval": 5,
     },
     "custom/stay-awake": {
         // Blocks the lock and screen off from outside the bar, in every layout and over fullscreen

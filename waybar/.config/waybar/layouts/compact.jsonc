@@ -2,5 +2,5 @@
 {
     "modules-left": ["custom/power-plan", "custom/claude"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["privacy", "battery", "group/datetime", "custom/notification"],
+    "modules-right": ["custom/privacy", "battery", "group/datetime", "custom/notification"],
 }
