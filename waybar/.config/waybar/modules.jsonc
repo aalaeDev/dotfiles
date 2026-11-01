@@ -226,11 +226,11 @@
             "transition-duration": 400,
             "transition-left-to-right": false,
         },
-        "modules": ["custom/expand", "tray", "idle_inhibitor"],
+        "modules": ["custom/expand", "tray", "custom/stay-awake"],
     },
     "group/session": {
         "orientation": "inherit",
-        "modules": ["idle_inhibitor#indicator", "custom/updates", "custom/mail", "custom/notification", "custom/power"],
+        "modules": ["custom/stay-awake#indicator", "custom/updates", "custom/mail", "custom/notification", "custom/power"],
     },
     "custom/expand": {
         "format": "<span size='130%' rise='-1451'>󰅁</span>",
@@ -251,24 +251,31 @@
             { "type": "audio-in", "icon-name": "audio-input-microphone-symbolic", "tooltip": true },
         ],
     },
-    "idle_inhibitor": {
+    "custom/stay-awake": {
+        // Blocks the lock and screen off from outside the bar, in every layout and over fullscreen
+        "exec": "~/.local/bin/waybar-stay-awake.py",
+        "on-click": "~/.local/bin/waybar-stay-awake.py --toggle",
+        "interval": "once",
+        "signal": 12,
+        "return-type": "json",
         "format": "{icon}",
         "format-icons": {
-            "activated": "<span size='130%' rise='-1451'>󰅶</span>",
-            "deactivated": "<span size='130%' rise='-1451'>󰛊</span>",
+            "on": "<span size='130%' rise='-1451'>󰅶</span>",
+            "off": "<span size='130%' rise='-1451'>󰛊</span>",
         },
-        "tooltip-format-activated": "Staying awake",
-        "tooltip-format-deactivated": "Idle as usual",
-        "signal": 12, // pkill -RTMIN+12 waybar toggles stay-awake
     },
-    // Mirrors the drawer's idle inhibitor (waybar syncs them) so "stay awake" is visible while on
-    "idle_inhibitor#indicator": {
+    // Only shows while stay awake is on, so it's visible with the drawer closed
+    "custom/stay-awake#indicator": {
+        "exec": "~/.local/bin/waybar-stay-awake.py",
+        "on-click": "~/.local/bin/waybar-stay-awake.py --toggle",
+        "interval": "once",
+        "signal": 12,
+        "return-type": "json",
         "format": "{icon}",
         "format-icons": {
-            "activated": "<span size='130%' rise='-1451'>󰅶</span>",
-            "deactivated": "",
+            "on": "<span size='130%' rise='-1451'>󰅶</span>",
+            "off": "",
         },
-        "tooltip-format-activated": "Staying awake · click to stop",
     },
     "bluetooth": {
         "format": "<span size='130%' rise='-1451'>󰂯</span>",

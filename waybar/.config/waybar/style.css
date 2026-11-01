@@ -125,7 +125,7 @@ window#waybar.empty #window {
 #battery,
 #custom-expand,
 #tray,
-#idle_inhibitor,
+#custom-stay-awake,
 #custom-updates,
 #custom-mail,
 #custom-notification,
@@ -144,7 +144,7 @@ window#waybar.empty #window {
 #backlight:hover,
 #battery:hover,
 #custom-expand:hover,
-#idle_inhibitor:hover,
+#custom-stay-awake:hover,
 #custom-updates:hover,
 #custom-mail:hover,
 #custom-notification:hover {
@@ -206,13 +206,8 @@ window#waybar.empty #window {
     color: @tertiary;
 }
 
-#idle_inhibitor.activated {
+#custom-stay-awake.on {
     color: @tertiary;
-}
-
-/* Outside-the-drawer copy: takes no space unless stay-awake is on */
-#idle_inhibitor.indicator.deactivated {
-    padding: 0;
 }
 
 #extras.expanded #custom-expand {
