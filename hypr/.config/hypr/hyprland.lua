@@ -7,6 +7,7 @@ require("hyprland-gui")
 require("colors")
 require("input")
 require("keybindings")
+require("window-switcher")
 require("altcodes")
 require("monitors")
 require("theme")
@@ -30,6 +31,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("[workspace special:background silent] ~/.local/bin/nc-daemon.sh")
     hl.exec_cmd("[workspace special:background silent] LD_PRELOAD=libgtk4-layer-shell.so ~/.local/bin/rofi-backdrop.py")
     hl.exec_cmd("[workspace special:background silent] LD_PRELOAD=libgtk4-layer-shell.so ~/.local/bin/osd.py")
+    hl.exec_cmd("[workspace special:background silent] LD_PRELOAD=libgtk4-layer-shell.so ~/.local/bin/window-switcher.py")
     hl.exec_cmd("[workspace special:background silent] nm-applet --indicator")
     hl.exec_cmd("[workspace special:background silent] copyq --start-server")
     hl.exec_cmd("[workspace special:background silent] elephant")
@@ -177,6 +179,11 @@ hl.layer_rule({
 hl.layer_rule({
     name = "osd-instant",
     match = { namespace = "^osd$" },
+    no_anim = true,
+})
+hl.layer_rule({
+    name = "window-switcher-instant",
+    match = { namespace = "^window-switcher$" },
     no_anim = true,
 })
 hl.layer_rule({

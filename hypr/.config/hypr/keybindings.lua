@@ -31,7 +31,6 @@ hl.bind(var_mainMod .. " + X", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggl
 hl.bind(var_mainMod .. " + R", hl.dsp.exec_cmd("sh " .. var_binPath .. "/launch.sh"))
 hl.bind(var_mainMod .. " + C", hl.dsp.exec_cmd("hyprpicker -a"))
 hl.bind(var_mainMod .. " + L", hl.dsp.exec_cmd(var_binPath .. "/lock.sh"))
-hl.bind(var_mainMod .. " + Tab", hl.dsp.exec_cmd("pkill -x rofi; ~/.local/bin/sound.sh walker; walker -m windows"))
 hl.bind(var_mainMod .. " + W", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh wallpaper " .. var_binPath .. "/wallset.sh"))
 hl.bind(var_mainMod .. " + B", hl.dsp.exec_cmd(var_binPath .. "/waybar-layout.sh toggle"))
 hl.bind(var_mainMod .. " + code:60", hl.dsp.exec_cmd(var_binPath .. "/rofi-menus/toggle.sh emoji " .. var_binPath .. "/rofi-menus/emoji.sh"))
