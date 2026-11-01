@@ -158,3 +158,8 @@ post_hook = 'sed -i "s/^#\?qt-slider-colours=.*/qt-slider-colours={{colors.prima
 [templates.tty-clock]
 input_path = '~/dotfiles/matugen/.config/matugen/templates/tty-clock-colors'
 output_path = '~/.cache/tty-clock-colors'
+
+# Open windows keep their colors until reopened: zathura only reads this at startup
+[templates.zathura]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/zathura-colors'
+output_path = '~/dotfiles/zathura/.config/zathura/colors'
