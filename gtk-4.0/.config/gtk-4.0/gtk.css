@@ -4,3 +4,7 @@ selection {
     background-color: @selection_bg_color;
     color: @selection_fg_color;
 }
+
+tooltip label {
+    font-size: 11px;
+}
