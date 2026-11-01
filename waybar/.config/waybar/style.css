@@ -302,6 +302,12 @@ window#waybar.empty #window {
     border-color: alpha(@green, 0.6);
 }
 
+/* Another session needs you, whichever one is showing */
+#custom-claude.attention {
+    border-color: @tertiary;
+    animation: claude_waiting 1.2s ease-in-out infinite alternate;
+}
+
 #custom-mail.unread {
     color: @tertiary;
 }

@@ -53,23 +53,24 @@ render_config() {
         def align_right: map("\t\(.)") | join("\n");
         ([if $athan then "menubar#today-head", "label#athan-bar", "menubar#athan-state" else empty end,
             if $weather then "menubar#weather" else empty end,
-            if ($claude | length) > 0 then "menubar#claude", "label#claude-bar" else empty end]) as $cards
+            ($claude[] | "menubar#\(.slug)", "label#\(.slug)-bar")]) as $cards
         | .widgets = $cards + .widgets
-        | if ($claude | length) > 0 then
+        | reduce $claude[] as $session (.;
             def word: {running: "Working", waiting: "Needs you", done: "Done"}[.];
             def glyph: {running: "✻", waiting: "✻", done: "󰄬"}[.];
             def clip($size): if length > $size then .[:$size - 1] + "…" else . end;
+            def detail:
+                if .state == "done" then "Finished in \(if .elapsed >= 60 then "\(.elapsed / 60 | floor)m \(.elapsed % 60)s" else "\(.elapsed)s" end)"
+                elif .state == "waiting" then "Waiting for permission"
+                elif (.total // 0) > 0 then ["\(.done // 0)/\(.total)", .note // empty] | join(" · ")
+                else "Estimated from past turns" end;
             .["widget-config"] += {
-                "menubar#claude": {
-                    "menu#sessions": {
-                        label: "Claude Code 󰅀\n\(if ($claude | length) > 1 then "\($claude | length) sessions"
-                            else [$claude[0].project, $claude[0].note // empty] | join(" · ") | clip(34) end)",
-                        position: "left",
-                        actions: [$claude[] | info(row(.project; .state | word))]},
+                "menubar#\($session.slug)": {
+                    "buttons#name": {position: "left",
+                        actions: [info("\($session.name | clip(34))\n\([$session.project, ($session | detail)] | join(" · ") | clip(38))")]},
                     "buttons#status": {position: "right",
-                        actions: [info("\($claude[0].state | glyph)  \($claude[0].state | word)")]}},
-                "label#claude-bar": {text: "", "max-lines": 1}}
-          else . end
+                        actions: [info("\($session.state | glyph)  \($session.state | word)")]}},
+                "label#\($session.slug)-bar": {text: "", "max-lines": 1}})
         | if $athan then
             .["widget-config"] += {
                 "menubar#today-head": {
@@ -115,23 +116,66 @@ refresh_bar() {
     swaync-client -sw -rs > /dev/null
 }
 
-# Sets CLAUDE_KEY to who's doing what, which is all the card's text shows. The percent only moves the bar,
-# so it can keep moving with the panel open.
+# One card per session, so its look is generated with its fill. Named after the session rather than its
+# position: with the panel open the config can't reload, and a bar must not move to someone else's card.
+claude_card_css() {
+    local slug=$1 state=$2 percent=$3 color=primary
+    case "$state" in waiting) color=tertiary ;; done) color=green ;; esac
+    cat << EOF
+.widget-menubar.$slug {
+    background: @surface_container_high;
+    color: @on_surface;
+    border: 1px solid alpha(@$color, 0.45);
+    border-bottom: none;
+    border-radius: var(--radius-row) var(--radius-row) 0 0;
+    margin: 4px 4px 0;
+    padding: 0;
+}
+.widget-menubar.$slug > .menu-button-bar > .start,
+.widget-menubar.$slug > .menu-button-bar > .end { margin: 0; }
+.widget-menubar.$slug button,
+.widget-menubar.$slug button:hover,
+.widget-menubar.$slug button:active {
+    background: transparent;
+    color: @on_surface;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 12px 4px;
+    margin: 0;
+    min-height: 0;
+}
+.widget-menubar.$slug > .menu-button-bar > .end button { color: @$color; font-weight: 600; }
+.widget-label.$slug-bar {
+    border: 1px solid alpha(@$color, 0.45);
+    border-top: none;
+    border-radius: 0 0 var(--radius-row) var(--radius-row);
+    margin: 0 4px 4px;
+    padding: 2px 12px 12px;
+}
+.widget-label.$slug-bar > label {
+    font-size: 1px;
+    min-height: 3px;
+    border-radius: 2px;
+    background-image: linear-gradient(to right, @$color $percent%, @outline_variant $percent%);
+EOF
+    [[ "$state" == done ]] || echo "    animation: claude_breathe 1.6s ease-in-out infinite alternate;"
+    echo "}"
+}
+
+# Sets CLAUDE_KEY to who's doing what, which is what the cards' text shows. The percent only moves the bars,
+# so they can keep moving with the panel open.
 refresh_claude_bar() {
-    local sessions new="" percent state color
+    local sessions new="" slug state percent
     sessions=$("$BIN/claude-widget.sh" --nc)
     CLAUDE_KEY=$(jq -r 'map("\(.session) \(.state)") | join(" ")' <<< "${sessions:-[]}")
-    if [[ -n "$CLAUDE_KEY" ]]; then
-        read -r percent state < <(jq -r '.[0] | "\(.percent) \(.state)"' <<< "$sessions")
-        case "$state" in waiting) color=tertiary ;; done) color=green ;; *) color=primary ;; esac
-        new=".widget-label.claude-bar > label { background-image: linear-gradient(to right, @$color $percent%, @outline_variant $percent%); }"
-        new+=$'\n'".widget-menubar.claude, .widget-label.claude-bar { border-color: alpha(@$color, 0.45); }"
-        new+=$'\n'".widget-menubar.claude > .menu-button-bar > .end button { color: @$color; }"
-        [[ "$state" == done ]] || new+=$'\n'".widget-label.claude-bar > label { animation: claude_breathe 1.6s ease-in-out infinite alternate; }"
-    fi
+    while read -r slug state percent; do
+        new+=$(claude_card_css "$slug" "$state" "$percent")$'\n'
+    done < <(jq -r '.[] | "\(.slug) \(.state) \(.percent)"' <<< "${sessions:-[]}")
     # -f: style.css imports it, so it has to exist even with nothing to show
-    [[ -f "$SWAYNC/claude-bar.css" && "$new" == "$(cat "$SWAYNC/claude-bar.css")" ]] && return 0
-    printf '%s\n' "$new" > "$SWAYNC/claude-bar.css"
+    [[ -f "$SWAYNC/claude-bar.css" && "$new" == "$(cat "$SWAYNC/claude-bar.css")"$'\n' ]] && return 0
+    printf '%s' "$new" > "$SWAYNC/claude-bar.css"
     swaync-client -sw -rs > /dev/null
 }
 

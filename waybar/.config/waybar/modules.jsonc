@@ -237,6 +237,11 @@
         // Only shows while a Claude Code session is working. ~ marks an estimated percent
         "exec": "~/.local/bin/claude-widget.sh --watch",
         "on-click": "sleep 0.1 && swaync-client -t -sw",
+        // With several sessions these walk through them; each shows its own progress
+        "on-click-right": "~/.local/bin/claude-widget.sh --next",
+        "on-scroll-down": "~/.local/bin/claude-widget.sh --next",
+        "on-scroll-up": "~/.local/bin/claude-widget.sh --previous",
+        "smooth-scrolling-threshold": 3, // One flick of the touchpad is one session
         "return-type": "json",
         "format": "{text}",
     },
