@@ -153,3 +153,8 @@ post_hook = '~/.local/bin/steam-theme.sh'
 input_path = '~/dotfiles/matugen/.config/matugen/templates/vlc.qss'
 output_path = '~/dotfiles/qt5ct/.config/qt5ct/qss/matugen.qss'
 post_hook = 'sed -i "s/^#\?qt-slider-colours=.*/qt-slider-colours={{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.primary.default.red}};{{colors.primary.default.green}};{{colors.primary.default.blue}};{{colors.error.default.red}};{{colors.error.default.green}};{{colors.error.default.blue}}/" ~/.config/vlc/vlcrc; touch ~/.config/qt5ct/.reload; rm ~/.config/qt5ct/.reload'
+
+# tty-clock (bin/) rereads this every second, so a new wallpaper shows up live
+[templates.tty-clock]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/tty-clock-colors'
+output_path = '~/.cache/tty-clock-colors'

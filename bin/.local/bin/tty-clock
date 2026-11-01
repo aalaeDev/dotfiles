@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""tty-clock's digits, stretched to fill the terminal in the matugen palette. q or Ctrl+C quits.
+
+Any argument runs the real tty-clock, which can't scale or use colors outside the terminal's 8.
+"""
+import os
+import select
+import signal
+import sys
+import termios
+import time
+import tty
+
+if len(sys.argv) > 1:
+    os.execv("/usr/bin/tty-clock", sys.argv)
+
+COLORS_FILE = os.path.expanduser("~/.cache/tty-clock-colors")
+FALLBACK = {"hours": "#a8c8ff", "seconds": "#bdc7dc", "colon": "#8e9099", "date": "#c4c6d0"}
+DATE_ROWS = 2
+
+# 3x5 glyphs, the same shapes as tty-clock
+FONT = {
+    "0": ("###", "# #", "# #", "# #", "###"),
+    "1": ("  #", "  #", "  #", "  #", "  #"),
+    "2": ("###", "  #", "###", "#  ", "###"),
+    "3": ("###", "  #", "###", "  #", "###"),
+    "4": ("# #", "# #", "###", "  #", "  #"),
+    "5": ("###", "#  ", "###", "  #", "###"),
+    "6": ("###", "#  ", "###", "# #", "###"),
+    "7": ("###", "  #", "  #", "  #", "  #"),
+    "8": ("###", "# #", "###", "# #", "###"),
+    "9": ("###", "# #", "###", "  #", "###"),
+    ":": (" ", "#", " ", "#", " "),
+}
+
+
+def read_colors():
+    colors = dict(FALLBACK)
+    try:
+        with open(COLORS_FILE) as file:
+            colors.update(line.strip().split("=", 1) for line in file if "=" in line)
+    except OSError:
+        pass
+    return colors
+
+
+def terminal_size(fd):
+    # Not shutil's, which trusts COLUMNS and LINES over the real size
+    size = os.get_terminal_size(fd)
+    return size.columns, size.lines
+
+
+def fg(color):
+    red, green, blue = (int(color[i : i + 2], 16) for i in (1, 3, 5))
+    return f"\033[38;2;{red};{green};{blue}m"
+
+
+def render(now, cols, rows, colors):
+    clock = time.strftime("%H:%M:%S", now)
+    date = time.strftime("%A %d %B %Y", now)
+    # Half blocks give two pixels per row, and a one column gap separates the glyphs
+    grid_width = sum(len(FONT[char][0]) for char in clock) + len(clock) - 1
+    pixel_rows = (rows - DATE_ROWS) * 2
+
+    out = ["\033[?2026h\033[2J"]
+    if cols < grid_width or pixel_rows < 5:
+        out.append(f"\033[{max(rows // 2, 1)};{max((cols - len(clock)) // 2 + 1, 1)}H")
+        out.append(fg(colors["hours"]) + clock + "\033[0m\033[?2026l")
+        return "".join(out)
+
+    grid_x = 0
+    for index, char in enumerate(clock):
+        glyph = FONT[char]
+        role = "colon" if char == ":" else "seconds" if index >= 6 else "hours"
+        out.append(fg(colors[role]))
+        for row in range(rows - DATE_ROWS):
+            for column in range(len(glyph[0])):
+                # Cells round to whole columns, so the digits reach both edges at any size
+                start = (grid_x + column) * cols // grid_width
+                end = (grid_x + column + 1) * cols // grid_width
+                upper = glyph[row * 2 * 5 // pixel_rows][column] == "#"
+                lower = glyph[(row * 2 + 1) * 5 // pixel_rows][column] == "#"
+                cell = ("█" if lower else "▀") if upper else ("▄" if lower else "")
+                if cell:
+                    out.append(f"\033[{row + 1};{start + 1}H" + cell * (end - start))
+        grid_x += len(glyph[0]) + 1
+
+    out.append(f"\033[{rows};{max((cols - len(date)) // 2 + 1, 1)}H")
+    out.append(fg(colors["date"]) + date[: cols] + "\033[0m\033[?2026l")
+    return "".join(out)
+
+
+def main():
+    fd = sys.stdin.fileno()
+    saved = termios.tcgetattr(fd)
+    wake_read, wake_write = os.pipe()
+    os.set_blocking(wake_write, False)
+    signal.set_wakeup_fd(wake_write)
+    signal.signal(signal.SIGWINCH, lambda *_: None)
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
+    try:
+        tty.setcbreak(fd)
+        # Without autowrap, a frame drawn just before a shrink clips instead of spilling onto other rows
+        sys.stdout.write("\033[?1049h\033[?25l\033[?7l")
+        while True:
+            size = terminal_size(fd)
+            frame = render(time.localtime(), *size, read_colors())
+            # A drag resizes faster than this draws, so don't send a frame that's already stale
+            if terminal_size(fd) != size:
+                continue
+            sys.stdout.write(frame)
+            sys.stdout.flush()
+            ready, _, _ = select.select([fd, wake_read], [], [], 1 - time.time() % 1)
+            if wake_read in ready:
+                os.read(wake_read, 512)
+            if fd in ready and os.read(fd, 1) in (b"q", b"Q"):
+                return
+    except KeyboardInterrupt:
+        pass
+    finally:
+        sys.stdout.write("\033[?7h\033[?25h\033[?1049l")
+        sys.stdout.flush()
+        termios.tcsetattr(fd, termios.TCSADRAIN, saved)
+
+
+if __name__ == "__main__":
+    main()

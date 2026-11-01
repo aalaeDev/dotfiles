@@ -1,0 +1,4 @@
+hours={{colors.primary.default.hex}}
+seconds={{colors.tertiary.default.hex}}
+colon={{colors.outline.default.hex}}
+date={{colors.on_surface_variant.default.hex}}
