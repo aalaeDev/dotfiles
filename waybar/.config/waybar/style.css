@@ -24,14 +24,14 @@ window#waybar > box {
 }
 
 tooltip {
-    background: @background;
-    border: 1px solid @primary;
+    background: alpha(@background, 0.96);
+    border: 1px solid @outline_variant;
     border-radius: 8px; /* Hardcoded */
     margin-top: 8px; /* Hardcoded */
 }
 tooltip label {
     color: @primary;
-    font-size: 0.9rem; /* Hardcoded */
+    font-size: 10px; /* Hardcoded */
     padding: 4px 6px; /* Hardcoded */
 }
 
@@ -79,7 +79,7 @@ tooltip label {
 #session {
     background-color: @pill_background;
     border-radius: 11px;
-    margin-left: 7px;
+    margin-left: 9px;
 }
 
 #window,
@@ -98,27 +98,29 @@ tooltip label {
 #memory,
 #custom-claude {
     margin-left: 0px;
-    margin-right: 7px;
+    margin-right: 9px;
 }
 
 /* Group members placed directly on the bar (layouts/compact.jsonc) get a pill too */
 .modules-right > widget > #battery,
 .modules-right > widget > #custom-notification {
     background-color: @pill_background;
-    margin-left: 7px;
+    margin-left: 9px;
+    padding: 4px 14px;
 }
 
 window#waybar.empty #window {
     background: transparent;
 }
 
-/* No padding: edge children's hover background then meets the pill's rounded corners */
+/* Plus the 6px on each child below: 14px at the pill's edge, like the standalone pills.
+   On the group, not its first and last child: hidden modules change which those are */
 #datetime,
 #connectivity,
 #hardware,
 #extras,
 #session {
-    padding: 0;
+    padding: 0 8px;
 }
 
 /* Modules inside a group: no pill of their own, highlight on hover */
@@ -137,30 +139,13 @@ window#waybar.empty #window {
 #custom-mail,
 #custom-notification,
 #custom-power {
-    padding: 4px 11px;
+    padding: 4px 6px;
     border-radius: 11px;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 #custom-power-plan {
     transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-#clock:hover,
-#custom-today:hover,
-#network:hover,
-#custom-protonvpn:hover,
-#bluetooth:hover,
-#pulseaudio:hover,
-#backlight:hover,
-#battery:hover,
-#custom-expand:hover,
-#custom-stay-awake:hover,
-#custom-power-plan:hover,
-#custom-updates:hover,
-#custom-mail:hover,
-#custom-notification:hover {
-    background-color: @surface_container_high;
 }
 
 /* --- Module states --- */
@@ -297,6 +282,28 @@ window#waybar.empty #window {
 
 #custom-mail.closed {
     color: @outline;
+}
+
+/* --- Hover: same as the workspace buttons. Last, so it also beats the state colors above --- */
+
+#clock:hover,
+#custom-today:hover,
+#network:hover,
+#custom-protonvpn:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#battery.warning:hover,
+#custom-expand:hover,
+#extras.expanded #custom-expand:hover,
+#custom-stay-awake:hover,
+#custom-power-plan:hover,
+#custom-updates:hover,
+#custom-mail:hover,
+#custom-notification:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
 }
 
 #custom-power:hover {

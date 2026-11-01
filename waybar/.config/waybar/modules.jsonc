@@ -24,6 +24,7 @@
         "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'",
         "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'",
         "persistent-workspaces": {},
+        "tooltip": false,
     },
     "hyprland/window": {
         // "{class}<US>{title}": rules key on the class. Apps with an icon get rules from
