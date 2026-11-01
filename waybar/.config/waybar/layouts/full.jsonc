@@ -1,6 +1,6 @@
 // Detailed bar. Switch with Super+B or a middle click on the clock (waybar-layout.sh).
 {
-    "modules-left": ["cpu", "memory", "hyprland/window"],
+    "modules-left": ["custom/power-plan", "cpu", "memory", "hyprland/window"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
         "privacy",

@@ -219,7 +219,7 @@
     },
     "group/hardware": {
         "orientation": "inherit",
-        "modules": ["pulseaudio", "backlight", "custom/power-plan#indicator", "battery"],
+        "modules": ["pulseaudio", "backlight", "battery"],
     },
     "group/extras": {
         "orientation": "inherit",
@@ -227,7 +227,7 @@
             "transition-duration": 400,
             "transition-left-to-right": false,
         },
-        "modules": ["custom/expand", "tray", "custom/stay-awake", "custom/power-plan"],
+        "modules": ["custom/expand", "tray", "custom/stay-awake"],
     },
     "group/session": {
         "orientation": "inherit",
@@ -235,7 +235,7 @@
     },
     "custom/expand": {
         "format": "<span size='130%' rise='-1451'>󰅁</span>",
-        "tooltip-format": "Tray, stay awake & power plan",
+        "tooltip-format": "Tray & stay awake",
     },
     "custom/power": {
         "format": "<span size='130%' rise='-1451'>󰐥</span>",
@@ -287,19 +287,6 @@
         "format-icons": {
             "power-saver": "<span size='130%' rise='-1451'>󰌪</span>",
             "balanced": "<span size='130%' rise='-1451'>󰗑</span>",
-            "performance": "<span size='130%' rise='-1451'>󰓅</span>",
-            "unavailable": "",
-        },
-    },
-    // Beside the battery, only while the plan isn't the default one
-    "custom/power-plan#indicator": {
-        "exec": "~/.local/bin/waybar-power-plan.sh --watch",
-        "on-click": "~/.local/bin/waybar-power-plan.sh --default",
-        "return-type": "json",
-        "format": "{icon}",
-        "format-icons": {
-            "power-saver": "<span size='130%' rise='-1451'>󰌪</span>",
-            "balanced": "",
             "performance": "<span size='130%' rise='-1451'>󰓅</span>",
             "unavailable": "",
         },

@@ -1,6 +1,6 @@
 // Minimal bar. Switch with Super+B or a middle click on the clock (waybar-layout.sh).
 {
-    "modules-left": [],
+    "modules-left": ["custom/power-plan"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["privacy", "custom/power-plan#indicator", "battery", "group/datetime", "custom/notification"],
+    "modules-right": ["privacy", "battery", "group/datetime", "custom/notification"],
 }
