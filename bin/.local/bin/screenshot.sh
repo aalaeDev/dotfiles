@@ -47,6 +47,32 @@ capture() {
     set_opaque unset
 }
 
+# The windows showing on each monitor: an open special workspace covers the regular one
+window_boxes() {
+    jq -nr --argjson monitors "$(hyprctl monitors -j)" --argjson clients "$(hyprctl clients -j)" '
+        [$monitors[] | if .specialWorkspace.name != "" then .specialWorkspace.name else .activeWorkspace.name end] as $visible
+        | $clients[] | select(.hidden | not) | select(.workspace.name | IN($visible[]))
+        | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
+}
+
+# Not hyprshot: its window mode breaks on special workspaces, which hyprctl lists without an id
+capture_window() {
+    local file="$SAVE_PATH/$FILE_NAME.png" freeze geometry
+    mkdir -p "$SAVE_PATH"
+    set_opaque 1
+    sleep "$OPAQUE_SETTLE"
+    hyprpicker -r -z &
+    freeze=$!
+    sleep 0.2
+    if geometry=$(window_boxes | slurp -r); then
+        grim -g "$geometry" "$file" && wl-copy --type image/png < "$file"
+    fi
+    kill "$freeze" 2> /dev/null
+    sleep "$OPAQUE_SETTLE"
+    set_opaque unset
+    [[ -s "$file" ]] && finish "$file"
+}
+
 edit() {
     if ! command -v satty > /dev/null; then
         notify-send -a Screenshot "Can't edit the screenshot" "satty isn't installed"
@@ -166,7 +192,7 @@ case "$1" in
     region) capture -m region -z ;;
     # Plain "-m output" waits for a click to pick a monitor
     output) capture -m output -m active ;;
-    window) capture -m window -z ;;
+    window) capture_window ;;
     pretty) SCREENSHOT_FRAME=1 capture -m region -z ;;
     text)   read_text ;;
     gif)    record_gif ;;
