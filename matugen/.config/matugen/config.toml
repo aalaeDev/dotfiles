@@ -141,6 +141,12 @@ post_hook = '~/.local/bin/onlyoffice-live-theme.sh'
 input_path = '~/dotfiles/matugen/.config/matugen/templates/krita.colors'
 output_path = '~/.local/share/krita/color-schemes/matugen.colors'
 
+# Steam reads this at startup, so the post_hook restarts it unless a game is running
+[templates.steam]
+input_path = '~/dotfiles/matugen/.config/matugen/templates/steam.css'
+output_path = '~/.local/share/adwaita-steam/matugen.css'
+post_hook = '~/.local/bin/steam-theme.sh'
+
 # qt5ct reloads open VLC windows when its folder changes, a few seconds later. Only the volume
 # slider waits for a restart: VLC draws it from vlcrc, which it reads at startup
 [templates.vlc]

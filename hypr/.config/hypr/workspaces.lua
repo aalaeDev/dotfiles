@@ -55,3 +55,12 @@ hl.window_rule({
     },
     no_anim = true,
 })
+
+-- Steam repaints its whole window on every change, and blurring behind it adds a pass each time
+hl.window_rule({
+    name = "steam-no-blur",
+    match = {
+        class = "steam",
+    },
+    no_blur = true,
+})
