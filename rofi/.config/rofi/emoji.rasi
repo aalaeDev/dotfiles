@@ -5,7 +5,7 @@ configuration {
 }
 
 * {
-    font:             "JetBrainsMono Nerd Font 10";
+    font:             "SF Pro Text 10";
     background-color: transparent;
     text-color:       @foreground;
 }
@@ -37,7 +37,7 @@ prompt {
     border-radius:    12px;
     background-color: @primary-container;
     text-color:       @on-primary-container;
-    font:             "JetBrainsMono Nerd Font Bold 10";
+    font:             "SF Pro Text Bold 10";
 }
 
 entry {
@@ -56,7 +56,7 @@ message {
 
 textbox {
     padding:        0px 4px;
-    font:           "JetBrainsMono Nerd Font 9";
+    font:           "SF Pro Text 9";
     text-color:     @foreground-dim;
     markup:         true;
 }
@@ -72,14 +72,14 @@ button {
     border-radius:    9px;
     background-color: @surface-container;
     text-color:       @foreground-dim;
-    font:             "JetBrainsMono Nerd Font Medium 8";
+    font:             "SF Pro Text Medium 8";
     cursor:           pointer;
 }
 
 button selected {
     background-color: @primary-container;
     text-color:       @on-primary-container;
-    font:             "JetBrainsMono Nerd Font Bold 8";
+    font:             "SF Pro Text Bold 8";
 }
 
 listview {

@@ -6,9 +6,10 @@
 * {
     border: none;
     border-radius: 0; /* Hardcoded */
-    font-family: "JetBrainsMono NFP", "JetBrainsMono NF"; /* Hardcoded; Propo gives icons their real width */
-    font-weight: 600; /* Hardcoded */
-    font-size: 0.8925rem; /* Hardcoded */
+    font-family: "SF Pro Text", "JetBrainsMono NFP", "JetBrainsMono NF"; /* Hardcoded; Propo gives icons their real width */
+    font-feature-settings: "tnum"; /* Same-width digits, so the clock and percentages don't jitter */
+    font-weight: 500; /* Hardcoded */
+    font-size: 11px; /* Hardcoded */
     min-height: 0;
 }
 

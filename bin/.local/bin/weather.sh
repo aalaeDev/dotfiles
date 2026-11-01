@@ -110,7 +110,8 @@ case "${1:-waybar}" in
         tooltip="$desc, feels like $feels°, humidity $humidity%"
         while read -r day high low day_code; do
             IFS='|' read -r _ day_desc <<< "$(describe "$day_code" 1)"
-            tooltip+=$'\n'"$(printf '%-4s %3s° %3s°  %s' "$(date -d "$day" +%a)" "$high" "$low" "$day_desc")"
+            # Columns line up with spaces, so they keep a monospaced font
+            tooltip+=$'\n'"<span font_family='JetBrainsMono NF'>$(printf '%-4s %3s° %3s°  %s' "$(date -d "$day" +%a)" "$high" "$low" "$day_desc")</span>"
         done < <(jq -r '.daily | range(0; .time | length) as $i
             | "\(.time[$i]) \(.temperature_2m_max[$i] | round) \(.temperature_2m_min[$i] | round) \(.weather_code[$i])"' "$forecast")
         jq -cn --arg text "$temp° <span size='130%' rise='-1451'>$icon</span>" --arg tooltip "$tooltip" \

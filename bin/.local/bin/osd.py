@@ -52,7 +52,7 @@ window.osd { background: transparent; }
     border-radius: 11px;
     padding: 10px 14px;
     color: @on_surface;
-    font-family: "JetBrainsMono NFP", "JetBrainsMono NF";
+    font-family: "SF Pro Text", "JetBrainsMono NFP", "JetBrainsMono NF";
 }
 .osd-fading { opacity: 0; transition: opacity %dms ease-out; }
 .osd-icon { font-size: 18px; color: @primary; }

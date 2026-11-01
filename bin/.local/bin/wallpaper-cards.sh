@@ -13,8 +13,8 @@ WALL_DIR="$HOME/Pictures/Wallpapers/Desktop"
 CACHE_DIR="$HOME/.cache/wallpaper-cards"
 SIZE=340           # Keep in sync with element-icon in wallpaper_switcher.rasi
 THUMB_HEIGHT=256
-FONT="JetBrainsMono-NF-Medium"
-FONT_BOLD="JetBrainsMono-NF-Bold"
+FONT="SF-Pro-Text-Medium"
+FONT_BOLD="SF-Pro-Text-Bold"
 SOURCE_INDEX=1     # Same source color wallset.sh applies by default
 
 # --- Helpers ---

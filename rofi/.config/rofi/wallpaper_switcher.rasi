@@ -6,7 +6,7 @@ configuration {
 @import "./colors.rasi"
 
 * {
-    font:             "JetBrainsMono Nerd Font 10";
+    font:             "SF Pro Text 10";
     background-color: transparent;
     text-color:       @foreground;
 }
@@ -50,7 +50,7 @@ entry {
 num-filtered-rows {
     expand:     false;
     text-color: @selected;
-    font:       "JetBrainsMono Nerd Font Bold 10";
+    font:       "SF Pro Text Bold 10";
 }
 textbox-num-sep {
     expand:     false;

@@ -15,7 +15,7 @@ configuration {
 @import "./colors.rasi"
 
 * {
-    font:             "JetBrainsMono Nerd Font 10";
+    font:             "SF Pro Text 10";
     background-color: transparent;
     text-color:       @foreground;
 }
@@ -52,7 +52,7 @@ prompt {
     border-radius:    12px;
     background-color: @primary-container;
     text-color:       @on-primary-container;
-    font:             "JetBrainsMono Nerd Font Bold 10";
+    font:             "SF Pro Text Bold 10";
 }
 entry {
     padding:           10px 14px;
@@ -73,7 +73,7 @@ counter {
 num-filtered-rows {
     expand:     false;
     text-color: @selected;
-    font:       "JetBrainsMono Nerd Font Bold 10";
+    font:       "SF Pro Text Bold 10";
 }
 textbox-num-sep {
     expand:     false;
@@ -151,7 +151,7 @@ element-icon {
 }
 element-text {
     text-color:     inherit;
-    font:           "JetBrainsMono Nerd Font Medium 10";
+    font:           "SF Pro Text Medium 10";
     highlight:      bold underline;
     cursor:         inherit;
     vertical-align: 0.5;
@@ -175,11 +175,11 @@ button {
     border-radius:    10px;
     background-color: @surface-container;
     text-color:       @foreground-dim;
-    font:             "JetBrainsMono Nerd Font Medium 9";
+    font:             "SF Pro Text Medium 9";
     cursor:           pointer;
 }
 button selected {
     background-color: @surface-container-high;
     text-color:       @selected;
-    font:             "JetBrainsMono Nerd Font Bold 9";
+    font:             "SF Pro Text Bold 9";
 }

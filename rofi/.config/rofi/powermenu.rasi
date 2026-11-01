@@ -6,7 +6,7 @@ configuration {
 @import "./colors.rasi"
 
 * {
-    font:             "JetBrainsMono Nerd Font 10";
+    font:             "SF Pro Text 10";
     background-color: transparent;
     text-color:       @foreground;
 }
@@ -72,7 +72,7 @@ element selected.normal {
 element-text {
     text-color:       inherit;
     cursor:           inherit;
-    font:             "JetBrainsMono Nerd Font Medium 9";
+    font:             "SF Pro Text Medium 9";
     horizontal-align: 0.5;
     vertical-align:   0.5;
     markup:           true;
