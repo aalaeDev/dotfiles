@@ -16,7 +16,7 @@ ROW_WEIGHT=500
 ROW_WIDTH=365  # Pixels that fit one line of a card: the width of its bar
 STAMP="$RICE_CACHE/athan-notified"
 LOCK="${XDG_RUNTIME_DIR:-/tmp}/nc-daemon.lock"
-CLAUDE_TICK=5  # Seconds between Claude Code bar updates while a session is active
+CLAUDE_TICK=5  # Seconds between Claude Code and media updates while one is active
 
 # --- Helpers ---
 # Once per athan, also across restarts. Only ever in the late window, so a long suspend stays quiet.
@@ -47,15 +47,26 @@ render_config() {
     weather=$("$BIN/weather.sh" json)
     claude=$("$BIN/claude-widget.sh" --nc)
     jq --argjson athan "${athan:-null}" --argjson weather "${weather:-null}" --argjson claude "${claude:-[]}" \
-        --arg clock "$(date +%H:%M)" --arg date "$(date '+%A, %-d %B')" '
+        --argjson streams "${STREAMS:-[]}" --arg clock "$(date +%H:%M)" --arg date "$(date '+%A, %-d %B')" '
         def row($left; $right): "\($left)\t\($right)";
         def or_dash: if . == "" or . == null then "–" else . end;
         def info($text): {label: $text, command: ""};
         def align_right: map("\t\(.)") | join("\n");
         ([if $athan then "menubar#today-head", "label#athan-bar", "menubar#athan-state" else empty end,
-            if $weather then "menubar#weather" else empty end,
-            ($claude[] | "menubar#\(.slug)", "label#\(.slug)-bar")]) as $cards
-        | .widgets = $cards + .widgets
+            if $weather then "menubar#weather" else empty end]) as $cards
+        # Glance, then controls, then what is going on: sessions sit with the notifications
+        | .widgets = $cards + (.widgets | map(if . == "title"
+            then ($claude[] | "menubar#\(.slug)", "label#\(.slug)-bar"), . else . end))
+        # The size button for the card lives here. One stream is already what the player above shows.
+        | .widgets |= map(if . == "mpris" then ., "menubar#playing" else . end)
+        | .["widget-config"]["menubar#playing"] = ({"buttons#size": {position: "right",
+                actions: [{label: "󰘖", command: "~/.local/bin/nc-media.py toggle"}]}}
+            + if ($streams | length) > 1 then {"menu#streams": {
+                label: "Playing · \($streams | length) 󰅀",
+                position: "left",
+                actions: [$streams[] | {
+                    label: row(.title | if length > 40 then .[:39] + "…" else . end; if .muted then "󰖁" else "󰕾" end),
+                    command: (.ids | map("wpctl set-mute \(.) toggle") | join("; "))}]}} else {} end)
         | reduce $claude[] as $session (.;
             def word: {running: "Working", waiting: "Needs you", done: "Done"}[.];
             def glyph: {running: "✻", waiting: "✻", done: "󰄬"}[.];
@@ -82,7 +93,10 @@ render_config() {
                 "menubar#athan-state": {"menu#state": {
                     label: "\($athan.state) 󰅀",
                     position: "left",
-                    actions: [$athan.times[] | info(row("\(.icon)  \(.name)"; .time))]}}}
+                    actions: [$athan.times[] | info(row("\(.icon)  \(.name)"; .time))]},
+                    # Colored and sized by privacy-dots.py. The row is here anyway, so a dot moves nothing.
+                    "buttons#privacy": {position: "right",
+                        actions: [info("●  Mic"), info("●  Camera"), info("●  Screen"), info("●  Location")]}}}
           else . end
         | if $weather then
             .["widget-config"]["menubar#weather"] = {
@@ -125,11 +139,12 @@ claude_card_css() {
     case "$state" in waiting) color=tertiary ;; done) color=green ;; esac
     cat << EOF
 .widget-menubar.$slug {
-    background: @surface_container_high;
+    background: transparent;
     color: @on_surface;
-    border: 1px solid alpha(@$color, 0.45);
+    border: 1px solid transparent;
+    border-top-color: @hairline;
     border-bottom: none;
-    border-radius: var(--radius-row) var(--radius-row) 0 0;
+    border-radius: 0;
     margin: 4px 4px 0;
     padding: 0;
 }
@@ -150,9 +165,9 @@ claude_card_css() {
 }
 .widget-menubar.$slug > .menu-button-bar > .end button { color: @$color; font-weight: 600; }
 .widget-label.$slug-bar {
-    border: 1px solid alpha(@$color, 0.45);
+    border: 1px solid transparent;
     border-top: none;
-    border-radius: 0 0 var(--radius-row) var(--radius-row);
+    border-radius: 0;
     margin: 0 4px 4px;
     padding: 2px 12px 12px;
 }
@@ -175,10 +190,32 @@ refresh_claude_bar() {
     while read -r slug state percent; do
         new+=$(claude_card_css "$slug" "$state" "$percent")$'\n'
     done < <(jq -r '.[] | "\(.slug) \(.state) \(.percent)"' <<< "${sessions:-[]}")
+    # A session that's over keeps its card until the config can reload, so it keeps its look too
+    while read -r slug; do
+        new+=$(claude_card_css "$slug" done 100)$'\n'
+    done < <(jq -r --argjson live "${sessions:-[]}" '.widgets[] | select(startswith("menubar#claude-")) | ltrimstr("menubar#")
+        | select(IN($live[].slug) | not)' "$SWAYNC/config.json" 2> /dev/null)
     # -f: style.css imports it, so it has to exist even with nothing to show
     [[ -f "$SWAYNC/claude-bar.css" && "$new" == "$(cat "$SWAYNC/claude-bar.css")"$'\n' ]] && return 0
     printf '%s' "$new" > "$SWAYNC/claude-bar.css"
     swaync-client -sw -rs > /dev/null
+}
+
+# Sets STREAMS to the apps making sound right now, one per tab for a browser
+refresh_streams() {
+    STREAMS=$(pw-dump 2> /dev/null | jq -c '[.[]
+        | select(.type == "PipeWire:Interface:Node")
+        | select(.info.props["media.class"] == "Stream/Output/Audio" and .info.state == "running")
+        | {id, muted: (.info.params.Props[0].mute // false),
+            # Tabs name their stream after the page. Other apps use a word that says nothing.
+            title: (.info.props["media.name"] as $name
+                | if ($name // "" | test("^(playback|audiostream|audio stream|)$"; "i")) then .info.props["application.name"] // "Unknown" else $name end)}]
+        | group_by(.title) | map({title: .[0].title, ids: map(.id), muted: all(.muted)})')
+    [[ -n "$STREAMS" ]] || STREAMS="[]"
+}
+
+refresh_media_bar() {
+    "$BIN/nc-media.py" refresh
 }
 
 refresh_card() {
@@ -203,11 +240,13 @@ while true; do
     notify_athan
     refresh_bar
     refresh_claude_bar
+    refresh_media_bar
+    refresh_streams
     refresh_card
-    # Up to the next minute, in short naps while Claude Code is working so its bar stays live
+    # Up to the next minute, in short naps while Claude Code or something audible is on so the bars stay live
     while true; do
         left=$(( 60 - $(date +%s) % 60 ))
-        [[ -n "$CLAUDE_KEY" ]] && (( left > CLAUDE_TICK )) && left=$CLAUDE_TICK
+        [[ -n "$CLAUDE_KEY" || "$STREAMS" != "[]" ]] && (( left > CLAUDE_TICK )) && left=$CLAUDE_TICK
         # 9>&-: the sleep mustn't inherit the lock, or a restart would find it taken
         sleep "$left" 9>&- &
         sleeper=$!
@@ -216,8 +255,10 @@ while true; do
         kill "$sleeper" 2> /dev/null
         (( interrupted > 128 )) && break
         (( $(date +%s) % 60 < CLAUDE_TICK )) && break
-        previous=$CLAUDE_KEY
+        previous=$CLAUDE_KEY$STREAMS
         refresh_claude_bar
-        [[ "$CLAUDE_KEY" == "$previous" ]] || refresh_card
+        refresh_media_bar
+        refresh_streams
+        [[ "$CLAUDE_KEY$STREAMS" == "$previous" ]] || refresh_card
     done
 done

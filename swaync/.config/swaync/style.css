@@ -2,9 +2,14 @@
 @import url("colors.css");
 @import url("athan-bar.css"); /* The bar's fill, written by nc-daemon.sh */
 @import url("claude-bar.css"); /* Same, for the Claude Code cards */
+@import url("media-bar.css"); /* Same, for the position painted on the media card */
+@import url("privacy.css"); /* Which privacy dots show, written by privacy-dots.py */
 
-/* Panel background: windows sit behind it unblurred, so it stays mostly solid to keep text readable */
-@define-color panel_background alpha(@background, 0.9);
+/* Panel background: windows sit behind it unblurred, so it stays nearly solid to keep text readable */
+@define-color panel_background alpha(@background, 0.98);
+
+/* The panel is the only surface. Sections are split by a hairline, and only what you act on gets a fill */
+@define-color hairline alpha(@on_surface, 0.08);
 
 :root {
     --notification-icon-size: 40px;
@@ -27,7 +32,7 @@
 .control-center {
     background: @panel_background;
     color: @on_surface;
-    border: 1px solid @outline_variant;
+    border: 1px solid alpha(@on_surface, 0.1);
     border-radius: var(--radius-panel);
     padding: 4px;
 }
@@ -38,6 +43,16 @@
 
 .control-center .control-center-list .notification {
     box-shadow: none;
+}
+
+/* Popups float over windows and keep their border. In the panel a fill is enough */
+.control-center .notification-row .notification-background .notification:not(.critical) {
+    border-color: transparent;
+}
+
+.control-center .notification-row .notification-background .notification:not(.critical):hover {
+    background: @surface_container_highest;
+    border-color: transparent;
 }
 
 .control-center .control-center-list-placeholder {
@@ -83,6 +98,12 @@ blankwindow {
 .notification-row:focus,
 .notification-group:focus {
     background: none;
+}
+
+/* The keyboard focus ring follows the cards' corners */
+.notification-row,
+.notification-group {
+    border-radius: var(--radius-row);
 }
 
 .notification-row .notification-background {
@@ -293,7 +314,12 @@ progressbar progress {
     color: @on_surface;
 }
 
+/* The cards under a stack are a shade darker, or they merge with the top one into a single shape */
 .notification-group.collapsed .notification-row .notification {
+    background-color: @surface_container;
+}
+
+.notification-group.collapsed .notification-row:last-child .notification {
     background-color: @surface_container_high;
 }
 
@@ -304,18 +330,22 @@ progressbar progress {
 }
 
 .notification-group.collapsed:hover .notification-row:not(:only-child) .notification {
+    background-color: @surface_container;
+}
+
+.notification-group.collapsed:hover .notification-row:last-child .notification {
     background-color: @surface_container_high;
 }
 
 /* --- Athan and weather cards --- */
 
-/* Separate widgets reading as one card. All text sits 12px inside the card. */
+/* Separate widgets reading as one section. Transparent borders keep ROW_WIDTH in nc-daemon.sh correct. */
 .widget-menubar.today-head,
 .widget-menubar.athan-state,
 .widget-label {
-    background: @surface_container_high;
+    background: transparent;
     color: @on_surface;
-    border: 1px solid @outline_variant;
+    border: 1px solid transparent;
     border-top: none;
     border-bottom: none;
     border-radius: 0;
@@ -337,22 +367,18 @@ progressbar progress {
 
 .widget-menubar.today-head {
     margin-top: 4px;
-    border-top: 1px solid @outline_variant;
-    border-radius: var(--radius-row) var(--radius-row) 0 0;
 }
 
 .widget-menubar.athan-state {
     margin-bottom: 4px;
-    border-bottom: 1px solid @outline_variant;
-    border-radius: 0 0 var(--radius-row) var(--radius-row);
 }
 
 .widget-menubar.weather {
     margin: 4px;
     padding: 0;
-    background: @surface_container_high;
-    border: 1px solid @outline_variant;
-    border-radius: var(--radius-row);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0;
 }
 
 /* Menubars: swaync's default margins would push these off the card's text edge */
@@ -363,6 +389,18 @@ progressbar progress {
 .widget-menubar.weather > .menu-button-bar > .start,
 .widget-menubar.weather > .menu-button-bar > .end {
     margin: 0;
+}
+
+/* Anything without its own rules stays flat: a Claude card outlives its generated style with the panel open */
+.widget-menubar button {
+    background: transparent;
+    color: @on_surface;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    min-height: 0;
+    margin: 0;
+    padding: 4px 12px;
 }
 
 .widget-menubar.today-head button,
@@ -393,12 +431,28 @@ progressbar progress {
 
 .widget-menubar.today-head > .menu-button-bar > .start button {
     font-size: 40px;
+    font-weight: 300;
     padding: 0 12px;
 }
 
 .widget-menubar.weather > .menu-button-bar > .end button {
     font-size: 24px;
+    font-weight: 300;
     padding: 0 12px;
+}
+
+/* No size until privacy.css colors one: swaync can't hide a widget, and this keeps the row's layout still */
+.widget-menubar.athan-state > .menu-button-bar > .end {
+    margin: 0 12px 0 0; /* The date's right edge */
+}
+
+.widget-menubar.athan-state > .menu-button-bar > .end button,
+.widget-menubar.athan-state > .menu-button-bar > .end button:hover {
+    background: transparent;
+    color: transparent;
+    font-size: 0;
+    min-width: 0;
+    padding: 0;
 }
 
 /* Only what expands reacts */
@@ -441,10 +495,12 @@ progressbar progress {
     to { opacity: 0.55; }
 }
 
-/* --- Title and Do Not Disturb --- */
+/* --- Title --- */
 
 .widget-title {
-    padding: 4px 4px 0 12px;
+    border-top: 1px solid @hairline;
+    border-radius: 0;
+    padding: 12px 4px 0 12px;
 }
 
 .widget-title > label {
@@ -470,50 +526,15 @@ progressbar progress {
     color: @on_surface;
 }
 
-.widget-dnd {
-    background: @surface_container_high;
-    border: 1px solid @outline_variant;
-    padding: 6px 12px;
-}
-
-.widget-dnd label {
-    color: @on_surface;
-    font-size: 12px;
-    margin: 0;
-}
-
-.widget-dnd switch {
-    background: @surface_container_highest;
-    border: none;
-    border-radius: 11px;
-    min-height: 20px;
-}
-
-.widget-dnd switch:checked {
-    background: @primary;
-}
-
-.widget-dnd switch slider {
-    background: @on_surface;
-    border: none;
-    box-shadow: none;
-    border-radius: 11px;
-    min-width: 16px;
-    min-height: 16px;
-    margin: 2px;
-}
-
-.widget-dnd switch:checked slider {
-    background: @on_primary;
-}
-
 /* --- Quick actions --- */
 
 /* Button gaps come from the children, so the grid gives that much back to keep the card edges */
 .widget-buttons-grid {
     background: transparent;
+    border-top: 1px solid @hairline;
+    border-radius: 0;
     margin: 4px 1px;
-    padding: 0;
+    padding: 12px 0 0;
 }
 
 .widget-buttons-grid flowbox {
@@ -529,12 +550,12 @@ progressbar progress {
 .widget-buttons-grid flowboxchild > button {
     background: @surface_container_high;
     color: @on_surface;
-    border: 1px solid @outline_variant;
+    border: 1px solid transparent;
     box-shadow: none;
     border-radius: var(--radius-row);
     font-size: 16px;
     min-height: 38px;
-    min-width: 40px;
+    min-width: 0;
     padding: 0;
     margin: 0;
 }
@@ -556,9 +577,9 @@ progressbar progress {
 
 .widget-volume,
 .widget-backlight {
-    background: @surface_container_high;
+    background: transparent;
     color: @on_surface;
-    border: 1px solid @outline_variant;
+    border: 1px solid transparent;
     font-size: 16px;
     padding: 6px 12px;
 }
@@ -592,33 +613,39 @@ scale trough slider {
     padding: 0;
 }
 
-/* Its own card: the album art only tints it, so it can't bleed into the panel */
+/* The one card in the panel, so the cover gets to color it */
 .widget-mpris .widget-mpris-player {
     background: @surface_container_high;
-    border: 1px solid @outline_variant;
-    border-radius: var(--radius-row);
+    border: none;
+    border-radius: var(--radius-panel);
     box-shadow: none;
     margin: 0;
 }
 
+.widget-mpris .widget-mpris-player .mpris-background {
+    filter: blur(24px) saturate(1.5);
+}
+
+/* Dark enough for the text on any cover. Bottom padding leaves room for the bar media-bar.css paints */
 .widget-mpris .widget-mpris-player .mpris-overlay {
-    background-color: alpha(@surface_container_high, 0.86);
-    padding: 10px;
+    background-color: alpha(@scrim, 0.42);
+    padding: 16px 16px 24px;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
-    -gtk-icon-size: 64px;
-    border-radius: var(--radius-control);
-    box-shadow: none;
+    -gtk-icon-size: 76px;
+    border-radius: var(--radius-row);
+    box-shadow: 0 6px 18px alpha(@shadow, 0.45);
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
-    font-size: 13px;
-    font-weight: 600;
+    color: @on_surface;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
-    color: @on_surface_variant;
+    color: alpha(@on_surface, 0.72);
     font-size: 12px;
 }
 
@@ -627,14 +654,111 @@ scale trough slider {
     color: @on_surface;
     border: none;
     box-shadow: none;
-    border-radius: var(--radius-control);
+    border-radius: 999px;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0;
+    -gtk-icon-size: 18px;
 }
 
+/* Play, filled so it's the first thing you find. Shuffle and repeat only count when the player has them,
+   so it's the button after previous, wherever that puts it */
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(2):nth-last-child(2),
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(3):nth-last-child(2),
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(2):nth-last-child(3),
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(3):nth-last-child(3) {
+    background: @on_surface;
+    color: @surface;
+    min-width: 44px;
+    min-height: 44px;
+    margin: 0 10px;
+    -gtk-icon-size: 22px;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(2):nth-last-child(2):hover,
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(3):nth-last-child(2):hover,
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(2):nth-last-child(3):hover,
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:nth-child(3):nth-last-child(3):hover {
+    background: @on_surface_variant;
+    color: @surface;
+}
+
+/* Hovering shouldn't look like the toggles' on state */
 .widget-mpris .widget-mpris-player .mpris-overlay button:hover,
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover,
 .widget-mpris button:hover {
-    background: @primary;
-    color: @on_primary;
+    background: alpha(@on_surface, 0.16);
+    color: @on_surface;
+}
+
+/* Switching between players: the arrows on the sides and the dots below */
+.widget-mpris > box > button {
+    color: @on_surface_variant;
+    min-width: 20px;
+    padding: 0;
+}
+
+.widget-mpris > box > button:disabled {
+    color: transparent;
+}
+
+.widget-mpris carouselindicatordots {
+    color: @on_surface_variant;
+    min-height: 0;
+}
+
+/* What's playing: browsers show as one player whatever the number of tabs, so these rows come from PipeWire */
+.widget-menubar.playing {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0;
+    margin: 0 4px;
+    padding: 0;
+}
+
+.widget-menubar.playing > .menu-button-bar > .start,
+.widget-menubar.playing > .menu-button-bar > .end,
+.widget-menubar.playing > revealer * {
+    margin: 0;
+}
+
+.widget-menubar.playing {
+    margin-top: 6px;
+}
+
+.widget-menubar.playing button {
+    background: transparent;
+    color: @on_surface_variant;
+    border: none;
+    box-shadow: none;
+    border-radius: var(--radius-control);
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 0;
+    margin: 0;
+    padding: 6px 12px;
+}
+
+/* Air between what's playing, and a gap before the next section */
+.widget-menubar.playing > revealer button {
+    margin: 1px 0;
+    padding: 8px 12px;
+}
+
+.widget-menubar.playing > revealer * button:last-child {
+    margin-bottom: 8px;
+}
+
+.widget-menubar.playing button:hover {
+    background: @surface_container_highest;
+    color: @on_surface;
+}
+
+/* No size until media-bar.css shows it: there's nothing to resize without a player */
+.widget-menubar.playing > .menu-button-bar > .end button {
+    color: transparent;
+    font-size: 1px;
+    padding: 0;
 }
 
 /* --- Scrollbar: a thin floating line in the gutter, clear of the cards --- */

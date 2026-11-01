@@ -38,21 +38,22 @@
     }
   },
   "widgets": [
-    "dnd",
     "buttons-grid",
-    "mpris",
     "volume",
+    "mpris",
     "title",
     "notifications"
   ],
   "widget-config": {
+    "mpris": {
+      "autohide": true,
+      "loop-carousel": true,
+      "show-album-art": "always"
+    },
     "title": {
       "text": "Notifications",
       "clear-all-button": true,
       "button-text": "Clear"
-    },
-    "dnd": {
-      "text": "Do Not Disturb"
     },
     "label": {
       "max-lines": 1,
@@ -62,7 +63,7 @@
       "label": ""
     },
     "buttons-grid": {
-      "buttons-per-row": 5,
+      "buttons-per-row": 6,
       "actions": [
         {
           "label": "",
@@ -75,6 +76,12 @@
           "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
           "type": "toggle",
           "update-command": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo true || echo false"
+        },
+        {
+          "label": "󰂛",
+          "command": "swaync-client -d",
+          "type": "toggle",
+          "update-command": "swaync-client -D"
         },
         {
           "label": "󰤨",
